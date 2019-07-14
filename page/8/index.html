@@ -24,15 +24,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-
-
-
 
 
 
@@ -55,21 +46,21 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.2">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.1.2">
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.1.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.2.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.1.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.2.0">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
 
 
   <link rel="manifest" href="/manifest.json">
@@ -86,13 +77,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Gemini',
-    version: '7.1.2',
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false,"b2t":false,"scrollpercent":true},
-    back2top: true,
-    back2top_sidebar: false,
+    version: '7.2.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    copycode: {"enable":true,"show_result":true,"style":null},
     fancybox: true,
     fastclick: true,
-    lazyload: true,
+    lazyload: false,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
@@ -101,13 +92,14 @@
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
     }
   };
 </script>
-
-
-  
-
 
 
 
@@ -141,7 +133,7 @@
   };
 </script>
 
-  <title>Chenfan Blog – Do cool things that matter.</title>
+  <title>Chenfan Blog - Do cool things that matter.</title>
   
 
 
@@ -232,9 +224,24 @@
         
         
           
-          <li class="menu-item menu-item-archives">
+          <li class="menu-item menu-item-home">
 
     
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
     
     
       
@@ -253,7 +260,6 @@
 
     
     
-    
       
     
 
@@ -268,7 +274,6 @@
           
           <li class="menu-item menu-item-tags">
 
-    
     
     
       
@@ -287,7 +292,6 @@
 
     
     
-    
       
     
 
@@ -304,7 +308,6 @@
 
     
     
-    
       
     
 
@@ -319,7 +322,6 @@
           
           <li class="menu-item menu-item-paper-reading">
 
-    
     
     
       
@@ -369,10 +371,6 @@
     </div>
   
 </nav>
-
-
-
-  
 
 
 
@@ -435,13 +433,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -454,16 +452,14 @@
               
 
               <time title="Created: 2015-10-24 08:52:11" itemprop="dateCreated datePublished" datetime="2015-10-24T08:52:11+08:00">2015-10-24</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -471,15 +467,12 @@
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2018-09-23 18:58:49" itemprop="dateModified" datetime="2018-09-23T18:58:49+08:00">2018-09-23</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -503,6 +496,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -549,6 +547,8 @@ B计划还是应该要有的，万一A计划崩了呢。
         
       
     </div>
+
+    
 
     
 
@@ -627,13 +627,13 @@ B计划还是应该要有的，万一A计划崩了呢。
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -646,16 +646,14 @@ B计划还是应该要有的，万一A计划崩了呢。
               
 
               <time title="Created: 2015-10-23 11:07:14" itemprop="dateCreated datePublished" datetime="2015-10-23T11:07:14+08:00">2015-10-23</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -663,15 +661,12 @@ B计划还是应该要有的，万一A计划崩了呢。
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2018-09-23 18:58:49" itemprop="dateModified" datetime="2018-09-23T18:58:49+08:00">2018-09-23</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -695,6 +690,11 @@ B计划还是应该要有的，万一A计划崩了呢。
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -731,6 +731,8 @@ B计划还是应该要有的，万一A计划崩了呢。
         
       
     </div>
+
+    
 
     
 
@@ -809,13 +811,13 @@ B计划还是应该要有的，万一A计划崩了呢。
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -828,16 +830,14 @@ B计划还是应该要有的，万一A计划崩了呢。
               
 
               <time title="Created: 2015-10-16 16:44:30" itemprop="dateCreated datePublished" datetime="2015-10-16T16:44:30+08:00">2015-10-16</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -845,15 +845,12 @@ B计划还是应该要有的，万一A计划崩了呢。
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2017-03-03 23:31:27" itemprop="dateModified" datetime="2017-03-03T23:31:27+08:00">2017-03-03</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -877,6 +874,11 @@ B计划还是应该要有的，万一A计划崩了呢。
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -922,6 +924,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -1000,13 +1004,13 @@ Linus Torvalds
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1019,16 +1023,14 @@ Linus Torvalds
               
 
               <time title="Created: 2015-09-22 21:36:52" itemprop="dateCreated datePublished" datetime="2015-09-22T21:36:52+08:00">2015-09-22</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1036,15 +1038,12 @@ Linus Torvalds
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2015-09-30 06:59:31" itemprop="dateModified" datetime="2015-09-30T06:59:31+08:00">2015-09-30</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1068,6 +1067,11 @@ Linus Torvalds
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1107,6 +1111,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -1185,13 +1191,13 @@ Linus Torvalds
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1204,16 +1210,14 @@ Linus Torvalds
               
 
               <time title="Created: 2015-09-19 18:32:40" itemprop="dateCreated datePublished" datetime="2015-09-19T18:32:40+08:00">2015-09-19</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1221,15 +1225,12 @@ Linus Torvalds
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2015-11-24 10:38:46" itemprop="dateModified" datetime="2015-11-24T10:38:46+08:00">2015-11-24</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1253,6 +1254,11 @@ Linus Torvalds
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1299,6 +1305,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -1377,13 +1385,13 @@ Linus Torvalds
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1396,16 +1404,14 @@ Linus Torvalds
               
 
               <time title="Created: 2015-09-13 15:09:34" itemprop="dateCreated datePublished" datetime="2015-09-13T15:09:34+08:00">2015-09-13</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1413,15 +1419,12 @@ Linus Torvalds
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2018-03-07 15:00:00" itemprop="dateModified" datetime="2018-03-07T15:00:00+08:00">2018-03-07</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1445,6 +1448,11 @@ Linus Torvalds
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1483,6 +1491,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -1561,13 +1571,13 @@ Linus Torvalds
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1580,16 +1590,14 @@ Linus Torvalds
               
 
               <time title="Created: 2015-09-09 10:56:01" itemprop="dateCreated datePublished" datetime="2015-09-09T10:56:01+08:00">2015-09-09</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1597,15 +1605,12 @@ Linus Torvalds
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2018-10-04 10:46:34" itemprop="dateModified" datetime="2018-10-04T10:46:34+08:00">2018-10-04</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1629,6 +1634,11 @@ Linus Torvalds
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1669,6 +1679,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -1747,13 +1759,13 @@ Linus Torvalds
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1766,16 +1778,14 @@ Linus Torvalds
               
 
               <time title="Created: 2015-09-07 22:50:58" itemprop="dateCreated datePublished" datetime="2015-09-07T22:50:58+08:00">2015-09-07</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1783,15 +1793,12 @@ Linus Torvalds
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2016-04-01 21:28:14" itemprop="dateModified" datetime="2016-04-01T21:28:14+08:00">2016-04-01</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1815,6 +1822,11 @@ Linus Torvalds
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1859,6 +1871,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -1937,13 +1951,13 @@ Linus Torvalds
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1956,16 +1970,14 @@ Linus Torvalds
               
 
               <time title="Created: 2015-08-31 22:34:15" itemprop="dateCreated datePublished" datetime="2015-08-31T22:34:15+08:00">2015-08-31</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1973,15 +1985,12 @@ Linus Torvalds
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2017-09-27 09:21:01" itemprop="dateModified" datetime="2017-09-27T09:21:01+08:00">2017-09-27</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -2005,6 +2014,11 @@ Linus Torvalds
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -2044,6 +2058,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -2122,13 +2138,13 @@ Linus Torvalds
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -2141,16 +2157,14 @@ Linus Torvalds
               
 
               <time title="Created: 2015-08-28 19:25:48" itemprop="dateCreated datePublished" datetime="2015-08-28T19:25:48+08:00">2015-08-28</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -2158,15 +2172,12 @@ Linus Torvalds
                   <span class="post-meta-item-text">Edited on</span>
                 
                 <time title="Modified: 2018-09-23 18:58:49" itemprop="dateModified" datetime="2018-09-23T18:58:49+08:00">2018-09-23</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -2190,6 +2201,11 @@ Linus Torvalds
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -2230,6 +2246,8 @@ Linus Torvalds
         
       
     </div>
+
+    
 
     
 
@@ -2812,15 +2830,21 @@ Linus Torvalds
           
 
           
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
 
           
           
 
           
-            
-          
-          
-
         </div>
       </div>
 
@@ -2830,7 +2854,7 @@ Linus Torvalds
 
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
         
@@ -2859,7 +2883,7 @@ Linus Torvalds
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.2</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
 
 
 
@@ -2907,9 +2931,9 @@ Linus Torvalds
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
-    
-
     
 
     
@@ -2929,9 +2953,6 @@ Linus Torvalds
 
 
 
-  
-
-
 
   
 
@@ -2939,12 +2960,12 @@ Linus Torvalds
 
 
 
-
+  
   
 
 
 
-
+  
 
 
 
@@ -2957,13 +2978,10 @@ Linus Torvalds
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
 
   
   <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -2975,38 +2993,35 @@ Linus Torvalds
   <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
 
 
-  
 
 
-  <script src="/js/utils.js?v=7.1.2"></script>
+  <script src="/js/utils.js?v=7.2.0"></script>
 
-  <script src="/js/motion.js?v=7.1.2"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/affix.js?v=7.1.2"></script>
-
-  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
-
+  <script src="/js/motion.js?v=7.2.0"></script>
 
 
 
   
-
   
 
 
-  <script src="/js/next-boot.js?v=7.1.2"></script>
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
 
 
   
-  <script src="/js/js.cookie.js?v=7.1.2"></script>
-  <script src="/js/scroll-cookie.js?v=7.1.2"></script>
 
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+  <script src="/js/js.cookie.js?v=7.2.0"></script>
+  <script src="/js/scroll-cookie.js?v=7.2.0"></script>
+
+
+  
 
   
 
@@ -3423,16 +3438,6 @@ Linus Torvalds
   
 
   
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
 
   
 
@@ -3445,43 +3450,9 @@ Linus Torvalds
   
 
   
-<script>
-  $('.highlight').not('.gist .highlight').each(function(i, e) {
-    var $wrap = $('<div>').addClass('highlight-wrap');
-    $(e).after($wrap);
-    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
-      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
-        return $(e).text();
-      }).toArray().join('\n');
-      var ta = document.createElement('textarea');
-      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
-      ta.style.top = yPosition + 'px'; // Prevent page scroll
-      ta.style.position = 'absolute';
-      ta.style.opacity = '0';
-      ta.readOnly = true;
-      ta.value = code;
-      document.body.appendChild(ta);
-      ta.select();
-      ta.setSelectionRange(0, code.length);
-      ta.readOnly = false;
-      var result = document.execCommand('copy');
-      
-        if (result) $(this).text('Copied');
-        else $(this).text('Copy failed');
-      
-      ta.blur(); // For iOS
-      $(this).blur();
-    })).on('mouseleave', function(e) {
-      var $b = $(this).find('.copy-btn');
-      setTimeout(function() {
-        $b.text('Copy');
-      }, 300);
-    }).append(e);
-  })
-</script>
-
 
   
+
 
   
 
