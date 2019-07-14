@@ -111,15 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="RDMA(Remote Direct Memory Access) is a technique for computers to access memory on a remote machine without interrupting the processing of its own CPU(s). Refer to:  RDMAmojo  Wikepedia - RDMA">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2016-06-27-rdma-1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2016-06-27-rdma-2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2016-06-27-rdma-4.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2016-06-27-rdma-3.jpg">
 <meta property="og:updated_time" content="2018-10-21T02:32:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RDMA Warming Up">
 <meta name="twitter:description" content="RDMA(Remote Direct Memory Access) is a technique for computers to access memory on a remote machine without interrupting the processing of its own CPU(s). Refer to:  RDMAmojo  Wikepedia - RDMA">
-<meta name="twitter:image" content="http://jcf94.com/download/2016-06-27-rdma-1.jpg">
 
 
 
@@ -553,7 +548,7 @@
 <li>Direct user-level access to HW</li>
 </ul>
 <p>Zero-copy: Applications can perform data transfer <strong>without the network software stack involvement</strong> and data is being send /received <strong>directly</strong> to the buffers without being copied between the network layers.</p>
-<img src="http://jcf94.com/download/2016-06-27-rdma-1.jpg" title="Zero Copy">
+<img title="Zero Copy" data-src="http://jcf94.com/download/2016-06-27-rdma-1.jpg">
 
 <p>Kernel bypass in the fast path: Applications can perform data transfer directly from userspace without the need to perform context switches.</p>
 <p>No CPU involvement: Applications can access remote memory without consuming any CPU in the remote machine. <strong>The caches in the remote CPU(s) won’t be filled with the accessed memory content.</strong></p>
@@ -565,17 +560,17 @@
 <li>Hardware managed transport</li>
 </ul>
 <p>Software deals with buffers, not packets.</p>
-<img src="http://jcf94.com/download/2016-06-27-rdma-2.jpg" title="Full Protocol Offloading">
+<img title="Full Protocol Offloading" data-src="http://jcf94.com/download/2016-06-27-rdma-2.jpg">
 
 <h2 id="Infiniband"><a href="#Infiniband" class="headerlink" title="Infiniband"></a>Infiniband</h2><p>A <strong>pervasive</strong>, <strong>low-latency</strong>, <strong>high-bandwidth</strong> interconnect which requires low processing overhead and is <strong>ideal</strong> to carry multiple traffic types (clustering, communications, storage, management, etc) over a single connection.</p>
 <p>IB mainly consists of 5 layers.</p>
 <p>|No|Layers|Functions|<br>|-|<br>|1st|Software Transport Verbs and Upper Layer Protocols|Interface between applications and hardwares<br>Define methodology for management functions|<br>|2nd|Transport|Delivers packets to the appropriate QP node<br>Message Assembly/De-assembly<br>Access Right|<br>|3rd|Network|Route packets between different partitions/subnets|<br>|4th|Data Link(Symbols and framing)|Route packets on the same partition/subnet|<br>|5th|Physical|Signal levels/Media/Connections|</p>
-<img src="http://jcf94.com/download/2016-06-27-rdma-4.jpg" title="Layers of IB Network">
+<img title="Layers of IB Network" data-src="http://jcf94.com/download/2016-06-27-rdma-4.jpg">
 
 <p>In an IB net, there are devices:</p>
 <p>HCA(Host Channel Adapter): Like a Ethernet NIC. Connects the InfiniBand Cable to the PCI Express bus. It is the <strong>end node</strong> of the InfiniBand network, executing transport-level functions as well as supporting the InfiniBand verbs interface.</p>
 <p>TCA(Target Channel Adapter): Similar to HCA,</p>
-<img src="http://jcf94.com/download/2016-06-27-rdma-3.jpg" title="Infiniband Architecture">
+<img title="Infiniband Architecture" data-src="http://jcf94.com/download/2016-06-27-rdma-3.jpg">
 
 <h1 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h1><p>Use <code>lsmod</code> to show the loaded kernel modules. Check for ‘<strong>rdma</strong>‘ and ‘<strong>ib</strong>‘.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">jcf@node1:~&gt; lsmod | grep ib</span><br><span class="line">ib_ucm                 18507  0</span><br><span class="line">ib_ipoib              140788  0</span><br><span class="line">ib_cm                  47822  3 ib_ucm,rdma_cm,ib_ipoib</span><br><span class="line">ib_uverbs              75527  2 rdma_ucm,ib_ucm</span><br><span class="line">ib_umad                22476  6</span><br><span class="line">mlx5_ib               188056  0</span><br><span class="line">mlx5_core             397618  1 mlx5_ib</span><br><span class="line">mlx4_ib               209139  0</span><br><span class="line">ib_sa                  33470  5 rdma_ucm,rdma_cm,ib_ipoib,ib_cm,mlx4_ib</span><br><span class="line">ib_mad                 56507  4 ib_cm,ib_umad,mlx4_ib,ib_sa</span><br><span class="line">ib_core               138343  12 rdma_ucm,ib_ucm,rdma_cm,iw_cm,ib_ipoib,ib_cm,ib_uverbs,ib_umad,mlx5_ib,mlx4_ib,ib_sa,ib_mad</span><br><span class="line">ib_addr                18889  3 rdma_ucm,rdma_cm,ib_core</span><br><span class="line">mlx4_core             370626  2 mlx4_en,mlx4_ib</span><br><span class="line">mlx_compat             30364  17 rdma_ucm,ib_ucm,rdma_cm,iw_cm,ib_ipoib,ib_cm,ib_uverbs,ib_umad,mlx5_ib,mlx5_core,mlx4_en,mlx4_ib,ib_sa,ib_mad,ib_core,ib_addr,mlx4_core</span><br><span class="line">libcrc32c              12644  0</span><br><span class="line">ipv6_lib              344914  187 ib_ipoib,ib_core,ib_addr,ipv6</span><br><span class="line">libsas                 88001  1 isci</span><br><span class="line">scsi_transport_sas     40887  2 isci,libsas</span><br><span class="line">libahci                35044  1 ahci</span><br><span class="line">libata                230626  5 libsas,ata_generic,ata_piix,ahci,libahci</span><br><span class="line">scsi_mod              235785  13 usb_storage,sr_mod,sg,sd_mod,isci,libsas,scsi_transport_sas,scsi_dh_emc,scsi_dh_alua,scsi_dh_hp_sw,scsi_dh_rdac,scsi_dh,libata</span><br></pre></td></tr></table></figure>

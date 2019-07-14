@@ -111,17 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="《Computer Organization and Design, Hardware/Software Interface》以及《Computer Architecture: A Quantitative Approach》被誉为体系结构界的两本圣经。 最近除了编译原理外，还在补的就是《硬件/软件接口》这一本了。 这本书讲解得非常透彻。原本我只是对体系结构、CPU有个模糊的很难学的概念，，，书中">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-chip.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-multi.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-divi.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-3.5.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-3.5.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-3.5.3.jpg">
 <meta property="og:updated_time" content="2018-10-04T02:46:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机组成与设计.硬件&#x2F;软件接口 学习笔记（一）">
 <meta name="twitter:description" content="《Computer Organization and Design, Hardware/Software Interface》以及《Computer Architecture: A Quantitative Approach》被誉为体系结构界的两本圣经。 最近除了编译原理外，还在补的就是《硬件/软件接口》这一本了。 这本书讲解得非常透彻。原本我只是对体系结构、CPU有个模糊的很难学的概念，，，书中">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-09-09-cod-chip.png">
 
 
 
@@ -619,7 +612,7 @@
 </tbody></table>
 <p>话说理论上来说从 1965 年一直到现在本质上用的原件都还是晶体管，只不过工艺水平一直在提升，集成度也在不断增加，摩尔定律本质上是对单块芯片里面晶体管数量增长率的估计。</p>
 <p>来看下 CPU 这些芯片是怎么造出来的：</p>
-<p><img src="http://jcf94.com/download/2015-09-09-cod-chip.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2015-09-09-cod-chip.png"></p>
 <p>首先原料是从硅开始，硅是一种出色的半导体材料，它本身的导电性介于导体和绝缘体之间，但是经过某些化学处理之后，可以变成三种不同性质的结构：</p>
 <ol>
 <li>用微观铜线或者铝线（microscopic copper or aluminum wire，不知道这个具体处理过程是啥）处理之后，可以变成良导体</li>
@@ -751,24 +744,24 @@
 <h1 id="CHAPTER-3-Arithmetic-for-Computers"><a href="#CHAPTER-3-Arithmetic-for-Computers" class="headerlink" title="CHAPTER 3. Arithmetic for Computers"></a>CHAPTER 3. Arithmetic for Computers</h1><p>计算机中的算术运算</p>
 <h2 id="3-1-Instruction"><a href="#3-1-Instruction" class="headerlink" title="3.1. Instruction"></a>3.1. Instruction</h2><h2 id="3-2-Addition-and-Subtraction"><a href="#3-2-Addition-and-Subtraction" class="headerlink" title="3.2. Addition and Subtraction"></a>3.2. Addition and Subtraction</h2><p>加减的硬件实现考虑数电中的加减电路，原理还是很简单的。</p>
 <h2 id="3-3-Multiplication"><a href="#3-3-Multiplication" class="headerlink" title="3.3. Multiplication"></a>3.3. Multiplication</h2><p>乘法的硬件实现也可以看成是用纸笔列竖式乘法方法的衍生，即移位和加法。</p>
-<p><img src="http://jcf94.com/download/2015-09-09-cod-multi.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2015-09-09-cod-multi.png"></p>
 <h2 id="3-4-Division"><a href="#3-4-Division" class="headerlink" title="3.4. Division"></a>3.4. Division</h2><p>移位加比较，原理类似。</p>
-<p><img src="http://jcf94.com/download/2015-09-09-cod-divi.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2015-09-09-cod-divi.png"></p>
 <h2 id="3-5-Floating-Point"><a href="#3-5-Floating-Point" class="headerlink" title="3.5. Floating Point"></a>3.5. Floating Point</h2><p>计算机中的实数用科学计数法来表示，将一个存储空间的一部分用于表示指数，另一部分用于表示尾数。</p>
 <p>存储空间的总大小是一定的，指数数位越多，则表示的数的范围越大，但是由于尾数数位少了，有效数位下降了；反之，指数数位越少，表示的数有效数位越多，精确度越高，但是能够表示的范围就小了。</p>
 <p>以MIPS中常见的32位浮点数表示为例：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-3.5.1.jpg" title="MIPS中常见的浮点数表示法">
+<img title="MIPS中常见的浮点数表示法" data-src="http://jcf94.com/download/2015-09-09-cod-3.5.1.jpg">
 
 <p>首位为符号位，接下来8位是带符号的指数部分，最后23位是尾数，则整个数最后表示的内容是：</p>
 <p>$$(-1)^S*F*2^E$$</p>
 <p>它能表示的范围在：$2*10^{-38}\sim2*10^{38}$</p>
 <p>64位的浮点数结构则是这样的：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-3.5.2.jpg" title="双精度浮点数表示">
+<img title="双精度浮点数表示" data-src="http://jcf94.com/download/2015-09-09-cod-3.5.2.jpg">
 
 <p>表示的范围在：$2*10^{-308}\sim2*10^{308}$</p>
 <hr>
 <p>IEEE754标准对零、无穷与无效数据格式作了规定：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-3.5.3.jpg" title="IEEE754浮点数编码">
+<img title="IEEE754浮点数编码" data-src="http://jcf94.com/download/2015-09-09-cod-3.5.3.jpg">
 
 <p>除此之外，对浮点数有两个比较重要的规定：</p>
 <ol>

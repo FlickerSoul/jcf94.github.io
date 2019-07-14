@@ -111,20 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run()  写着写着越写越多了，所以想想还是分成多篇来了，要不一页内容有点多。 Control Flow in TF从 Executor 的运行实现里面往下继续的时候遇到了点问题，代码里面有个叫 Frame 的概念，但是注释里面很多东西都写的不清不楚的，不知道在干吗，于是在网上找了点关于 TF 的整个控制流方面的资料：  Reques">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-01-13-tfunpacking-dataflow-primitives.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-01-13-tfunpacking-cond.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-01-13-tfunpacking-while.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-01-23-tfunpacking2-naive.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-01-23-tfunpacking2-notnaive.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-def-greek.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-forward-greek.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-backward-greek.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-01-23-tfunpacking2-net.svg">
 <meta property="og:updated_time" content="2018-11-09T02:03:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（二）：TF 的数据流模型实现以及自动求导">
 <meta name="twitter:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run()  写着写着越写越多了，所以想想还是分成多篇来了，要不一页内容有点多。 Control Flow in TF从 Executor 的运行实现里面往下继续的时候遇到了点问题，代码里面有个叫 Frame 的概念，但是注释里面很多东西都写的不清不楚的，不知道在干吗，于是在网上找了点关于 TF 的整个控制流方面的资料：  Reques">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-01-13-tfunpacking-dataflow-primitives.png">
 
 
 
@@ -534,7 +524,7 @@
 <a id="more"></a>
 
 <p>TensorFlow 中，每一个 Op 都在一个 Execution Frame（前面看代码见到的结构）中运行，由以下五种控制流原语来负责 Execution Frame 的创建和维护。例如每个 while 循环在跑的时候都会先创建一个 Execution Frame，然后循环里面的所有 Op 都会在这个 Frame 里面完成运行。Frame 也可以嵌套，比如说嵌套的循环就会有嵌套的 Frame。不同 Frame 中的 Op 只要相互之间没有依赖的都可以并行运行。</p>
-<p><img src="http://jcf94.com/download/2018-01-13-tfunpacking-dataflow-primitives.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-01-13-tfunpacking-dataflow-primitives.png"></p>
 <ul>
 <li>Switch：根据控制 p，把输入 d 传到某个输出里。只要 d 和 p 都可用时就可以执行</li>
 <li>Merge：把某个输入传到输出里。只要有任意一个输入就能执行，如果有多个输入都可用，这里并不会指明最终会输出哪一个输入</li>
@@ -546,22 +536,22 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.cond(x &lt; y, <span class="keyword">lambda</span>: tf.add(x, z), <span class="keyword">lambda</span>: tf.square(y))</span><br></pre></td></tr></table></figure>
 
 <p>可以这样实现：</p>
-<p><img src="http://jcf94.com/download/2018-01-13-tfunpacking-cond.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-01-13-tfunpacking-cond.png"></p>
 <p>然后对于一个 while 循环：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.while_loop(<span class="keyword">lambda</span> i: i &lt; <span class="number">10</span>, <span class="keyword">lambda</span> i: tf.add(i, <span class="number">1</span>), [<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
 
 <p>实现出来是这样的：</p>
-<p><img src="http://jcf94.com/download/2018-01-13-tfunpacking-while.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-01-13-tfunpacking-while.png"></p>
 <p>上面这个例子里面的循环非常简单，当循环更复杂一点，例如变量有多个时，就会有多个 Enter、多个 NextIteration 和 多个 Exit Op。这样每一层迭代中的不同部分就能够充分发挥并行性。</p>
 <p>Executor 中运行产生的每个 Tensor 都可以用一个三元组来表示<code>(value, is_dead, tag)</code>，value 显然是实际的数据，is_dead 用于标识当前 Tensor 是不是在一个选择语句的 untaken branch 上（感觉怎么翻译都难受，还是原文好），tag 这个标记是唯一的，其中包含了 Executor 上下文信息、Tensor 的生产者等等，在 send/recv 的过程中 tag 也是通信 key 的一部分。</p>
 <p>分布式环境下有可能出现条件选择语句在 Device A 上，某个分支的具体执行在 Device B 上的情况。运行时中遇到 source node 都是无条件执行的，例如 recv Op 也是一种 source node，所以实际实现的时候会做 is_dead 标记的广播。</p>
 <h2 id="Distributed-While-Loop"><a href="#Distributed-While-Loop" class="headerlink" title="Distributed While Loop"></a>Distributed While Loop</h2><p>再来看一下分布式环境下的循环是怎么实现的。</p>
 <p>一种 naively 的实现是这样的：</p>
-<p><img src="http://jcf94.com/download/2018-01-23-tfunpacking2-naive.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-01-23-tfunpacking2-naive.png"></p>
 <p>这里比较尴尬的的是，循环的控制体在 Device A 上，循环体却是在 Device B 上（话说实际会有这种划分方式吗？想一下 GPU 的运行是不是就是这样的呢？控制 batch 和 epoch 的部分在 CPU 上，然后中间实际的图的运算在 GPU 上？）。</p>
 <p>按照前面原本的实现方式，Device B 并不知道自己所跑的子图是一个循环的一部分，因此按照正常情况来处理，它所负责的每个 Op 都只执行一次就结束了，那如果要让这个循环一直跑下去，可能就要在每次 Device A 调用 send 之后，Device B 再创建一个新的 Executor Frame，果然是 naive 啊。</p>
 <p>TensorFlow 的解决方案是：</p>
-<p><img src="http://jcf94.com/download/2018-01-23-tfunpacking2-notnaive.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-01-23-tfunpacking2-notnaive.png"></p>
 <p>在 Device B 上加上一个控制循环的状态机，把 Device A 中的 switch 和 next 也加到 B 上去。使用这种方式实现的循环在<strong>更多设备参与</strong>的<strong>更复杂循环</strong>中能够发挥出更好的并行性。例如 Device B 只要接收到了 P 就能开始下一层迭代或者退出了，而不用等到 Device A 跑完循环的其他部分，多个不同的设备也可以在同一时刻跑着一个循环的不同迭代层的内容。接收一个 P 的开销可以被高度的并行性隐藏掉。</p>
 <p>嵌套循环的情况类似，也是继续构造一个状态机，把外层循环的 switch 输入到内层循环状态机的 Enter 里去即可。</p>
 <h2 id="Automatic-differentiation"><a href="#Automatic-differentiation" class="headerlink" title="Automatic differentiation"></a>Automatic differentiation</h2><p>首先需要理解 BP 算法里面的梯度计算规则，参考资料在这里：</p>
@@ -569,11 +559,11 @@
 <li><a href="http://colah.github.io/posts/2015-08-Backprop/" target="_blank" rel="noopener">Calculus on Computational Graphs: Backpropagation</a></li>
 </ul>
 <p>基本原理就是链式求导法则，这里有个前向求导和反向求导的区别，例如对于一个这样的计算过程：</p>
-<p><img src="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-def-greek.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-def-greek.png"></p>
 <p>前向求导是从第一层开始，逐层计算梯度 $\frac{\partial}{\partial X}$ 到最后一层：</p>
-<p><img src="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-forward-greek.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-forward-greek.png"></p>
 <p>反向求导是从最后一层开始，逐层计算梯度 $\frac{\partial Z}{\partial}$ 到第一层：</p>
-<p><img src="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-backward-greek.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-23-tfunpacking2-chain-backward-greek.png"></p>
 <p>前向求导关注的是<strong>输入是怎么影响到每一层</strong>的，反向求导则是关注于<strong>每一层是怎么影响到最终的输出结果</strong>的。</p>
 <p>对于一个多输入单输出的计算网络，如果想要得到每个输入和输出之间的关系，用前向求导需要对每一个输入都做一次，而用反向求导则只需要做一次就可以得到输出和每个输入之间的关系。</p>
 <p>对于单输入多输出的计算网络，则应该用前向求导才能一次获得一个输入对多个输出的关系。</p>
@@ -582,7 +572,7 @@
 <p>举个栗子：</p>
 <p>假定有一个网络，输入数据是 <strong>$X_{in}$（形状是 N x D）</strong>，结果一共有 <strong>C 种分类</strong>，则对应的 Label 一共有 <strong>N 个</strong>，处理之后每一个都是一个 <strong>1 x C 的向量</strong>，每个向量中都只有唯一一个位置是 1，代表了这个样本属于哪个类，其他 C-1 个位置都是 0，设这个对应的结果是 $Y_{label}​$ （形状是 N x C）。</p>
 <p>网络有多个层，每层有参数（$W_i$ 和 $b_i$）：</p>
-<p><img src="http://jcf94.com/download/2018-01-23-tfunpacking2-net.svg" alt="Neural Network"></p>
+<p><img alt="Neural Network" data-src="http://jcf94.com/download/2018-01-23-tfunpacking2-net.svg"></p>
 <p>这个过程写成公式大概是：</p>
 <p>$$<br>\begin{align}<br>Y_0 &amp;= f_0(W_0, b_0, X_{in})\<br>Y_1 &amp;= f_1(W_1, b_1, Y_0)\<br>Y_2 &amp;= f_2(W_2, b_2, Y_1)\<br>&amp;…\<br>Y_n &amp;= f_n(W_n, b_n, Y_{n-1})\<br>Y_{out} &amp;= Softmax(Y_n)\<br>\end{align}<br>$$</p>
 <p>BP 算法的训练过程则是根据网络计算得到的 $Y_{out}$ 和实际的真实结果 $Y_{label}$ 来计算误差，并且沿着网络反向传播来调整前面公式中提到的所有 $W_i$ 和 $b_i$，使<strong>误差</strong>达到最小。</p>

@@ -111,13 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="Minimal Ratio TreeTime Limit: 2000/1000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others) Problem DescriptionFor a tree, which nodes and edges are all weighted, the ratio of it is calculat">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2014-09-06-HDU-2489-Minimal-Ratio-Tree-1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-09-06-HDU-2489-Minimal-Ratio-Tree-2.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDU 2489 Minimal Ratio Tree 最小生成树+DFS">
 <meta name="twitter:description" content="Minimal Ratio TreeTime Limit: 2000/1000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others) Problem DescriptionFor a tree, which nodes and edges are all weighted, the ratio of it is calculat">
-<meta name="twitter:image" content="http://jcf94.com/download/2014-09-06-HDU-2489-Minimal-Ratio-Tree-1.jpg">
 
 
 
@@ -515,11 +512,11 @@
       
         <h1 id="Minimal-Ratio-Tree"><a href="#Minimal-Ratio-Tree" class="headerlink" title="Minimal Ratio Tree"></a>Minimal Ratio Tree</h1><p>Time Limit: 2000/1000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others)</p>
 <h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>For a tree, which nodes and edges are all weighted, the ratio of it is calculated according to the following equation.</p>
-<p><img src="http://jcf94.com/download/2014-09-06-HDU-2489-Minimal-Ratio-Tree-1.jpg" alt="1"></p>
+<p><img alt="1" data-src="http://jcf94.com/download/2014-09-06-HDU-2489-Minimal-Ratio-Tree-1.jpg"></p>
 <p>Given a complete graph of n nodes with all nodes and edges weighted, your task is to find a tree, which is a sub-graph of the original graph, with m nodes and whose ratio is the smallest among all the trees of m nodes in the graph.</p>
 <a id="more"></a>
 
-<p><img src="http://jcf94.com/download/2014-09-06-HDU-2489-Minimal-Ratio-Tree-2.jpg" alt="2"></p>
+<p><img alt="2" data-src="http://jcf94.com/download/2014-09-06-HDU-2489-Minimal-Ratio-Tree-2.jpg"></p>
 <h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>Input contains multiple test cases. The first line of each test case contains two integers n (2&lt;=n&lt;=15) and m (2&lt;=m&lt;=n), which stands for the number of nodes in the graph and the number of nodes in the minimal ratio tree. Two zeros end the input. The next line contains n numbers which stand for the weight of each node. The following n lines contain a diagonally symmetrical n×n connectivity matrix with each element shows the weight of the edge connecting one node with another. Of course, the diagonal will be all 0, since there is no edge connecting a node with itself.</p>
 <p>All the weights of both nodes and edges (except for the ones on the diagonal of the matrix) are integers and in the range of [1, 100].<br>The figure below illustrates the first test case in sample input. Node 1 and Node 3 form the minimal ratio tree.</p>
 <h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p>For each test case output one line contains a sequence of the m nodes which constructs the minimal ratio tree. Nodes should be arranged in ascending order. If there are several such sequences, pick the one which has the smallest node number; if there’s a tie, look at the second smallest node number, etc. Please note that the nodes are numbered from 1 .</p>

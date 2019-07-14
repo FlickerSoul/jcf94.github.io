@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="OJ是跑在LAMP的环境中，Linux+Apache+Mysql+Php">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2014-12-22-oj-hustoj-1.apache2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-12-22-oj-hustoj-2.mysql.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-12-22-oj-hustoj-3.mysql.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="长大OJ诞生记（一）HUSTOJ搭建">
 <meta name="twitter:description" content="OJ是跑在LAMP的环境中，Linux+Apache+Mysql+Php">
-<meta name="twitter:image" content="http://jcf94.com/download/2014-12-22-oj-hustoj-1.apache2.jpg">
 
 
 
@@ -523,7 +519,7 @@
 
 <p>装好之后再浏览器中访问 <a href="http://localhost" target="_blank" rel="noopener">http://localhost</a></p>
 <p>看到如下页面就是正常工作了：</p>
-<p><img src="http://jcf94.com/download/2014-12-22-oj-hustoj-1.apache2.jpg" alt="Apache正常工作"></p>
+<p><img alt="Apache正常工作" data-src="http://jcf94.com/download/2014-12-22-oj-hustoj-1.apache2.jpg"></p>
 <p>Apache2的配置信息在：</p>
 <blockquote>
 <p>/etc/apache2</p>
@@ -536,7 +532,7 @@
 <h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install mysql-server mysql-client</span><br></pre></td></tr></table></figure>
 
 <p>安装过程中需要设置root账号的密码：</p>
-<p><img src="http://jcf94.com/download/2014-12-22-oj-hustoj-2.mysql.jpg" alt="设置密码"></p>
+<p><img alt="设置密码" data-src="http://jcf94.com/download/2014-12-22-oj-hustoj-2.mysql.jpg"></p>
 <p>装好之后，配置信息在：</p>
 <blockquote>
 <p>/etc/mysql</p>
@@ -560,7 +556,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; show variables like &apos;char%&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>出现：</p>
-<p><img src="http://jcf94.com/download/2014-12-22-oj-hustoj-3.mysql.jpg" alt="编码"></p>
+<p><img alt="编码" data-src="http://jcf94.com/download/2014-12-22-oj-hustoj-3.mysql.jpg"></p>
 <p>看到编码都是utf8就正常了</p>
 <h2 id="php5"><a href="#php5" class="headerlink" title="php5"></a>php5</h2><p>安装php5以及Apache的php5模块</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install php5 libapache2-mod-php5</span><br></pre></td></tr></table></figure>

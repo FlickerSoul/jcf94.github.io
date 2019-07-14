@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node  这篇要分析的是 TensorFlow 中跟计算设备相关的内容。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-03-07-tfunpacking4-total.svg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（四）：Device">
 <meta name="twitter:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node  这篇要分析的是 TensorFlow 中跟计算设备相关的内容。">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-03-07-tfunpacking4-total.svg">
 
 
 
@@ -564,7 +562,7 @@
 <p>其实就是运行传入的 Op 所注册的 OpKernel 函数。</p>
 <p>ThreadPoolDevice 类重载了这两个函数，加上一些额外需要记录的信息，核心部分还是运行 OpKernel。</p>
 <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>这里把前面几篇中的涉及到的内容稍微做一下总结：</p>
-<p><img src="http://jcf94.com/download/2018-03-07-tfunpacking4-total.svg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-03-07-tfunpacking4-total.svg"></p>
 <hr>
 <p>后续：</p>
 <ul>

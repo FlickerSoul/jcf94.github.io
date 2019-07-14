@@ -111,39 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="重新理了一下，把内容分开，其实大部分内容都是以前记的，接上篇：  计算机组成与设计.硬件/软件接口 学习笔记（一）  本篇为第四、五章开始。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-abstra.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-rtype.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-total.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.4.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.4.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.5.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.5.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.6.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.6.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-multi-clock-cycle.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-single-clock-cycle.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-controlpath.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.7.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.7.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.7.3.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.7.4.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.7.5.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.8.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-exception.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-4.10.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-a8.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-i7.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-5.1.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-5.3.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-5.3.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-5.4.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-5.4.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-5.9.1.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机组成与设计.硬件&#x2F;软件接口 学习笔记（二）">
 <meta name="twitter:description" content="重新理了一下，把内容分开，其实大部分内容都是以前记的，接上篇：  计算机组成与设计.硬件/软件接口 学习笔记（一）  本篇为第四、五章开始。">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-02-06-cod2-abstra.png">
 
 
 
@@ -553,7 +524,7 @@
 <li>根据指令具体要做的事情，读取一个或者两个寄存器的数据。</li>
 </ul>
 <p>前面两步是所有指令都要做的，再之后就是根据指令做具体的操作了。</p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-abstra.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-06-cod2-abstra.png"></p>
 <h2 id="4-2-Logic-Design-Conventions"><a href="#4-2-Logic-Design-Conventions" class="headerlink" title="4.2. Logic Design Conventions"></a>4.2. Logic Design Conventions</h2><p>这里把 MIPS 实现的数据通路上的逻辑元素分成两类：结合性元素（combinational element）和状态元素（state element）。</p>
 <p>结合性元素指的是执行操作的元素，输出只与输入有关，任何时候，只要给一样的输入，就会有一样的输出结果，例如 ALU。</p>
 <p>另外一些元素不是结合性的，而是可能包含运行状态，即带有内部存储结构，例如指令存储器、寄存器等。</p>
@@ -576,11 +547,11 @@
 <blockquote>
 <p>需要注意的是：lw中目标地址是<strong>直接把offset和$2中的内容相加</strong>，而beq中offset指的是按4字节寻址的地址，PC中存的是完整的地址，<strong>offset要作2位偏移之后再加到PC中去</strong></p>
 </blockquote>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-rtype.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-06-cod2-rtype.png"></p>
 <p>上图中进行R-format指令操作时：<br>多路选择器ALUSrc选0，输入两个寄存器的内容到ALU中；多路选择器MemtoReg选0，将运算结果输出至寄存器文件的写入数据端，写入寄存器。</p>
 <p>进行I-format指令操作时：<br>多路选择器ALUSrc选1，输入一个寄存器的内容以及将offset从16位符号扩展至32位之后的值到ALU中；多路选择器MemtoReg选1，将数据存储器中读到的内容输出至寄存器文件的写入数据端，写入寄存器。</p>
 <p>在上图的基础上把PC以及指令寄存器的内容加上去就是一个比较完整的数据通路了。</p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-total.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-06-cod2-total.png"></p>
 <p>PC后的两个加法器用于改变PC的地址。将offset从16位符号扩展至32位之后的值作2位左移与地址累加是完成beq这一类的跳转，用PCSrc进行数据选择。</p>
 <h2 id="4-4-A-Simple-Implementation-Scheme"><a href="#4-4-A-Simple-Implementation-Scheme" class="headerlink" title="4.4. A Simple Implementation Scheme"></a>4.4. A Simple Implementation Scheme</h2><p>然后来模拟实现<strong>一个简单的</strong>的指令集，包含：</p>
 <ul>
@@ -598,12 +569,12 @@
 <li>根据上述的2位ALUOp和6位Funct，生成出真正的4位ALU操作码</li>
 </ul>
 <p>结合第二章表格里面每一种类型的指令的格式，再加上控制单元部分，可以把数据通路图进一步画成：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.4.1.jpg" title="标明了所有控制信号与控制单元的数据通路">
+<img title="标明了所有控制信号与控制单元的数据通路" data-src="http://jcf94.com/download/2015-09-09-cod-4.4.1.jpg">
 
 <p>多路选择器RegDst用于区分R-format和I-format中目标寄存器在操作数中的位置（rt在20:16，rd在15:11）</p>
 <p>单独有一个ALUOp用来根据最后的Funct（5:0）来产生真正的ALU控制码，这里其实只是一个真值表的处理。</p>
 <p>指令的31:26位用一个单独的控制器处理，来完成各种控制信号的产生。</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.4.2.jpg" title="最后加上一个跳转">
+<img title="最后加上一个跳转" data-src="http://jcf94.com/download/2015-09-09-cod-4.4.2.jpg">
 
 <p>跳转的指令是6位操作数和26位地址，这个地址也是按4字节寻址的。</p>
 <p>则加上跳转就是将原来PC+4的高4位，以及26位地址偏移2位组成新的PC地址，完成跳转。</p>
@@ -632,9 +603,9 @@
 <p>当<code>sub</code>指令需要读取<code>$s0</code>的数据时，<code>add</code>只执行到第三个阶段，还要等到第五个阶段才能把结果写回到<code>$s0</code>中去。</p>
 <p>数据冒险是特别常见的情况，编译器可以通过改变指令顺序处理掉一部分的数据冒险，另外的就需要通过增加额外的硬件结构来完成<strong>转发（forward）</strong>和<strong>旁路（bypass）</strong>。</p>
 <p>转发指的是下一条指令读取寄存器数据时直接把上一条 ALU 计算的结果拿过来。</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.5.1.jpg" title="两条指令间的转发/旁路">
+<img title="两条指令间的转发/旁路" data-src="http://jcf94.com/download/2015-09-09-cod-4.5.1.jpg">
 对于某些特别的指令，比如读取数据，就需要给流水线暂停一个时钟周期再转发，相当于插入一条气泡指令。
-<img src="http://jcf94.com/download/2015-09-09-cod-4.5.2.jpg" title="插入流水线气泡的转发">
+<img title="插入流水线气泡的转发" data-src="http://jcf94.com/download/2015-09-09-cod-4.5.2.jpg">
 可以通过指令重排，往气泡的位置插入一条跟这两条无依赖关系的指令来避免浪费。
 </li>
 <li><p>控制冒险/分支冒险：遇到例如beq这类指令时，指令正在译码，但是流水线就要紧接着读入下一条指令，而此时下一条指令的PC还没有确定，因此产生矛盾。<br>比较简单的解决方案是<strong>随便预测一个方向先执行</strong>，如果不对再忽略前面执行的指令转去执行正确的指令，这样如果预测是正确的，则流水线任然是全速运行，如果是错误的那么与原来不采用预测的方式耗时一样。</p>
@@ -642,7 +613,7 @@
 </li>
 </ol>
 <h2 id="4-6-Pipelined-Datapath-and-Control"><a href="#4-6-Pipelined-Datapath-and-Control" class="headerlink" title="4.6. Pipelined Datapath and Control"></a>4.6. Pipelined Datapath and Control</h2><p>流水线中的数据通路和控制</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.6.1.jpg" title="将单周期数据通路按照上一节的要求进行划分">
+<img title="将单周期数据通路按照上一节的要求进行划分" data-src="http://jcf94.com/download/2015-09-09-cod-4.6.1.jpg">
 
 <ul>
 <li>IF：Instruction fetch<br>指令预取</li>
@@ -653,7 +624,7 @@
 </ul>
 <p>数据流是从数据通路的左端开始，一直向右进行。图中仅有的两条反向流动通路是PC和寄存器的回写，这两个反向流也就是后面需要<strong>解决冒险</strong>的地方。</p>
 <p>为了使得一个数据通路里面的五个部分之间相互不影响，解决方法就是在两个相邻的部分之间使用额外的寄存器来传递数据，保证上一条指令的结果能够保存下来传给下一个部分来执行，同时能继续执行下一条指令的该部分。</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.6.2.jpg" title="修正之后的数据通路">
+<img title="修正之后的数据通路" data-src="http://jcf94.com/download/2015-09-09-cod-4.6.2.jpg">
 
 <p>考虑一条<code>lw $dest, offset($addr)</code>指令：</p>
 <ol>
@@ -668,35 +639,35 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lw  <span class="variable">$10</span>,20(<span class="variable">$1</span>)</span><br><span class="line">sub <span class="variable">$11</span>,<span class="variable">$2</span>,<span class="variable">$3</span></span><br><span class="line">add <span class="variable">$12</span>,<span class="variable">$3</span>,<span class="variable">$4</span></span><br><span class="line">lw  <span class="variable">$13</span>,24(<span class="variable">$1</span>)</span><br><span class="line">add <span class="variable">$14</span>,<span class="variable">$5</span>,<span class="variable">$6</span></span><br></pre></td></tr></table></figure>
 
 <p>运行过程中流水线中的内容：</p>
-<img src="http://jcf94.com/download/2018-02-06-cod2-multi-clock-cycle.png" title="多时钟周期流水线图">
+<img title="多时钟周期流水线图" data-src="http://jcf94.com/download/2018-02-06-cod2-multi-clock-cycle.png">
 
 <p>把上图中第五个时钟周期中每个部分执行的内容连起来看：</p>
-<img src="http://jcf94.com/download/2018-02-06-cod2-single-clock-cycle.png" title="第5个时钟周期中流水线的物理表现">
+<img title="第5个时钟周期中流水线的物理表现" data-src="http://jcf94.com/download/2018-02-06-cod2-single-clock-cycle.png">
 
 <p>流水线每一级能够独立工作就是完全靠了每一级之间的这些流水线寄存器。</p>
 <p>控制部分与前面的单周期数据通路类似，这里主要强调控制指令也是逐级往后传递，在本级没有用到的控制字直接传递给下一级的状态寄存器，给数据通路中的每一个组件加上控制信号等等即可。</p>
-<img src="http://jcf94.com/download/2018-02-06-cod2-controlpath.png" title="加上了控制部分的完整流水线数据通路">
+<img title="加上了控制部分的完整流水线数据通路" data-src="http://jcf94.com/download/2018-02-06-cod2-controlpath.png">
 
 <h2 id="4-7-Data-Hazards-Forwarding-versus-Stalling"><a href="#4-7-Data-Hazards-Forwarding-versus-Stalling" class="headerlink" title="4.7. Data Hazards: Forwarding versus Stalling"></a>4.7. Data Hazards: Forwarding versus Stalling</h2><p>然后来看看数据冒险的解决。</p>
 <p>以下面这段代码为例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sub $2, $1,$3</span><br><span class="line">and $12,$2,$5</span><br><span class="line">or  $13,$6,$2</span><br><span class="line">and $14,$2,$2</span><br><span class="line">sw  $15,100($2)</span><br></pre></td></tr></table></figure>
 
 <p>将上述代码画在图中即：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.7.1.jpg" title="流水线中发生的数据冒险">
+<img title="流水线中发生的数据冒险" data-src="http://jcf94.com/download/2015-09-09-cod-4.7.1.jpg">
 
 <p>后面四条指令均用到了第一条指令的结果：<br>其中第二条$2作为rs，第三条作为rt，第一条的结果还没来得及写入寄存器即马上要被调用，发生数据冒险<br>虽然第三条的读取寄存器与第一条的写入寄存器发生在同一个时钟周期内，但是可以认为写入发生在前半个时钟周期内，读取发生在后半个时钟周期内，无冲突<br>第四条读取寄存器时，数据已完成写入寄存器，无冲突</p>
 <p>这里的解决方案是作数据转发，上图是从寄存器角度来看这个过程，如果从状态寄存器上看：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.7.2.jpg" title="状态寄存器之间的数据关系">
+<img title="状态寄存器之间的数据关系" data-src="http://jcf94.com/download/2015-09-09-cod-4.7.2.jpg">
 
 <p>第二条指令的ALU需要输入时实际上答案已经算出来了，存在第一条的EX/MEM状态寄存器中，只要作一下<strong>转发</strong>即可避免冲突的产生。</p>
 <p>转发这个操作从图上很好理解，但是发生在一个流水线通路中，那么从硬件实现上面就是增加多路选择器以及额外的控制模块（Forwarding Unit）来实现：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.7.3.jpg" title="数据选择/寄存器转发控制">
+<img title="数据选择/寄存器转发控制" data-src="http://jcf94.com/download/2015-09-09-cod-4.7.3.jpg">
 
 <p>但是，另外仍然有一个无法用转发避免的数据冒险，发生在 lw 这样读取数据存储器的指令后：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.7.4.jpg" title="lw中的数据冒险">
+<img title="lw中的数据冒险" data-src="http://jcf94.com/download/2015-09-09-cod-4.7.4.jpg">
 
 <p>这里正确的结果出现在MEM/WB状态寄存器中，解决方案只有将后面的指令作一个时钟周期的延时，以完成转发：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.7.5.jpg" title="延时和转发">
+<img title="延时和转发" data-src="http://jcf94.com/download/2015-09-09-cod-4.7.5.jpg">
 
 <p>“气泡指令”即输入一条空指令，将所有控制状态字都置为0，则整个数据通路中状态寄存器不发生改变，相当于保持原状延时1个时钟周期。</p>
 <h2 id="4-8-Control-Hazards"><a href="#4-8-Control-Hazards" class="headerlink" title="4.8. Control Hazards"></a>4.8. Control Hazards</h2><p>接下来来看一下控制冒险的问题。</p>
@@ -710,12 +681,12 @@
 <ul>
 <li><a href="https://www.zhihu.com/question/23973128" target="_blank" rel="noopener">CPU 的分支預測器是怎樣工作的？</a></li>
 </ul>
-<img src="http://jcf94.com/download/2015-09-09-cod-4.8.1.jpg" title="修改了beq优化之后的数据通路">
+<img title="修改了beq优化之后的数据通路" data-src="http://jcf94.com/download/2015-09-09-cod-4.8.1.jpg">
 
 <h2 id="4-9-Exceptions"><a href="#4-9-Exceptions" class="headerlink" title="4.9. Exceptions"></a>4.9. Exceptions</h2><p>最影响流水线性能的是<strong>异常</strong>和<strong>中断</strong>，因为这类情况的发生是不可预知的，而发生时则需要暂停当前正在运行的程序，跳转执行至异常处理程序中。</p>
 <p>在MIPS异常发生时，需要保存下当前的指令地址 EPC 以及错误发生的原因 Cause。</p>
 <p>到这里为止，基本上完整的流水线数据通路已经完成了：</p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-exception.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-06-cod2-exception.png"></p>
 <h2 id="4-10-Parallelism-via-Instructions"><a href="#4-10-Parallelism-via-Instructions" class="headerlink" title="4.10. Parallelism via Instructions"></a>4.10. Parallelism via Instructions</h2><p>流水线技术其实表现的是计算机执行指令时的并行潜力，这里有个专门的词就叫指令级并行（ILP，Instruction Level Parallelism）。</p>
 <p>本书中关于指令级并行的内容只有13页，基本上只是个概览，关于详细的要去看《量化分析方法》。</p>
 <blockquote>
@@ -744,7 +715,7 @@
 </li>
 </ol>
 <p>超标量流水线的结构已经不同于前面的简单数据通路了，而是分成了 3 个部分，一个<strong>指令发射单元</strong>，多个<strong>功能单元</strong>，一个<strong>提交单元</strong>，<strong>顺序发射指令</strong>，<strong>乱序执行指令</strong>， 最后<strong>顺序提交指令</strong>：
-<img src="http://jcf94.com/download/2015-09-09-cod-4.10.1.jpg" title="超标量流水线"></p>
+<img title="超标量流水线" data-src="http://jcf94.com/download/2015-09-09-cod-4.10.1.jpg"></p>
 <p>每个功能单元里面都有个<strong>保留站（Reservation Station）</strong>用于存储当前指令的操作数和操作码，只要功能单元硬件就绪，并且所有操作数就绪，它就可以执行了，当计算已经执行完毕，结果就会被马上转发到其他正在等待的保留站，同时存入提交单元的<strong>重排缓存（Reorder Buffer）</strong>中，经过提交后写入寄存器或者存储进内存等等。</p>
 <ol>
 <li>发射单元按顺序取指令并译码，将操作码、操作数发送给合适的功能单元去执行，存入对应功能单元的保留站，任何在寄存器或者重排缓存中就绪的数据也会直接被拷贝进来。一旦指令被发射出去，数据完成了到保留站的拷贝，则原寄存器的数据锁定也可以解除了，若此时有写寄存器的操作发生，可以直接覆盖，因为正确的内容已经被功能单元保存下来了；</li>
@@ -825,7 +796,7 @@
 </tr>
 </tbody></table>
 <p>ARM A8 的流水线是动态多发射，但是静态顺序运行，其 14 级流水线结构如下：</p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-a8.png" alt="ARM Cortex-A8 的流水线结构"></p>
+<p><img alt="ARM Cortex-A8 的流水线结构" data-src="http://jcf94.com/download/2018-02-06-cod2-a8.png"></p>
 <ol>
 <li>前三级能同时取出 2 条指令，并维护一个 12 条指令的预取缓存。两级分支预测，但是没有在这里做额外的预测判断，所以如果预测错了就要等 13 个时钟周期之后才能知道。</li>
 <li>接下来是把一对（2条指令）进行五级指令译码，这里也负责判断数据依赖等等。</li>
@@ -833,7 +804,7 @@
 </ol>
 <p>SPEC2000 测试集跑下来的结果是，CPI 最好的情况 1.4，最差 5.2，跟理想的 0.5 还是有一定差距的。平均情况 80% 的停顿是源于流水线冒险（分支预测错了、结构冒险、数据依赖）。这种流水线结构基本上是要完全依靠编译器的指令重排来解决结构冒险和数据依赖的问题。</p>
 <p>x86 处理器的流水线结构就要复杂多了：</p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-i7.png" alt="Intel Core i7 920 的流水线结构"></p>
+<p><img alt="Intel Core i7 920 的流水线结构" data-src="http://jcf94.com/download/2018-02-06-cod2-i7.png"></p>
 <p>x86 是一种复杂指令集，一条指令在译码的时候会先转换成一种类 MIPS 结构的指令（微操作，micro-operations）。配合动态多发射，动态调度，乱序执行，分支预测等等，最高可以达到单指令周期 6 个微操作的速度。</p>
 <ol>
 <li>指令读取：多级分支预测、涉及 cache 等等一堆复杂的部分，最终从指令 cache 中得到 16 个字节的指令数据。预测错误需要浪费大约 15 个指令周期。</li>
@@ -861,14 +832,14 @@
 <h2 id="4-17-Exercises"><a href="#4-17-Exercises" class="headerlink" title="4.17. Exercises"></a>4.17. Exercises</h2><p><a href="http://jcf94.com/download/2015-09-09-cod-CH04_Solution.pdf">答案</a></p>
 <hr>
 <h1 id="CHAPTER-5-Large-and-Fast-Exploiting-Memory-Hierarchy"><a href="#CHAPTER-5-Large-and-Fast-Exploiting-Memory-Hierarchy" class="headerlink" title="CHAPTER 5. Large and Fast: Exploiting Memory Hierarchy"></a>CHAPTER 5. Large and Fast: Exploiting Memory Hierarchy</h1><p>这章的内容主要是存储器结构层次，大部分篇幅在 cache 上。</p>
-<h2 id="5-1-Introduction"><a href="#5-1-Introduction" class="headerlink" title="5.1. Introduction"></a>5.1. Introduction</h2><img src="http://jcf94.com/download/2015-09-09-cod-5.1.1.jpg" title="存储器层次结构">
+<h2 id="5-1-Introduction"><a href="#5-1-Introduction" class="headerlink" title="5.1. Introduction"></a>5.1. Introduction</h2><img title="存储器层次结构" data-src="http://jcf94.com/download/2015-09-09-cod-5.1.1.jpg">
 
 <p>越靠近CPU，速度越快，容量越小，价格越高。</p>
 <p>越远离CPU，速度越慢，容量越大，价格越低。</p>
 <h2 id="5-2-Memory-Technologies"><a href="#5-2-Memory-Technologies" class="headerlink" title="5.2. Memory Technologies"></a>5.2. Memory Technologies</h2><p>一般常见的几种存储器技术：</p>
 <p>|存储器技术|典型访问时间|价格/GB|特点|<br>|-|-|<br>|SRAM半导体存储器|0.5<del>2.5 ns|$500</del>1000|数据用晶体管存储，可直接读取数据|<br>|DRAM半导体存储器|50<del>70 ns|$10</del>20|数据用电容存储，会不断漏电，需要定期刷新（充电）|<br>|FLASH半导体存储器|5,000<del>50,000 ns|$0.75</del>1.00|EEPROM，电擦除可编程存储器，有读写次数上限|<br>|磁性硬盘|5,000,000<del>20,000,000 ns|$0.05</del>0.10|用磁盘、磁头等进行磁性存储和读写|</p>
 <h2 id="5-3-The-Basics-of-Caches"><a href="#5-3-The-Basics-of-Caches" class="headerlink" title="5.3. The Basics of Caches"></a>5.3. The Basics of Caches</h2><p>Cache是CPU直接用来进行读取的存储器，在第四章的数据通路部分没有指明的是，指令和数据都必须要到了Cache中才能够被CPU访问。</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-5.3.1.jpg" title="数据在Cache中的存放">
+<img title="数据在Cache中的存放" data-src="http://jcf94.com/download/2015-09-09-cod-5.3.1.jpg">
 
 <ol>
 <li>整个Cache区域分成多个条目，每个条目的存储结构由3部分组成：本条是否有效、条目标签以及数据块内容</li>
@@ -876,7 +847,7 @@
 <li>查找内容时，首先根据地位地址找到索引条目，对比该条的标签与高位地址一致并且条目为有效则访问命中，可以直接读取数据块内容给CPU；若没有命中，则要将数据请求下放一级，并从下一级获取数据到该级，然后返回数据给CPU，在取数据到Cache的过程中，CPU需要等待数据到位</li>
 </ol>
 <p>若缓存Cache块中同时存放了多个字的数据，则可以进一步加一个多路选择器来解决：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-5.3.2.jpg" title="FastMATH处理器中的Cache结构">
+<img title="FastMATH处理器中的Cache结构" data-src="http://jcf94.com/download/2015-09-09-cod-5.3.2.jpg">
 
 <p>正如上面所介绍的，读取数据时CPU首先从Cache中找数据，若未命中，则要多花时间先从下一级提取内容至Cache中，这里就造成了Cache延时；<br>而写入数据时，也会发生冲突：需要考虑用<strong>写直达法</strong>，同时更新Cache与下一级存储器中的内容，或者<strong>写回法</strong>，先写到Cache，当该块Cache需要被替换时再写回存储器。</p>
 <h2 id="5-4-Measuring-and-Improving-Cache-Performance"><a href="#5-4-Measuring-and-Improving-Cache-Performance" class="headerlink" title="5.4. Measuring and Improving Cache Performance"></a>5.4. Measuring and Improving Cache Performance</h2><ul>
@@ -907,10 +878,10 @@
 <p><strong>全相联</strong>方式：任意的地址都能任意存在Cache的任意一条索引上…这个，每次查找的时候就需要把整个Cache遍历一遍…想想都慢，虽然多加几个判断硬件可以做成并行的，但是成本也加大了。适用于Cache很小的时候。</p>
 <p>折中的办法是<strong>组相联</strong>方式：首先还是按照直接匹配的方式计算索引号，然后就是一条索引号对应一个集合中的几个数据块，这样可以同时存放索引相同的几个不同地址的记录。</p>
 <p>然而整个Cache的物理大小是固定的，增加组数，就是减少了索引数。需要在缺失率和命中时间之间平衡考虑。</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-5.4.1.jpg" title="一个8-Block大小的Cache的几种结构">
+<img title="一个8-Block大小的Cache的几种结构" data-src="http://jcf94.com/download/2015-09-09-cod-5.4.1.jpg">
 
 <p>在组联合结构中，为了使一条索引中的每块数据同时判断（并行判断），增加一些比较器即可：</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-5.4.2.jpg" title="组联合Cache的实现方式">
+<img title="组联合Cache的实现方式" data-src="http://jcf94.com/download/2015-09-09-cod-5.4.2.jpg">
 
 <ul>
 <li>多级Cache</li>
@@ -963,7 +934,7 @@
 <hr>
 <p>可以采用3C模型来评价Cache的整体表现。</p>
 <h2 id="5-9-Using-a-Finite-State-Machine-to-Control-a-Simple-Cache"><a href="#5-9-Using-a-Finite-State-Machine-to-Control-a-Simple-Cache" class="headerlink" title="5.9. Using a Finite-State Machine to Control a Simple Cache"></a>5.9. Using a Finite-State Machine to Control a Simple Cache</h2><p>使用有限状态机来控制一个简单的Cache</p>
-<img src="http://jcf94.com/download/2015-09-09-cod-5.9.1.jpg" title="有限状态机">
+<img title="有限状态机" data-src="http://jcf94.com/download/2015-09-09-cod-5.9.1.jpg">
 
 <p>附录D：<a href="http://booksite.elsevier.com/9780124077263/downloads/advance_contents_and_appendices/appendix_D.pdf" target="_blank" rel="noopener">PDF材料</a></p>
 <h2 id="5-10-Parallelism-and-Memory-Hierarchies-Cache-Coherence"><a href="#5-10-Parallelism-and-Memory-Hierarchies-Cache-Coherence" class="headerlink" title="5.10. Parallelism and Memory Hierarchies: Cache Coherence"></a>5.10. Parallelism and Memory Hierarchies: Cache Coherence</h2><p>多处理器的Cache中还可能存在一些问题，也是并行一定会出现的问题，即：相同数据的冲突问题。</p>

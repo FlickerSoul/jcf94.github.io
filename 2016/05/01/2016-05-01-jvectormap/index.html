@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="我的About页面上面有一张Footmark，用于记录自己走过的地方。 其实我最早的想法并不仅仅是挂个图片而已的，只是除了能按教程弄个博客以外，我没有系统地学过html、css那些东西，就不了了之了。 昨天看到个博客：  翁天信  博主是个不走寻常路的人，他的经历也曾经火过一段时间：仅仅上过2星期小学就退学回家，一直homeschool至今。比较厉害的是他在homeschool期间并没有荒废时间，">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-01-jvectormap-1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-01-jvectormap-2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-01-jvectormap-3.jpg">
 <meta property="og:updated_time" content="2018-10-21T02:34:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS地图插件jvectormap">
 <meta name="twitter:description" content="我的About页面上面有一张Footmark，用于记录自己走过的地方。 其实我最早的想法并不仅仅是挂个图片而已的，只是除了能按教程弄个博客以外，我没有系统地学过html、css那些东西，就不了了之了。 昨天看到个博客：  翁天信  博主是个不走寻常路的人，他的经历也曾经火过一段时间：仅仅上过2星期小学就退学回家，一直homeschool至今。比较厉害的是他在homeschool期间并没有荒废时间，">
-<meta name="twitter:image" content="http://jcf94.com/download/2016-05-01-jvectormap-1.jpg">
 
 
 
@@ -526,14 +522,14 @@
 <a id="more"></a>
 
 <h1 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h1><hr>
-<img src="http://jcf94.com/download/2016-05-01-jvectormap-1.jpg" class="full-image">
+<img class="full-image" data-src="http://jcf94.com/download/2016-05-01-jvectormap-1.jpg">
 
 <p>上图来自<strong>翁天信</strong>同学的网站截图。这个95年出生的年轻人只比我小1岁而已，他所经历的人生轨迹、所设计的东西却都令我感到惊叹。</p>
 <p>他从10年开始写自己的个人网站，之后每一年都会用这一年所学的新知识把它重写一遍。14年的这版看上去是最炫的，用了大量动画效果，最后15年这版又重归极简。</p>
 <p>从设计理念上可能也能看出来一点他人生思维的变化吧。</p>
 <hr>
 <p>扯回到jvectormap这个东西，用chrome的F12工具扫了一下他博客上的地图，可以找到<code>jvectormap-container</code>这个类，猜想这张地图大概是用<code>jvectormap</code>来实现的。</p>
-<img src="http://jcf94.com/download/2016-05-01-jvectormap-2.jpg" title="Elements">
+<img title="Elements" data-src="http://jcf94.com/download/2016-05-01-jvectormap-2.jpg">
 
 <p>只是可惜直接查看网页的源代码找不到其他有用的信息，地图的位置只能看到一个id为maps的<code>div</code>标签而已。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"maps"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h3</span>&gt;</span>我在中国的旅行足迹<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -580,7 +576,7 @@
 <h1 id="进阶应用"><a href="#进阶应用" class="headerlink" title="进阶应用"></a>进阶应用</h1><p>完成初始地图的生成之后，接下来可以使用许多参数来改变地图的外观，设定一些响应动作等等，在上面提到的2篇中文资料中已经介绍得非常详细了。</p>
 <p>戳右边About页面可以看到我这里的实现方式，我的代码是直接写在Markdown文件里面的，所以查看网页源代码可以直接看到详细的代码情况。</p>
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>额，逛<strong>翁天信</strong>同学网站的时候还发现个有趣的东西：</p>
-<img src="http://jcf94.com/download/2016-05-01-jvectormap-3.jpg" title="哈哈">
+<img title="哈哈" data-src="http://jcf94.com/download/2016-05-01-jvectormap-3.jpg">
       
     </div>
 

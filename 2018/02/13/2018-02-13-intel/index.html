@@ -111,19 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="刚刚把《硬/软件接口》重新过完了一遍，觉得对微处理器中间的结构有点意犹未尽，真的是很有趣啊，然鹅翻开《量化分析方法》的目录看了看，又吓得我把书扔回去了……内容略多，留着慢慢看吧。 其实 Intel 历年处理器架构演变这事老早我就很好奇了，尤其在 SC17 上今年我们摸过的 Xeon Platinum 8176 那一代 CPU 性能比上代 E5-269x 暴涨了一大截，更是让人好奇这里面有些什么变化">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-Intel-logo.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-Intel_Core2_arch.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-Intel_Nehalem_arch.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-sandybridge-uarch.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-ring.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-haswell_block_diagram.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-v4_24coreshcc.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-13-intel-mesh.jpeg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Intel 处理器架构演进">
 <meta name="twitter:description" content="刚刚把《硬/软件接口》重新过完了一遍，觉得对微处理器中间的结构有点意犹未尽，真的是很有趣啊，然鹅翻开《量化分析方法》的目录看了看，又吓得我把书扔回去了……内容略多，留着慢慢看吧。 其实 Intel 历年处理器架构演变这事老早我就很好奇了，尤其在 SC17 上今年我们摸过的 Xeon Platinum 8176 那一代 CPU 性能比上代 E5-269x 暴涨了一大截，更是让人好奇这里面有些什么变化">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-02-13-intel-Intel-logo.svg">
 
 
 
@@ -522,7 +513,7 @@
         <p>刚刚把《硬/软件接口》重新过完了一遍，觉得对微处理器中间的结构有点<strong>意犹未尽</strong>，真的是很有趣啊，然鹅翻开《量化分析方法》的目录看了看，又吓得我把书扔回去了……内容略多，留着慢慢看吧。</p>
 <p>其实 Intel 历年处理器架构演变这事老早我就很好奇了，尤其在 SC17 上今年我们摸过的 Xeon Platinum 8176 那一代 CPU 性能比上代 E5-269x 暴涨了一大截，更是让人好奇这里面有些什么变化。</p>
 <p>所以准备来理一理 Intel 处理器架构的演进史。</p>
-<p><img src="http://jcf94.com/download/2018-02-13-intel-Intel-logo.svg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-13-intel-Intel-logo.svg"></p>
 <a id="more"></a>
 
 <h1 id="Intel-Micro-architecture"><a href="#Intel-Micro-architecture" class="headerlink" title="Intel Micro-architecture"></a>Intel Micro-architecture</h1><p>下面这个表是从<a href="https://www.wikiwand.com/en/Tick%E2%80%93tock_model" target="_blank" rel="noopener">维基百科</a>里面扒的：</p>
@@ -743,12 +734,12 @@ Haswell-LP (ultrabooks)</td>
 </ul>
 <p>然后就是一代 Tick 再一代 Tock，交替演进。</p>
 <p>P6 的末尾阶段，首次出现了双核，当时的双核还是基本上像是把两个单核用胶水粘在一起的感觉。</p>
-<h2 id="Core"><a href="#Core" class="headerlink" title="Core"></a>Core</h2><p><img src="http://jcf94.com/download/2018-02-13-intel-Intel_Core2_arch.svg" alt="Core 架构"></p>
+<h2 id="Core"><a href="#Core" class="headerlink" title="Core"></a>Core</h2><p><img alt="Core 架构" data-src="http://jcf94.com/download/2018-02-13-intel-Intel_Core2_arch.svg"></p>
 <p>最早的名字里面带 Core 这个牌子的处理器是 Core Duo，它的架构代号是 Yonah，其实还是算是个 NetBurst 的改版，只是跟后期的 NetBurst 走向了不同的发展道路，虽然名字上有 Core 但不是 Core 架构。主要的设计目标是面向移动平台，因此很多设计都是偏向低功耗，<strong>高能效</strong>的。</p>
 <p>再后来的 Core 2 Duo 才是采用 Core 架构的新一代处理器，全线 65nm，然后微架构在 Yonah 之上做了比较大的改动。</p>
 <p>Core 架构把 NetBurst 做深了的流水线级数又砍下来了，主频虽然降下来了（而且即使后来工艺提升到 45nm 之后也没有超过 NetBurst 的水平），但是却提高了整个流水线中的资源利用率，所以性能还是提升了；把奔腾4上曾经用过的超线程也砍掉了；对各个部分进行了强化，双核共享 L2 cache 等等。</p>
 <p>从 Core 架构开始是真的走向多核了，就不再是以前“胶水粘的”伪双核了，这时候已经有最高 4 核的处理器设计了。</p>
-<h2 id="Nehalem"><a href="#Nehalem" class="headerlink" title="Nehalem"></a>Nehalem</h2><p><img src="http://jcf94.com/download/2018-02-13-intel-Intel_Nehalem_arch.svg" alt="Nehalem 架构"></p>
+<h2 id="Nehalem"><a href="#Nehalem" class="headerlink" title="Nehalem"></a>Nehalem</h2><p><img alt="Nehalem 架构" data-src="http://jcf94.com/download/2018-02-13-intel-Intel_Nehalem_arch.svg"></p>
 <p>Core 从 65nm 改到 45nm 之后，基于 45nm 又推出了新一代架构叫 Nehalem，这一代的提升引入了相当多的新技术，算是个非常重要的里程碑。</p>
 <p>Core 这个名字变成了桌面 PC 以及笔记本处理器的系列名，后面架构继续更新，然而 Core（酷睿） 这个名字就留下来了，然后系列开始细分，这个架构推出了<strong>第一代的 i7</strong>。</p>
 <p>相对上一代的主要改进：</p>
@@ -774,7 +765,7 @@ Haswell-LP (ultrabooks)</td>
 </ul>
 <p>工艺提升到 32nm 的 Westmere 后，推出了<strong>第一代的 i5 和 i3</strong>。</p>
 <p>Xeon 系列也从 Westmere 开始推出了第一代 E 命名的 E7-x8xx 系列。</p>
-<h2 id="Sandy-Bridge"><a href="#Sandy-Bridge" class="headerlink" title="Sandy Bridge"></a>Sandy Bridge</h2><p><img src="http://jcf94.com/download/2018-02-13-intel-sandybridge-uarch.png" alt></p>
+<h2 id="Sandy-Bridge"><a href="#Sandy-Bridge" class="headerlink" title="Sandy Bridge"></a>Sandy Bridge</h2><p><img alt data-src="http://jcf94.com/download/2018-02-13-intel-sandybridge-uarch.png"></p>
 <p>32nm 的下一代 Tock 是 Sandy Bridge，<strong>二代 Core i 系列</strong>以及<strong>第一代 Xeon E3、E5 系列</strong>也基于这个架构：</p>
 <ul>
 <li>Intel Turbo Boost 2.0</li>
@@ -790,7 +781,7 @@ Haswell-LP (ultrabooks)</td>
 <li>其他指令扩展升级等等</li>
 </ul>
 <p>Ring Bus:</p>
-<p><img src="http://jcf94.com/download/2018-02-13-intel-ring.jpg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-13-intel-ring.jpg"></p>
 <p>真是令人惊叹的操作啊。</p>
 <blockquote>
 <p>这个故事教育我们，cache 这个思路很多地方都能用到！！！<br>这个简单的想法能起到的效果可不简单~~</p>
@@ -807,7 +798,7 @@ Haswell-LP (ultrabooks)</td>
 <li><strong>PCIE 3.0</strong></li>
 <li>其他各个部分都做了很多提升</li>
 </ul>
-<h2 id="Haswell"><a href="#Haswell" class="headerlink" title="Haswell"></a>Haswell</h2><p><img src="http://jcf94.com/download/2018-02-13-intel-haswell_block_diagram.svg" alt></p>
+<h2 id="Haswell"><a href="#Haswell" class="headerlink" title="Haswell"></a>Haswell</h2><p><img alt data-src="http://jcf94.com/download/2018-02-13-intel-haswell_block_diagram.svg"></p>
 <p>22nm 的 Tock 到了 Haswell，<strong>四代 Core i 系列</strong>和<strong>三代 Xeon E 系列</strong>：</p>
 <ul>
 <li>每个核内的部分进一步升级，更多的 ALU、各种带宽增加等等</li>
@@ -842,9 +833,9 @@ Haswell-LP (ultrabooks)</td>
 <p>这里还有个重要变动，Intel 沿用了很多年的 Ring Bus 片内总线从 Skylake-X 开始改掉了！前面说 Sandy Bridge 开始，微架构设计上已经全面采用了 Ring Bus，其实最早到 Nehalem 时代的 Xeon 系列就已经开始用上 Ring Bus了，主要用于解决多核（非常非常多的核）之间的共享、扩展等等的问题。</p>
 <p>然而随着 CPU 的发展，核越来越多，所以一个 CPU 片内还可能有多个 Ring Bus，就像下面这样。这会有什么问题呢？</p>
 <p>以前我们考虑多路服务器里面的 CPU 亲和性的时候，只考虑过 socket 之间的 NUMA 关系，两片 CPU 核之间会有亲和性问题。。。。。。谁想过在下面这种结构的单片 CPU 里面其实也已经是个 NUMA 结构了！！！</p>
-<p><img src="http://jcf94.com/download/2018-02-13-intel-v4_24coreshcc.png" alt="E5 v4 的 Ring Bus 架构"></p>
+<p><img alt="E5 v4 的 Ring Bus 架构" data-src="http://jcf94.com/download/2018-02-13-intel-v4_24coreshcc.png"></p>
 <p>但是当核的数量持续增长，Ring Bus 的延迟也会越来越高，终究不是个办法，Intel 在 KNL 上已经试过 2D Mesh 的总线结构了，大概是效果比较好，于是从 Skylake-X 开始，之后的系列开始全面改用 Mesh 结构。</p>
-<p><img src="http://jcf94.com/download/2018-02-13-intel-mesh.jpeg" alt="Mesh 架构"></p>
+<p><img alt="Mesh 架构" data-src="http://jcf94.com/download/2018-02-13-intel-mesh.jpeg"></p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/32216294" target="_blank" rel="noopener">破茧化蝶，从Ring Bus到Mesh网络，CPU片内总线的进化之路</a></li>
 </ul>

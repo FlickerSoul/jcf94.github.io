@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="正好复习信号到FFT了，想起来前段时间放了挺久的FFT大数乘法，顺便研究下。 普通的高精度乘法的复杂度需要$O(n^2)$，用了押位之后，一般押4位的话能够达到$O(n^2/16)$，看上去可能效果不错，但仍然是同一个数量级的。 对付更大一点的变态数据（。。。ACM赛场上很少有卡这货的吧。。。-_-////）就需要用的$O(nlogn)$的FFT大数乘法算法了。 数学基础 首先基础是DFT，FFT">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-07-05-fft1.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-07-05-fft1.gif">
-<meta property="og:image" content="http://jcf94.com/download/2015-07-05-fft1.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="快速傅里叶变换FFT算法的用途">
 <meta name="twitter:description" content="正好复习信号到FFT了，想起来前段时间放了挺久的FFT大数乘法，顺便研究下。 普通的高精度乘法的复杂度需要$O(n^2)$，用了押位之后，一般押4位的话能够达到$O(n^2/16)$，看上去可能效果不错，但仍然是同一个数量级的。 对付更大一点的变态数据（。。。ACM赛场上很少有卡这货的吧。。。-_-////）就需要用的$O(nlogn)$的FFT大数乘法算法了。 数学基础 首先基础是DFT，FFT">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-07-05-fft1.png">
 
 
 
@@ -536,13 +532,13 @@
 <p>令：</p>
 <p>$$W_N^K=e^{-j\frac{2\pi K}{N}}$$</p>
 <p>则重新整理上面的运算单元可以得到：</p>
-<p><img src="http://jcf94.com/download/2015-07-05-fft1.png" alt="蝶形运算"></p>
+<p><img alt="蝶形运算" data-src="http://jcf94.com/download/2015-07-05-fft1.png"></p>
 <p>这就是著名的蝶形运算了。</p>
 <p>然后整个图画出来是这样的：</p>
-<p><img src="http://jcf94.com/download/2015-07-05-fft1.gif" alt="8"></p>
+<p><img alt="8" data-src="http://jcf94.com/download/2015-07-05-fft1.gif"></p>
 <p>8点FFT</p>
 <p>或者：</p>
-<p><img src="http://jcf94.com/download/2015-07-05-fft1.jpg" alt="16"></p>
+<p><img alt="16" data-src="http://jcf94.com/download/2015-07-05-fft1.jpg"></p>
 <p>16点FFT</p>
 <h2 id="FFT的用途"><a href="#FFT的用途" class="headerlink" title="FFT的用途"></a>FFT的用途</h2><p>综上，FFT就是专门为计算机快速运算而设计的，1点变2点，2点变4点，4点变8点……这样就能在原始数据（原数组）的基础上不断计算下一层的结果，最终完成整个DFT的快速计算。</p>
 <p>写代码的话，第一步是处理一下最左边一排原始数据的摆放顺序，是按照二进制逆序排过来的，然后一层一层求和迭代即可。</p>

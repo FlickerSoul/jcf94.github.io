@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="B计划还是应该要有的，万一A计划崩了呢。   一大早起来就看到设置的提醒消息发过来：  您好，您的网站宕机啦！！！  大汗，X_X，赶紧测试了一下，还是能上滴，原来是down了一个站，还好还有另一个地址作了备份切换  我是今年上半年开始迁移Blog到Hexo上的，当时只是架在Github上。偶尔出现的问题就是有时候会被墙，访问速度也间歇性的掉到底，不过总体上来说还算稳定。 还有个问题是自从有一次">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod3.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客站双机备份切换">
 <meta name="twitter:description" content="B计划还是应该要有的，万一A计划崩了呢。   一大早起来就看到设置的提醒消息发过来：  您好，您的网站宕机啦！！！  大汗，X_X，赶紧测试了一下，还是能上滴，原来是down了一个站，还好还有另一个地址作了备份切换  我是今年上半年开始迁移Blog到Hexo上的，当时只是架在Github上。偶尔出现的问题就是有时候会被墙，访问速度也间歇性的掉到底，不过总体上来说还算稳定。 还有个问题是自从有一次">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod2.jpg">
 
 
 
@@ -538,16 +534,16 @@ B计划还是应该要有的，万一A计划崩了呢。
 <p>我的域名解析用的是<a href="https://www.dnspod.cn/" target="_blank" rel="noopener">dnspod.cn</a>，域名也是顺便在上面买的。</p>
 <h1 id="设置CNAME和监控"><a href="#设置CNAME和监控" class="headerlink" title="设置CNAME和监控"></a>设置CNAME和监控</h1><p>首先在Github上和Gitcafe上分别建好自己的站，按照各自的要求把访问地址都指向自定义域名，然后需要做的就是通过设置域名的CNAME来正常地引导流量。</p>
 <p>在dnspod上可以对同一个地址设置多条不同来源的CNAME，还是相当方便的。</p>
-<img src="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod2.jpg" title="CNAME设置">
+<img title="CNAME设置" data-src="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod2.jpg">
 
 <p>Github在墙外访问比较方便，国外流量的目标地址，而且比较稳定，因此把它作为默认站；国内的流量就都链到Gitcafe上。</p>
 <p>（下面这张图是刚刚截的，Gitcafe的监控都飘红了，仍然处在宕机中…）</p>
-<img src="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod1.jpg" title="默认站设置情况">
+<img title="默认站设置情况" data-src="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod1.jpg">
 
 <p>还有更多的站的话，可以分别把来自电信、移动、教育网等等的流量分别链到更适合的地址上去。</p>
 <hr>
 <p>其他的域名解析服务我不太清楚，但是对dnspod来说，设置监控是必要的，要不然当一个地址无法访问之后，没有办法自动迁移到另一个上去。</p>
-<img src="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod3.jpg" title="D监控设置">
+<img title="D监控设置" data-src="http://jcf94.com/download/2015-10-24-dnsswitch-dnspod3.jpg">
 
 <p>设置好切换规则之后，如果某个地址宕机，就会按照预先的规则切换到另外一个站上。</p>
 <hr>

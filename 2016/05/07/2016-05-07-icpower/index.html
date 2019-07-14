@@ -111,19 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="在知乎上看到一篇文章，讲CPU功耗的，感觉这样的干货还是很不错的。 以下是文章内容：  首先需要澄清的是，这篇文章的作者其实是IC之神-rabaey。rabaey之名无需赘述，上过微电子课程的童鞋想必都被这本《数字集成电路——电路、系统与设计》折磨过，你们的苦难就是拜他所赐。 大神写了新书《low power design essentials》（也不算新，09年的），讲低功耗设计的，今天讲的内容">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-1.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-2.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-3.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-4.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-5.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-6.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-7.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-05-07-icpower-ic.png">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【转】功耗对处理器的限制究竟有多大？">
 <meta name="twitter:description" content="在知乎上看到一篇文章，讲CPU功耗的，感觉这样的干货还是很不错的。 以下是文章内容：  首先需要澄清的是，这篇文章的作者其实是IC之神-rabaey。rabaey之名无需赘述，上过微电子课程的童鞋想必都被这本《数字集成电路——电路、系统与设计》折磨过，你们的苦难就是拜他所赐。 大神写了新书《low power design essentials》（也不算新，09年的），讲低功耗设计的，今天讲的内容">
-<meta name="twitter:image" content="http://jcf94.com/download/2016-05-07-icpower-1.png">
 
 
 
@@ -528,23 +519,23 @@
 <a id="more"></a>
 
 <p>我们都知道，低功耗设计很重要，尤其是对于移动端处理器以及嵌入式系统。但是功耗对设计究竟影响到了什么程度，相信很多人并没有明确的定量的概念。而rabeay在第一章用一系列数据告诉了我们Power是怎么影响芯片设计的。</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-1.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-1.png"></p>
 <p>上图是统计了近年来主流微处理器（MPU）和DSP的平均功耗。可以看到95年之前，每3年功耗增加4倍；95年之后，每3年增加1.4倍。同时95年前后，移动端应用的快速发展，出现了低功耗处理器的新分支（向下的灰箭头）。</p>
 <p>为什么在95年会有功耗增长率减半这个突然变化？因为95年开始，工业界放弃了<strong>5V固定电压</strong>的设计模式，开始采用<strong>等比降压</strong>的设计模式。什么叫5V固定电压设计？就是说，早先的处理器供电电压是5V，随着工艺尺寸不断减小，晶体管的阈值电压降低，理论上供电电压也可以减小。但是电压减小意味着晶体管开关速度变慢，IC厂商为了性能考虑，在设计时，即便采用更小的工艺尺寸，照样会保持5V供电电压，带来的后果就是功耗增大很多。什么叫等比降压？就是随着工艺尺寸的缩小，等比例的缩小chip电压。95年左右就是该方案的开始。</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-2.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-2.png"></p>
 <p>上面这张图展示了90年开始芯片电压是怎么变化的。95年之后，在0.35um的工艺中开始采用3.3V供电，此后随着工艺尺寸的不断缩小，供电电压也开始不断降低。在180nm的时候，电压降为1.8V。在130nm的时候，电压降为1.3V。当然了，工艺尺寸2016年已经到达14nm，chip电压可没有降到0.14V。所以，实际情况是随着工艺尺寸进一步减小，chip电压再往下降已经非常困难了。因此，最近几年再次出现了工艺尺寸不断缩小，但是供电电压基本不变的趋势。</p>
 <p>为什么工艺尺寸缩小，就一定要降电压？这个就得说到<strong>功耗密度（每c㎡的功率）</strong>。</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-3.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-3.png"></p>
 <p>上图展示了功耗密度的变化趋势。可以看到，95年之前，chip上的功耗密度与k成3次方正比，95年之后，随着chip供电电压降低，功耗密度开始与k成0.7次方正比。k是工艺尺寸缩小因子，典型值是1.41。为什么是1.41？这其实是摩尔定律决定的参数，反映了工艺尺寸的演进的跨度。180nm的下一代工艺是130nm，180/130就大约接近1.41。</p>
 <p>说了这么多，目前我们知道的是，<strong>尽管芯片工艺尺寸不断减小，chip的电压也在不断降低，但是功耗密度仍然在不断增加</strong>，但是究竟会达到什么程度？</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-4.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-4.png"></p>
 <p>上图给出了直观的对比。当然了，这是一个很惊悚的图，大概是说按照目前功耗密度的趋势，大概2004年功耗密度将跟核反应一样的程度。2008年达到火箭尾焰的程度。看到这里，我不由得掐指算了算，咦，今年好像2016年了。</p>
 <p>上图当然是危言耸听。但是也说明了一个问题，那就是从2004年开始，如果不遏制持续增长的功耗密度，芯片设计将变得不太可能。至少，封装将不太可能。现在的设计普遍认为，<strong>功耗密度高于150W/c㎡是应该极力避免的</strong>，除非说你完全不在乎封装的成本。</p>
 <p>150W/c㎡是个很大的数了，一个2c㎡的chip 能允许的是300W。想象一下指甲壳大小的chip是个300W的热源，有多烫简直不可想象。当然实际的chip远远不到这个功耗就已经烫的不行了。</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-5.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-5.png"></p>
 <p>上面这张图终于给出了我们最关心的主题。根据估算，在20nm工艺下，以前的45nm处理器如果采用1.2V供电，不考虑散热的话，其实运行频率理论上可以达到30GHZ。但是带来的问题就是功耗密度达到惊人的20KW/c㎡，远高于太阳表面的功耗密度。即便运行频率达到10GHZ，功耗密度也达到5KW/c㎡，比火箭的尾焰还热。<strong>所以从散热考虑，实际的处理器运行频率都被限制在10GHZ以内，即便晶体管的速度允许其达到10GHZ</strong>。</p>
 <p>咦？好像又有哪里不太对。我记得Intel的CPU都可以上4G的频率的。按照10G就是5KW/c㎡，4G也妥妥是800W/c㎡，依然远高于我们的阈值：150W/c㎡。那现在的处理器是怎么上4G频率的呢？</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-6.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-6.png"></p>
 <p>这张图给出了解释。对于2cmx2cm的处理器，供电电压假设为0.6V，系统频率假设可以上10GHZ，那么将会有一个极大的功耗密度。但是我们把条件放松一点，对功耗密度除以5（够仁至义尽了），最终总功耗也有4kW。如果要将chip的总功耗限制在200W，结果就是：<strong>整个chip将在任何时候只能有5%的门电路翻转</strong>。其余的95%必须不消耗任何功耗，连漏电流也不能有。</p>
 <p>这就解释了要满足功耗密度限制，如果想做高性能，你必须牺牲什么。那就是只有很少的一部分逻辑能够翻转。</p>
 <p>基于以上我们看到了功耗密度对处理器的限制究竟有多大。由于阈值摆在那里：150W/c㎡，所以处理器的频率以及晶体管翻转率就受到了极大的限制。即便晶体管速度允许达到10GHZ，带来的功耗密度也完全不可容忍。想要提高频率，在总功耗一定的情况下，就只能减少晶体管翻转率。</p>
@@ -553,11 +544,11 @@
 <p>比较坑爹的是，封装是有成本的。对于处理器来讲，普通的塑料封装，成本可能只有几美元，但是总功率必须低于3W；高性能的封装，可以允许功率密度达到100W/c㎡，但是需要十几美元的成本。再往上，封装成本越高。</p>
 <p>因此，现在的处理器设计其实是一个悖论：想要处理器的性能更高，就必须降低某一频率下的整体功耗。因为只有整体功耗更低，才能允许核心运行更高的频率，才能允许更高的性能。IC设计早已经过了那种性能提高功耗也提高的粗放式增长年代了，<strong>在总功耗一定的情况下，性能就是看谁对功耗运用的更合理、更节省</strong>。同样的工艺，intel的CPU能上4G散热照样hold住，别人家的CPU则只能上2G或者3G，弱势就很明显。</p>
 <p>换句话说，芯片设计者不得不面对的事实是：<strong>芯片性能要稳定提高，但是功耗却不能更高</strong>，这可真是难啊！在摩尔定律尚未终结的时候，工艺尺寸的不断缩减带来的福利使得这个目标或许不难达成。但是假如工艺尺寸无法继续缩减，漏电流也无法进一步改善，芯片性能还能有提高吗？未来的CPU发展很有可能会是下图的情况，由于总功耗的限制，CPU的性能在有限范围内不断小幅升级，但是终至枯竭，急需新的封装工艺，加工工艺，电池工艺和材料物理的突破，再来一次革命。关于这图，有疑问的只是摩尔定律终结究竟是哪一年，新工艺元年又是哪一年，两者中间有多大的latency而已。</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-7.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-7.png"></p>
 <hr>
 <p>作者：龚黎明<br>链接：<a href="https://zhuanlan.zhihu.com/p/20808891" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20808891</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 <p>本文也转自微信公众号：IC免费课。</p>
-<p><img src="http://jcf94.com/download/2016-05-07-icpower-ic.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2016-05-07-icpower-ic.png"></p>
 
       
     </div>

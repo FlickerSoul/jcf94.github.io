@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="这个月十几号的时候索尼发了篇论文，224 秒跑完了 ImageNet……想想大概去年的这个时候还是 Facebook 和 UCBerkeley 在 ImageNet 的大规模方面你争我赶，不得不感叹时间过得真快。 去年毕业开题大概开的也是这个方向，然后前段时间面试的时候：  面试官：你最近做了什么？ 我：我 follow 了 FB 和 UCB 他们在 ImageNet 上做训练的工作，大概试了下他">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2017-12-20-distributeddl-minibatch.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-11-26-fasterimagenet-jizhi.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-11-26-fasterimagenet-kfac.png">
 <meta property="og:updated_time" content="2018-12-02T08:34:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster and Faster -- ImageNet">
 <meta name="twitter:description" content="这个月十几号的时候索尼发了篇论文，224 秒跑完了 ImageNet……想想大概去年的这个时候还是 Facebook 和 UCBerkeley 在 ImageNet 的大规模方面你争我赶，不得不感叹时间过得真快。 去年毕业开题大概开的也是这个方向，然后前段时间面试的时候：  面试官：你最近做了什么？ 我：我 follow 了 FB 和 UCB 他们在 ImageNet 上做训练的工作，大概试了下他">
-<meta name="twitter:image" content="http://jcf94.com/download/2017-12-20-distributeddl-minibatch.png">
 
 
 
@@ -530,7 +526,7 @@
 <p>随着网络模型和数据规模的不断增长，训练时间也跟着增长了，为了保证训练时间能够保持在一个有意义的限度之内，需要一些额外的工作。</p>
 <p>文章的立足点是通过增大训练时的 batch size 来加快训练速度。例如 ResNet-50 这个网络通常大家采用的 batch 大小是 256，在 8 块 P100 上大约需要 29 个小时才能跑完整个 ImageNet 数据集（应该指的是原始的 ResNet 论文）。</p>
 <p>但是如果加大 batch size 呢？<strong>改变 batch size 会影响到最终的收敛和训练结果的正确率</strong>。</p>
-<p><img src="http://jcf94.com/download/2017-12-20-distributeddl-minibatch.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2017-12-20-distributeddl-minibatch.png"></p>
 <p>文章接下来的工作就是通过调学习率等等其他的一些方法，把加大 batch size 带来的影响控制在一个可接受的范围内，最终做到 8192 个 batch 训出来的结果跟原本的效果持平。当然最重要的，batch size 增大了 32 倍，总的训练时间也能够降下来，<strong>用 256 块 GPU 在 1 小时内训完了整个 ImageNet！</strong></p>
 <hr>
 <p>为了维持训练结果的准确率，他们在过往积累的大量经验上得出了一个令人难以置信地简单却又有效的规则：</p>
@@ -793,7 +789,7 @@
 </ol>
 <p>最好的成果是 2048 块 P40 在 6.6 分钟把 ResNet-50 跑到了 75.8% 的准确率，以及 4 分钟跑完 95 个 epoch 的 AlexNet。</p>
 <p>他们搭了一套名叫 Jizhi 的训练系统（机智？）：</p>
-<p><img src="http://jcf94.com/download/2018-11-26-fasterimagenet-jizhi.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-11-26-fasterimagenet-jizhi.png"></p>
 <ul>
 <li>Input Pipeline 负责准备下一个 step 的训练数据，在上一个 step 的运算阶段准备完成以尽可能地减少 CPU 和 GPU 之间的数据传输延迟；</li>
 <li>训练模块包括了模型的搭建和参数管理等等，他们对这部分增加了 fp16/fp32 混合精度训练以及 LARS 的支持；</li>
@@ -830,7 +826,7 @@
 <p>K-FAC 是利用各层参数得到的费希尔信息矩阵（Fisher Information Matrix）计算一个系数，再乘上参数的梯度来进行更新。数学部分先跳过了，大致的过程跟 SGD 差不太多，只是 Kronecker 系数的计算涉及到了更多的东西，相对 SGD 来说，这部分计算是额外的 overhead。</p>
 <p>软件方面，他们的工作是在 Chainer 上完成的，这个框架平时完全没接触过，但是前面 2017 年那篇日本的工作用的也是这个，猜测应该是作者是日本的研究者或者在日本这个框架更流行吧。</p>
 <p>以 3 层网络为例，基本的流程如下：</p>
-<p><img src="http://jcf94.com/download/2018-11-26-fasterimagenet-kfac.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-11-26-fasterimagenet-kfac.png"></p>
 <p>Stage 1、2 分别是网络的前向和后向计算，之后的 3、4、5 是 Allreduce 计算 Kronecker 系数，最后 Stage 6 用每层计算出来的系数进行梯度更新。</p>
 <p>其他诸如学习率的调整和预热的方法这里也有用。</p>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>Facebook 的工作是我看到的最早在大规模训练实现这块引路的了，之后 UC Berkeley 提出的优化方案又把整个效果往前推进了一步，其他人后来的文章都是集合了当时各种高效方案的实现，最近看到的索尼的那篇应该算是这个方向的集大成了。</p>

@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="BoxTime Limit: 10000/5000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others) Problem DescriptionThere are N boxes on the ground, which are labeled by numbers from 1 to N. The boxes are magi">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-04-25-HDU-2475-1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-04-25-HDU-2475-2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-04-25-HDU-2475-3.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDU 2475 BOX 动态树 Link-Cut Tree">
 <meta name="twitter:description" content="BoxTime Limit: 10000/5000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others) Problem DescriptionThere are N boxes on the ground, which are labeled by numbers from 1 to N. The boxes are magi">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-04-25-HDU-2475-1.jpg">
 
 
 
@@ -518,11 +514,11 @@
 <h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>There are N boxes on the ground, which are labeled by numbers from 1 to N. The boxes are magical, the size of each one can be enlarged or reduced arbitrarily. Jack can perform the “MOVE x y” operation to the boxes: take out box x; if y = 0, put it on the ground; Otherwise, put it inside box y. All the boxes inside box x remain the same. It is possible that an operation is illegal, that is, if box y is contained (directly or indirectly) by box x, or if y is equal to x. In the following picture, box 2 and 4 are directly inside box 6, box 3 is directly inside box 4, box 5 is directly inside box 1, box 1 and 6 are on the ground.</p>
 <a id="more"></a>
 
-<p><img src="http://jcf94.com/download/2015-04-25-HDU-2475-1.jpg" alt="1"></p>
+<p><img alt="1" data-src="http://jcf94.com/download/2015-04-25-HDU-2475-1.jpg"></p>
 <p>The picture below shows the state after Jack performs “MOVE 4 1”:</p>
-<p><img src="http://jcf94.com/download/2015-04-25-HDU-2475-2.jpg" alt="2"></p>
+<p><img alt="2" data-src="http://jcf94.com/download/2015-04-25-HDU-2475-2.jpg"></p>
 <p>Then he performs “MOVE 3 0”, the state becomes:</p>
-<p><img src="http://jcf94.com/download/2015-04-25-HDU-2475-3.jpg" alt="3"></p>
+<p><img alt="3" data-src="http://jcf94.com/download/2015-04-25-HDU-2475-3.jpg"></p>
 <p>During a sequence of MOVE operations, Jack wants to know the root box of a specified box. The root box of box x is defined as the most outside box which contains box x. In the last picture, the root box of box 5 is box 1, and box 3’s root box is itself.</p>
 <h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>Input contains several test cases. For each test case, the first line has an integer N (1 &lt;= N &lt;= 50000), representing the number of boxes. Next line has N integers: a1, a2, a3, … , aN (0 &lt;= ai &lt;= N), describing the initial state of the boxes. If ai is 0, box i is on the ground, it is not contained by any box; Otherwise, box i is directly inside box ai. It is guaranteed that the input state is always correct (No loop exists). Next line has an integer M (1 &lt;= M &lt;= 100000), representing the number of MOVE operations and queries. On the next M lines, each line contains a MOVE operation or a query:</p>
 <ol>

@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="iptables 是 Linux 中一个非常重要的安全工具，用于配置内核防火墙。 参考自：Arch Wiki - iptables 12345678910111213141516171819202122232425262728293031323334                               XXXXXXXXXXXXXXXXXX">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2016-08-30-iptables-tables_traverse.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="填坑系列 - Iptables">
 <meta name="twitter:description" content="iptables 是 Linux 中一个非常重要的安全工具，用于配置内核防火墙。 参考自：Arch Wiki - iptables 12345678910111213141516171819202122232425262728293031323334                               XXXXXXXXXXXXXXXXXX">
-<meta name="twitter:image" content="http://jcf94.com/download/2016-08-30-iptables-tables_traverse.jpg">
 
 
 
@@ -521,7 +519,7 @@
 <hr>
 <h1 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h1><p>iptables 用于检查、修改、转发、丢弃 IP 数据包，其中每一步的详细工作通过 tables 和 chains 这两个结构来完成。</p>
 <p>上面那张图的完整情况是这个样子的：</p>
-<img src="http://jcf94.com/download/2016-08-30-iptables-tables_traverse.jpg" title="Packets Traverse">
+<img title="Packets Traverse" data-src="http://jcf94.com/download/2016-08-30-iptables-tables_traverse.jpg">
 
 <p>每个节点上的小写字母表示 table ，下面的大写字母表示 chain ，可以把每个节点理解成很多设定好的规则。每一个 IP 数据包都要从上到下经过这样一整个工作流的检查（有的数据包从外面进来到 Local Process 就结束了，有的是从 Local Process 里面产生然后发送到外面去）。</p>
 <h2 id="Tables"><a href="#Tables" class="headerlink" title="Tables"></a>Tables</h2><p>iptables 中包含5个 tables：</p>

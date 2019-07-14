@@ -111,16 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="刚刚跟实验室的一个博士生师兄联系上了，研究生入学前本来漫无目的的乱学过程终于稍微找到点方向。虽然还没决定以后具体要做体系结构方向的哪一块内容，至少先走一步学一步吧。 师兄是主要做并行程序优化的，估计老师也是看我以前编程方面还可以才给我推荐的这个方向。 下一阶段开始学习并行编程：mpi和openmp 先从mpi开始吧。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-11-03-mpi-1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-11-03-mpi-2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-11-03-mpi-3.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-11-03-mpi-4.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-11-03-mpi-5.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="并行编程 MPI初探">
 <meta name="twitter:description" content="刚刚跟实验室的一个博士生师兄联系上了，研究生入学前本来漫无目的的乱学过程终于稍微找到点方向。虽然还没决定以后具体要做体系结构方向的哪一块内容，至少先走一步学一步吧。 师兄是主要做并行程序优化的，估计老师也是看我以前编程方面还可以才给我推荐的这个方向。 下一阶段开始学习并行编程：mpi和openmp 先从mpi开始吧。">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-11-03-mpi-1.jpg">
 
 
 
@@ -587,10 +581,10 @@
 
 <p>此时普通的编译指令会返回找不到头文件mpi.h，就算找到了也是编译失败。<br><code>alt+b</code>可正常通过编译。</p>
 <p>然后用wmpiexec来运行之，开了4个线程：</p>
-<img src="http://jcf94.com/download/2015-11-03-mpi-1.jpg" title="Wmpiexec">
+<img title="Wmpiexec" data-src="http://jcf94.com/download/2015-11-03-mpi-1.jpg">
 
 <p>结果：</p>
-<img src="http://jcf94.com/download/2015-11-03-mpi-2.jpg" title="Results">
+<img title="Results" data-src="http://jcf94.com/download/2015-11-03-mpi-2.jpg">
 
 <hr>
 <p>MPI我还没有真正开始学，不过也可以从这个简单的测试程序中稍微看出一些特点来：</p>
@@ -611,17 +605,17 @@
 <p>我的两台win10都用的是微软账户，为了测试这个多机并行改了好久的本地账户。</p>
 <p>再然后是要求如果是直接执行的本机的文件的话，要求对方的同样目录下必须有同样的文件，就是说<strong>文件也必须是同步的</strong>。</p>
 <p>完成上面所有的设置之后，然后用wmpiexec调用：</p>
-<img src="http://jcf94.com/download/2015-11-03-mpi-3.jpg" title="Muti-wmpiexec">
+<img title="Muti-wmpiexec" data-src="http://jcf94.com/download/2015-11-03-mpi-3.jpg">
 
 <p>或者用命令行调用：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpiexec -hosts 2 j-cf-yoga 2 j-cf-pc 2 <span class="string">"D:\mpitest.exe"</span></span><br></pre></td></tr></table></figure>
 
 <p>如果网络和设置都是正常的，应该能得到这样的结果：</p>
-<img src="http://jcf94.com/download/2015-11-03-mpi-4.jpg" title="Muti-results">
+<img title="Muti-results" data-src="http://jcf94.com/download/2015-11-03-mpi-4.jpg">
 
 <p>多机并行完成。</p>
 <h1 id="并行的效率问题"><a href="#并行的效率问题" class="headerlink" title="并行的效率问题"></a>并行的效率问题</h1><p>这里测试了一下多个线程之间的效率比较情况：</p>
-<img src="http://jcf94.com/download/2015-11-03-mpi-5.jpg" title="Muti-Processor">
+<img title="Muti-Processor" data-src="http://jcf94.com/download/2015-11-03-mpi-5.jpg">
 
 <p>可以比较明显地看到同样对于<code>9999999999</code>精度的求圆周率计算：</p>
 <p>单线程花了10.7s，2线程5.41秒，4线程2.78秒，8线程以上效率就不会再怎么增加了</p>

@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="前篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA TensorFlow 拆包（七）：Profiling 踩坑">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-06-11-tfunpacking8-p12.png">
 <meta property="og:updated_time" content="2018-10-21T02:28:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（八）：Dynamic Control Flow in Large-Scale Machine Learning">
 <meta name="twitter:description" content="前篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA TensorFlow 拆包（七）：Profiling 踩坑">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-06-11-tfunpacking8-p12.png">
 
 
 
@@ -578,7 +576,7 @@
 <p>一开始的两个测试用的是构造出来的模拟算例。</p>
 <p>图 11 的结果感觉有点迷。</p>
 <p>图 12 是模拟 RNN 的结构，把一个类似 8 层的 RNN 计算分布在 8 块卡上，把 <code>tf.while_loop()</code> 支持的并行 iteration 数从 1 调到 32，可以发现并行性发挥出来之后效果确实是挺好的，最高大约有 5 倍左右的性能提升。并行 iteration 数为 1 的时候其实就相当于跟 out-of-graph 一样。</p>
-<p><img src="http://jcf94.com/download/2018-06-11-tfunpacking8-p12.png" alt="图12"></p>
+<p><img alt="图12" data-src="http://jcf94.com/download/2018-06-11-tfunpacking8-p12.png"></p>
 <p>后面模型并行的测试是把一个实际的 8 层 LSTM 分布在 8 块卡上，具体的并行方式与图 12 的测试类似。在 1~8 块卡上分别测试，加速比也还可以。</p>
 <hr>
 <p>接下来对一个单层 LSTM 的测试是对比是否开启内存交换。不开内存交换时，序列长度加到 600 就出现超内存的现象了，而开启内存交换则可以在保证能跑的前提下还不会损失性能。</p>

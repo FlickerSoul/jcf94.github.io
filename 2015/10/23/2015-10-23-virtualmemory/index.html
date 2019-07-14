@@ -111,16 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="正在努力攻克《硬件/软件接口》一书。 笔记总帖：计算机组成与设计.硬件/软件接口 学习笔记 读到第五章 Large and Fast: Exploiting Memory Hierarchy 5.7节Virtual Memory时遭遇了较大难度。另外花费了不少功夫来看。 这一节已经开始从CPU层涉及到操作系统的内容了，现在从总帖中另外再开出来一个单独记笔记。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.3.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.4.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-pic.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="硬件&#x2F;软件接口 Virtual Memory">
 <meta name="twitter:description" content="正在努力攻克《硬件/软件接口》一书。 笔记总帖：计算机组成与设计.硬件/软件接口 学习笔记 读到第五章 Large and Fast: Exploiting Memory Hierarchy 5.7节Virtual Memory时遭遇了较大难度。另外花费了不少功夫来看。 这一节已经开始从CPU层涉及到操作系统的内容了，现在从总帖中另外再开出来一个单独记笔记。">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg">
 
 
 
@@ -623,14 +617,14 @@
 </ol>
 <p>页表、PC和寄存器，这三种东西放在一起就确定了一个程序的<strong>状态（State）</strong>，通常把这种状态叫做一个<strong>进程（Process）</strong>。当一个进程占用CPU时，它就是<strong>活跃的（Active）</strong>；当另一个进程需要占用CPU时，就会保存下该进程的当前状态，把它变成<strong>非活跃的（Inactive）</strong>；等下次再切回来执行的时候，操作系统再重新加载程序的状态，把它激活，进程就会在之前保存的地方继续向下执行。</p>
 <p>每个不同的进程可能有<strong>相同的虚拟地址</strong>（因为编程的时候无需考虑这一点），但是<strong>每个进程都有自己的页表</strong>，由操作系统负责分配和更新页表（地址的映射状况），每个虚拟地址都会指向不同的物理地址，因此不会产生冲突。</p>
-<img src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg" titile="页表寄存器、页表以及地址转换">
+<img titile="页表寄存器、页表以及地址转换" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg">
 
 <p>上图中，首先通过页表寄存器查到一个程序页表的起始位置；<br>然后用程序中的<strong>虚拟地址页号（虚拟地址高位）</strong>来作为索引，定位到虚拟存储器的条目；<br>与Cache非常类似，一条虚拟存储器记录里面有两项：有效位、内容（物理页号）；因为页表里面包含的是所有可能的虚拟页的映射情况，因此不需要Tag位；<br>如果某一条是有效的，则命中，根据记录里面的内容就能找到对应的在主存上的物理页地址；否则就发生缺页，要去硬盘中提取内容到主存中来</p>
 <p>注意上图中的设备：一个页的大小是2^12=4KB，而虚拟地址空间一共是2^32=4GB，物理地址只有2^30=1GB（可见虚拟地址系统能够让1GB的实际物理空间处理4GB内存大小的程序，还是相当强大的），然后图里面显示的一个条目宽度只有19位，事实上为了寻址方便，会加入其它保护信息把它扩到32位。</p>
 <h3 id="5-7-2-缺页"><a href="#5-7-2-缺页" class="headerlink" title="5.7.2. 缺页"></a>5.7.2. 缺页</h3><p>如果页表中的某条有效位是0，那么就发生了缺页，转由操作系统处理，操作系统需要在下一级存储层中（一般是硬盘）找到这一页，然后把它放到主存中去。</p>
 <p>因此除了用页表跟踪虚拟页在主存中的对应位置，如果缺页发生，还需要用一个另外的数据结构来快速找到<strong>虚拟页在硬盘中的位置</strong>。这个结构可以是页表的一部分（比如说用页表的1表示命中，然后条目内容是虚拟页在主存上的物理地址；用0表示缺页，但是这个时候条目内容是虚拟页在硬盘上的物理地址），或者另外维护一个，然后寻址方式跟页表一样。</p>
 <p>操作系统在创建进程的时候也会在硬盘上建好一个专门的区域叫做<strong>交换区（Swap Space）</strong>，把进程中所有页的内容都放进去，然后建好索引。</p>
-<img src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.2.jpg" title="用一个页表同时映射主存和硬盘">
+<img title="用一个页表同时映射主存和硬盘" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.2.jpg">
 
 <p>然后，关于主存上的哪些页可以被替换掉，操作系统中也会有另外一个结构用来维护，当需要替换主存上的内容时，把长时间不用/近期不用的页写入交换区，要用的调出来。这个策略叫做<strong>LRU（Least Recently Used）</strong>。</p>
 <p>要完全准确地执行LRU的代价太高，所以一种简化的方式是在页表中加入一个<strong>引用位（Reference Bit）/使用位（Use Bit）</strong>。当某一页被访问过时，把它置为1，然后每过一段时间把所有引用位清零。这样就可以判定在某一段特定的时间内哪些页被访问过。</p>
@@ -642,11 +636,11 @@
 <blockquote>
 <p>虚拟存储器这部分多次反复使用到了Cache的思想。TLB与页表的思想区别是，页表有很多个，TLB只有一个。页表是在思想上参照了Cache，TLB则完全就是Cache的翻版。</p>
 </blockquote>
-<img src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.3.jpg" title="TLB作为页表的Cache">
+<img title="TLB作为页表的Cache" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.3.jpg">
 
 <p>上图中的页表加上了前几小节中提到的<strong>引用位（Reference Bit）和重写位（Dirty Bit）</strong>。虚拟地址过来首先跟Cache一样把虚拟地址页号分成两部分，用索引地址找到对应的条目，然后对比Tag，如果命中则直接使用物理地址；否则TLB缺失，则继续看能否在主存中找到，并装载到TLB中；再否则就是发生了主存缺页，进一步跳到硬盘上调取数据。</p>
 <p>三个标志位同步更新处理即可。</p>
-<img src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.4.jpg" title="FastMATH中的TLB和Cache">
+<img title="FastMATH中的TLB和Cache" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.4.jpg">
 
 <h3 id="5-7-5-集成虚拟存储器、TLB和Cache"><a href="#5-7-5-集成虚拟存储器、TLB和Cache" class="headerlink" title="5.7.5. 集成虚拟存储器、TLB和Cache"></a>5.7.5. 集成虚拟存储器、TLB和Cache</h3><p>虚拟存储系统和Cache可以看成是同一级的，下面来看一下TLB、页表、Cache三个缺失和命中的所有情况：</p>
 <table>
@@ -726,7 +720,7 @@
 <p>TLB操作与页表操作都要通过特殊的指令来完成。</p>
 <hr>
 <p>本节到此结束，真是有点累。增加了存储器部分的详细信息，尤其是支持虚拟存储器系统之后，第4章的数据通路与流水线怕是要发生很大的改动了。存储器的访问部分需要耗费的时钟周期远比原来想象的要多。</p>
-<img src="http://jcf94.com/download/2015-10-23-virtualmemory-pic.jpg" title="手绘一张虚拟存储器系统图" class="full-image">
+<img title="手绘一张虚拟存储器系统图" class="full-image" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-pic.jpg">
 
 <hr>
 <p>资料：</p>

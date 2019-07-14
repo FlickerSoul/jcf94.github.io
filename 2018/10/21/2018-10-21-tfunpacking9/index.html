@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="前篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA TensorFlow 拆包（七）：Profiling 踩坑">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-10-21-tfunpacking9-staging1.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-10-21-tfunpacking9-staging2.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-10-21-tfunpacking9-staging3.svg">
 <meta property="og:updated_time" content="2018-12-10T13:12:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（九）：High Level APIs">
 <meta name="twitter:description" content="前篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA TensorFlow 拆包（七）：Profiling 踩坑">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-10-21-tfunpacking9-staging1.svg">
 
 
 
@@ -666,11 +662,11 @@
 <h1 id="StagingArea"><a href="#StagingArea" class="headerlink" title="StagingArea"></a>StagingArea</h1><p>从名字上直译过来应该是用于暂存的区域，这套 API 用于跨 step 地把数据保存到网络 data path 之外的地方，然后可以在另外的 step 中把保存下来的数据取出来。</p>
 <p>解释上看起来挺绕的，而实际上用这套 API 实现出来的效果就是——<strong>软件流水</strong>。</p>
 <p>例如以下面这个由三个阶段组成的计算过程为例：</p>
-<p><img src="http://jcf94.com/download/2018-10-21-tfunpacking9-staging1.svg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-10-21-tfunpacking9-staging1.svg"></p>
 <p>在 a/b 和 b/c 之间分别加入 StagingArea 即：</p>
-<p><img src="http://jcf94.com/download/2018-10-21-tfunpacking9-staging2.svg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-10-21-tfunpacking9-staging2.svg"></p>
 <p>更重要的是加入了暂存结构之后，事实上 a、b、c 三个计算阶段的依赖就被解耦了：</p>
-<p><img src="http://jcf94.com/download/2018-10-21-tfunpacking9-staging3.svg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-10-21-tfunpacking9-staging3.svg"></p>
 <p>对执行的流程稍微进行一些修改：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">step1: A1</span><br><span class="line">step2: A2 B1</span><br><span class="line">step3: A3 B2 C1</span><br><span class="line">step4: A4 B3 C2</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 

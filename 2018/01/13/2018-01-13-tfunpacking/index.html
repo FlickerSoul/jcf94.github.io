@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="18年的第一篇，开一个估计又是会持续超长时间的坑。  要来拆包 TensorFlow 啦。   嗯，话说这件事情前年、去年就一直在做，做完 RDMA 写完论文就扔一边了，也没再整理过。没想到之后的工作还是回到了这里，所以重新过一遍，也好好整理一下。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-01-13-tfunpacking-tf_session_run.svg">
 <meta property="og:updated_time" content="2018-10-04T02:46:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（一）：Session.Run()">
 <meta name="twitter:description" content="18年的第一篇，开一个估计又是会持续超长时间的坑。  要来拆包 TensorFlow 啦。   嗯，话说这件事情前年、去年就一直在做，做完 RDMA 写完论文就扔一边了，也没再整理过。没想到之后的工作还是回到了这里，所以重新过一遍，也好好整理一下。">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-01-13-tfunpacking-tf_session_run.svg">
 
 
 
@@ -693,7 +691,7 @@
 <p>也就是说，当前线程要么把全部的不耗时任务做了，要么只做一个耗时任务。</p>
 <hr>
 <p>到这里为止，运行部分的逻辑闭环就结束了。这部分的整个流程图大概是这个样子：</p>
-<p><img src="http://jcf94.com/download/2018-01-13-tfunpacking-tf_session_run.svg" alt="Session.Run()"></p>
+<p><img alt="Session.Run()" data-src="http://jcf94.com/download/2018-01-13-tfunpacking-tf_session_run.svg"></p>
 <hr>
 <p>后面继续深入 Executor 的运行时实现往下看看：</p>
 <ul>

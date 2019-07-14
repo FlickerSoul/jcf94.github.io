@@ -111,16 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="接上篇：  计算机组成与设计.硬件/软件接口 学习笔记（一） 计算机组成与设计.硬件/软件接口 学习笔记（二）  本篇为第六章的内容。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-6.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-6.4.1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-gpu.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-Fermi.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-06-cod2-gpumem.png">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机组成与设计.硬件&#x2F;软件接口 学习笔记（三）">
 <meta name="twitter:description" content="接上篇：  计算机组成与设计.硬件/软件接口 学习笔记（一） 计算机组成与设计.硬件/软件接口 学习笔记（二）  本篇为第六章的内容。">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-09-09-cod-6.1.jpg">
 
 
 
@@ -525,7 +519,7 @@
 <a id="more"></a>
 
 <h1 id="CHAPTER-6-Parallel-Processors-from-Client-to-Cloud"><a href="#CHAPTER-6-Parallel-Processors-from-Client-to-Cloud" class="headerlink" title="CHAPTER 6. Parallel Processors from Client to Cloud"></a>CHAPTER 6. Parallel Processors from Client to Cloud</h1><p>从客户端到云端的并行计算，这一章主要关注于处理器之间、集群之间的网络连接，并行性等等。</p>
-<p><img src="http://jcf94.com/download/2015-09-09-cod-6.1.jpg" alt="img"></p>
+<p><img alt="img" data-src="http://jcf94.com/download/2015-09-09-cod-6.1.jpg"></p>
 <h2 id="6-1-Introduction"><a href="#6-1-Introduction" class="headerlink" title="6.1. Introduction"></a>6.1. Introduction</h2><p>关于并行的好处，前面的章节也已经有提到过了。</p>
 <p>这里再重新明确一下串行（Serial）、并行（Parallel）、顺序（Sequential）、并发（Concurrent）的概念：</p>
 <table>
@@ -629,7 +623,7 @@
 <p>主要还是依靠<strong>多发射动态调度的流水线</strong>的能力来挖掘线程级并行，同时保持指令级并行。这种方式的核心思想是多发射处理器有多个功能单元，而单个线程可能根本用不上这些多余的硬件资源，依靠动态调度、寄存器重命名等等技术，来自不同线程的多条指令之间完全不会有数据依赖，能够被同时发射出来处理。</p>
 <p>这种方式应该是最完美的，但具体实现起来还是有很多困难点的。需要用到超标量、寄存器重命名、动态调度等等技术，解决来自不同线程的多条指令的相关性等等问题。</p>
 <p>最新的Intel Core i7处理器也只能够支持2个线程的实时多线程处理。</p>
-<p><img src="http://jcf94.com/download/2015-09-09-cod-6.4.1.jpg" alt="img"></p>
+<p><img alt="img" data-src="http://jcf94.com/download/2015-09-09-cod-6.4.1.jpg"></p>
 <p>上面这张图的各种实现已经是基于超标量了。</p>
 <p>可以很明显地看出，SMT下超标量+实时多线程的效果之强。</p>
 <h2 id="6-5-Multicore-and-Other-Shared-Memory-Multiprocessors"><a href="#6-5-Multicore-and-Other-Shared-Memory-Multiprocessors" class="headerlink" title="6.5. Multicore and Other Shared Memory Multiprocessors"></a>6.5. Multicore and Other Shared Memory Multiprocessors</h2><p>这里讲的是一些常规的各种并行问题。</p>
@@ -642,7 +636,7 @@
 <p>GPU 是一堆多线程 SIMD 处理器组合在一起的 MIMD 处理器结构。</p>
 </blockquote>
 <p>GPU的主存是<strong>面向带宽而不是面向延迟的</strong>，GPU的主存通常能够提供更大的带宽，而容量通常要小于CPU的主存。</p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-gpu.png" alt="gpu流处理器的简要数据通路图"></p>
+<p><img alt="gpu流处理器的简要数据通路图" data-src="http://jcf94.com/download/2018-02-06-cod2-gpu.png"></p>
 <p>上面是个简单的GPU流处理器结构。</p>
 <blockquote>
 <p>刚看到这里的时候，感觉书上讲的 Fermi 架构跟网上查到的还不太一样。</p>
@@ -650,7 +644,7 @@
 </blockquote>
 <hr>
 <p><a href="https://www.wikiwand.com/en/Fermi_(microarchitecture)" target="_blank" rel="noopener">维基百科上的 Fermi</a></p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-Fermi.svg" alt="Fermi架构"></p>
+<p><img alt="Fermi架构" data-src="http://jcf94.com/download/2018-02-06-cod2-Fermi.svg"></p>
 <p>一个Fermi流处理器（SM，Streaming Multiprocessor）里有32个单精 CUDA 核，16个 load/store 单元以及4个特殊功能单元（Special Functional Unit）。</p>
 <p>CUDA 核内部是一个 32 位的整数 ALU（支持 64 位扩展运算），以及一个 FPU（支持单双精浮点运算以及 FMA）。64位的双精运算需要一排的两个 CUDA 核共同完成。所以一个 SM 在一个时钟周期内最多可以完成 16 个双精 FMA 操作。</p>
 <p>接下来要说到流处理中的线程调度策略，Fermi 架构采用两级硬件调度器：</p>
@@ -668,7 +662,7 @@
 <p>然后回到书上那张图，这样就能明白是什么意思了。</p>
 <p>书上的 SIMD 通道其实就是把 CUDA 核和 load/store 单元给放在了一起，相当于半个 SM 的硬件数据通路的结构。抽象成这个样子之后，这个抽象结构跟之前 6.4 节的传统多线程处理器基本是一致的，只是这里的每条指令都是 SIMD 的。</p>
 <p>接下来是 GPU 上的存储结构：</p>
-<p><img src="http://jcf94.com/download/2018-02-06-cod2-gpumem.png" alt="GPU中的存储结构"></p>
+<p><img alt="GPU中的存储结构" data-src="http://jcf94.com/download/2018-02-06-cod2-gpumem.png"></p>
 <p>一个 SM 中的寄存器大小是 32k * 32 位，被所有这些 CUDA 核共享，均摊下来相当于每个 CUDA 核可以用到 1k 个 32 位的寄存器，这个也就是前面那张书上的图上画着的数据。实际运行中单个线程最多可以用到 63 个向量寄存器，每个向量寄存器由 32 个 32 位的寄存器元素组成（不超过 64 * 32 = 2k 个 32 位寄存器）。</p>
 <p>片上有一块 64KB 大小的 shared memory 作为每个 block 的 local memory，这块片上内存可以配置成 L1 cache 或者手动来管理 shared memory。材质是 SRAM。</p>
 <p>再往下一级，被所有的 grid 共享的就是 GPU 上的主存，材质是 GDDR 内存。</p>

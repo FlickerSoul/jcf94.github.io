@@ -111,14 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="Node.js 现在已经发展成一个很强大的框架了，像 Hexo 这样的博客系统、Visual Studio Code 这样的文本编辑器、甚至Steam客户端（？）等等都是用这个写的。还有一堆，哪哪都是 Node。 很早就想学一下这玩意，结果各种事情一直拖着。 考完试终于有时间可以瞎折腾了。 记一下学 Node 的时候遇到的一些坑点。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2017-06-15-nodejs-node.png">
-<meta property="og:image" content="http://jcf94.com/download/2017-06-15-nodejs-arch.jpeg">
-<meta property="og:image" content="http://jcf94.com/download/2017-06-15-nodejs-event.jpg">
 <meta property="og:updated_time" content="2018-10-04T02:46:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js 踩坑">
 <meta name="twitter:description" content="Node.js 现在已经发展成一个很强大的框架了，像 Hexo 这样的博客系统、Visual Studio Code 这样的文本编辑器、甚至Steam客户端（？）等等都是用这个写的。还有一堆，哪哪都是 Node。 很早就想学一下这玩意，结果各种事情一直拖着。 考完试终于有时间可以瞎折腾了。 记一下学 Node 的时候遇到的一些坑点。">
-<meta name="twitter:image" content="http://jcf94.com/download/2017-06-15-nodejs-node.png">
 
 
 
@@ -514,7 +510,7 @@
       
 
       
-        <img src="http://jcf94.com/download/2017-06-15-nodejs-node.png" class="full-image">
+        <img class="full-image" data-src="http://jcf94.com/download/2017-06-15-nodejs-node.png">
 
 <p>Node.js 现在已经发展成一个很强大的框架了，像 Hexo 这样的博客系统、Visual Studio Code 这样的文本编辑器、甚至Steam客户端（？）等等都是用这个写的。还有一堆，哪哪都是 Node。</p>
 <p>很早就想学一下这玩意，结果各种事情一直拖着。</p>
@@ -539,12 +535,12 @@
 <p>下面记的好多东西都来源于上面的 <strong>深入理解Node.js</strong>。</p>
 <hr>
 <p>Node.js 的整体架构：</p>
-<img src="http://jcf94.com/download/2017-06-15-nodejs-arch.jpeg" class="full-image">
+<img class="full-image" data-src="http://jcf94.com/download/2017-06-15-nodejs-arch.jpeg">
 
 <p>底层是 C/C++ 写的，所以 Node.js 的代码跑起来会比 Python 这样的脚本语言要快很多。</p>
 <hr>
 <h1 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h1><hr>
-<img src="http://jcf94.com/download/2017-06-15-nodejs-event.jpg" class="full-image">
+<img class="full-image" data-src="http://jcf94.com/download/2017-06-15-nodejs-event.jpg">
 
 <p>Node.js 是一个<strong>单线程</strong>的<strong>事件驱动</strong>的<strong>异步</strong>系统。</p>
 <p>Node.js 本身的 API 里面有同步函数也有异步函数，简单地说整个调度过程是这样的：</p>

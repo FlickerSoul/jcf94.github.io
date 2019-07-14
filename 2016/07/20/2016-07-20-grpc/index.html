@@ -111,13 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="gRPC 是谷歌写的一个开源 RPC 框架，官网在这里。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2016-07-20-grpc-grpc.png">
-<meta property="og:image" content="http://jcf94.com/download/2016-07-20-grpc-rpc.png">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="填坑系列 - gRPC">
 <meta name="twitter:description" content="gRPC 是谷歌写的一个开源 RPC 框架，官网在这里。">
-<meta name="twitter:image" content="http://jcf94.com/download/2016-07-20-grpc-grpc.png">
 
 
 
@@ -513,7 +510,7 @@
       
 
       
-        <img src="http://jcf94.com/download/2016-07-20-grpc-grpc.png">
+        <img data-src="http://jcf94.com/download/2016-07-20-grpc-grpc.png">
 
 <p>gRPC 是谷歌写的一个开源 RPC 框架，官网在<a href="http://www.grpc.io/" target="_blank" rel="noopener">这里</a>。</p>
 <a id="more"></a>
@@ -536,7 +533,7 @@
 <p>对于写这段代码的我来说，我的目标要的只是一个<strong>能工作的函数</strong>，并不关心这个函数是在什么地方，如果它不在本机上，如果有人能给我一个实现好的框架来实现调用，那么我也并不关心里面的通信部分到底是怎么写的。</p>
 <p>RPC 框架就是完成了这个任务，高度封装之后，直接体现在工作代码里面就是一个简单的函数调用，背后的通信等等实现都被隐藏在框架里面了。</p>
 <p>大概来说，一般的 RPC 都是这么个结构：</p>
-<img src="http://jcf94.com/download/2016-07-20-grpc-rpc.png" title="RPC Call">
+<img title="RPC Call" data-src="http://jcf94.com/download/2016-07-20-grpc-rpc.png">
 
 <p>Server 和 Client 的应用中都有一个叫 Stub 的结构，这个结构用于找到<strong>需要调用的函数在哪台机器上</strong>或者<strong>对远程向本地的服务申请作出响应</strong>。简单地说就是靠它来完成所有工作细节的封装，向上只要给出一个类似本地函数调用一样的接口（当然实际中肯定还需要一些别的东西），向下它会完成网络通信部分的任务。</p>
 <p>中间通常还会有个<strong>序列化/反序列化</strong>的过程，则完整的 RPC 过程是类似这个样子的：</p>

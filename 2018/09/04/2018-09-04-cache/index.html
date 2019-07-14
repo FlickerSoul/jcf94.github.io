@@ -111,16 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="可能是因为简历里面写了个大大的 “计算机系统结构方向”，然后面的几个厂的岗位也都是偏系统方向，秋招面试的时候被好几个面试官都按在地上狂问系统方面的问题。 其中大概尤其与 Cache 有关的内容比较有代表性，于是准备根据几次回忆出来的自己和小伙伴遇到的面试题好好理一理 Cache 这块的内容。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-09-04-cache-hierarchy.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-09-04-cache-location.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2018-09-04-cache-8-way.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-09-04-cache-cam.png">
-<meta property="og:image" content="http://jcf94.com/download/2018-09-04-cache-sbtfalse_sharing.PNG">
 <meta property="og:updated_time" content="2018-10-04T02:46:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="（试图）深入理解 Cache">
 <meta name="twitter:description" content="可能是因为简历里面写了个大大的 “计算机系统结构方向”，然后面的几个厂的岗位也都是偏系统方向，秋招面试的时候被好几个面试官都按在地上狂问系统方面的问题。 其中大概尤其与 Cache 有关的内容比较有代表性，于是准备根据几次回忆出来的自己和小伙伴遇到的面试题好好理一理 Cache 这块的内容。">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-09-04-cache-hierarchy.png">
 
 
 
@@ -518,7 +512,7 @@
       
         <p>可能是因为简历里面写了个大大的 “计算机系统结构方向”，然后面的几个厂的岗位也都是偏系统方向，秋招面试的时候被好几个面试官都<strong>按在地上</strong>狂问系统方面的问题。</p>
 <p>其中大概尤其与 Cache 有关的内容比较有代表性，于是准备根据几次回忆出来的自己和小伙伴遇到的面试题好好理一理 Cache 这块的内容。</p>
-<p><img src="http://jcf94.com/download/2018-09-04-cache-hierarchy.png" alt="Hierarchy"></p>
+<p><img alt="Hierarchy" data-src="http://jcf94.com/download/2018-09-04-cache-hierarchy.png"></p>
 <a id="more"></a>
 
 <h1 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h1><p>上图是一张最基础也最常见的存储器层次结构图，表达的是计算机系统中各级存储器的速度、容量、价格等等的金字塔关系。</p>
@@ -544,7 +538,7 @@
 <p>后来一想这本书上是以一个假想的简单数据通路结构为例进行介绍，可能细节上后来有变动，然后去翻了下《量化》，里面没有详细讲，但是看图感觉像是用的虚拟地址。</p>
 <p>再后来去网上搜这个问题的时候，说物理地址的也有，说虚拟地址的也有，还各有各的理由，于是就更迷了。</p>
 <p>直到我在<a href="https://zhuanlan.zhihu.com/p/31875174" target="_blank" rel="noopener">这个专栏文章中</a>看到了这张图：</p>
-<p><img src="http://jcf94.com/download/2018-09-04-cache-location.jpg" alt="Cache 与 MMU 的位置关系"></p>
+<p><img alt="Cache 与 MMU 的位置关系" data-src="http://jcf94.com/download/2018-09-04-cache-location.jpg"></p>
 <p>MMU 是 CPU 中用于虚拟地址-物理地址转换的工作单元（主要是页表、TLB 甚至多级 TLB 等等组成），这张图中根据芯片实际实现时 MMU 和 Cache 的位置关系，则很明显 L1 Cache 可能用虚拟地址也可能用物理地址了。</p>
 <p>那我们来考虑一下这两种实现的区别：</p>
 <ul>
@@ -619,12 +613,12 @@
 <hr>
 <p>这一块能够找到的资料也比较模糊，最后是从<a href="https://1drv.ms/b/s!AuxK9QzqA6LQkvZxNVaponZFKqF6uA" target="_blank" rel="noopener">王齐的《浅谈 Cache Memory》</a>中找到了比较靠谱的答案：</p>
 <p>组相联方式组织的 Cache 会分成两个部分，Tag 部分和数据部分分开存放，例如一个 8 路组相联的 Cache 结构是这样的：</p>
-<p><img src="http://jcf94.com/download/2018-09-04-cache-8-way.png" alt="8-Way Set-Associative"></p>
+<p><img alt="8-Way Set-Associative" data-src="http://jcf94.com/download/2018-09-04-cache-8-way.png"></p>
 <p>左边是地址 Tag 以及当前 Cache Line 的状态，右边是实际存放的数据。</p>
 <p>这两类字段由于功能和特性不同，会使用两种不同类型的存储器来存放。Tag 阵列多使用 <strong>CAM（Content Addressable Memory）</strong>来存放，以利于并行查找，数据字段用的才是<strong>多端口多 Bank 的 SRAM</strong>。一般说的 Cache 大小也都指的是 SRAM 数据块的大小，CAM 这部分不包含在内。</p>
 <p>CAM 对应的应该是前面结构图中一个 Set 中的多个 Way 的结构。首先根据需要访问的虚拟地址确定 Index 找到在哪个 Set 中，然后对该 Set 中的多条记录并行进行 Tag 的比对。</p>
 <p>CAM 的基本结构如下：</p>
-<p><img src="http://jcf94.com/download/2018-09-04-cache-cam.png" alt="CAM 的基本组成结构"></p>
+<p><img alt="CAM 的基本组成结构" data-src="http://jcf94.com/download/2018-09-04-cache-cam.png"></p>
 <p>上图的 CAM 有 3 个 Word，分别对应一条横向的 ML（Match Line），每一个 Word 由 4 个 Bits （CAM Cell）组成。在每一列中，Bits 分别与两个 SL（Search Line）对应。</p>
 <p>使用 CAM 进行查找时，首先需要把需要搜索的目标（Tag）放入 Search Data Register/Drivers 中，分解成多个 Bits 之后，通过 SL 发送到所有的 CAM Cell 中，每个 Cell 的 Hit/Miss 信息会向右传递给各自的 ML，最终 ML 汇总得到自己的 Hit/Miss 情况，这样就能够确定下来在当前的多个 Way 里面有没有命中的数据了。</p>
 <p>后面更细节的就跳过了。</p>
@@ -689,7 +683,7 @@
 <p>CSAPP 上面讲 Cache 的那章用的是类似的方法，根据这样的测试结果可以画出一张“存储器山”的图。</p>
 <h2 id="多核情况下-Cache-会有什么问题？"><a href="#多核情况下-Cache-会有什么问题？" class="headerlink" title="多核情况下 Cache 会有什么问题？"></a>多核情况下 Cache 会有什么问题？</h2><p>这个问的主要应该就是 Cache 的一致性、写回、写直达等等这些方面的内容。</p>
 <p>另外还有一个叫做伪共享（False Sharing）的问题：</p>
-<p><img src="http://jcf94.com/download/2018-09-04-cache-sbtfalse_sharing.PNG" alt="False Sharing"></p>
+<p><img alt="False Sharing" data-src="http://jcf94.com/download/2018-09-04-cache-sbtfalse_sharing.PNG"></p>
 <p>多核 CPU 通常都是 L1、L2 每个核独立，共享 L3。如上图这种情况，两个核实际操作的数据是独立的，但是它们恰好在一个 Cache Line 里面，则其中一个作了修改之后，另一个的 Cache Line 也会跟着失效，引起了本来不必要的效率问题。</p>
 
       

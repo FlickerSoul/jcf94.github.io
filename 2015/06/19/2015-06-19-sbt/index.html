@@ -111,17 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="这将会是你踏入高级数据结构的第一步。   终于要开始给队里面讲这种比较高级的数据结构了，也趁此机会自己好好理理。 首先要讲的是这个： 二叉搜索树 二叉搜索树又叫二叉排序树，它的定义很简单：  这是一棵二叉树  令x为二叉树中某个结点上表示的值，那么其左子树上所有结点的值都要不大于x，其右子树上所有结点的值都要不小于x">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-06-19-sbt-1.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-06-19-sbt-2.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-06-19-sbt-3.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-06-19-sbt-4.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-06-19-sbt-5.png">
-<meta property="og:image" content="http://jcf94.com/download/2015-06-19-sbt-6.png">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Size Balanced Tree">
 <meta name="twitter:description" content="这将会是你踏入高级数据结构的第一步。   终于要开始给队里面讲这种比较高级的数据结构了，也趁此机会自己好好理理。 首先要讲的是这个： 二叉搜索树 二叉搜索树又叫二叉排序树，它的定义很简单：  这是一棵二叉树  令x为二叉树中某个结点上表示的值，那么其左子树上所有结点的值都要不大于x，其右子树上所有结点的值都要不小于x">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-06-19-sbt-1.png">
 
 
 
@@ -580,7 +573,7 @@
 <p>相比红黑树、AVL树等自平衡二叉查找树，SBT更易于实现。据陈启峰在论文中称，SBT是“目前为止速度最快的高级二叉搜索树”。</p>
 <h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><p>首先是所有平衡树中都会用到的旋转操作，平衡树需要不断改变树的结构，但是改变结构的同时又必须保证的是整棵树的二叉查找树性质<strong>不能被破坏掉</strong>（要是二叉查找树性质都没了，下面就不用玩了）。</p>
 <p>调整方式就是逐点进行左旋或者右旋：</p>
-<p><img src="http://jcf94.com/download/2015-06-19-sbt-1.png" alt="rotate"></p>
+<p><img alt="rotate" data-src="http://jcf94.com/download/2015-06-19-sbt-1.png"></p>
 <p>以上图作为例子，左右旋实现起来其实也很简单，就是交换一下x、y的父子关系，然后调整B子树的连接情况，且能够保证整体的二叉搜素性质不改变。</p>
 <h2 id="SBT的特殊性质"><a href="#SBT的特殊性质" class="headerlink" title="SBT的特殊性质"></a>SBT的特殊性质</h2><p>我们给二叉搜索树的结点增加一个size域，用来保存以该节点为根的子树中一共有多少个结点。</p>
 <p>上面说了，SBT是通过结点大小(Size)来调整整棵树的平衡性的，它相比一般的二叉搜索树多出来的性质有两条：</p>
@@ -591,7 +584,7 @@
 <li><p>$size[left[t]]&gt;=size[left[right[t]]],size[right[right[t]]]$</p>
 </li>
 </ol>
-<p><img src="http://jcf94.com/download/2015-06-19-sbt-2.png" alt="maintain"></p>
+<p><img alt="maintain" data-src="http://jcf94.com/download/2015-06-19-sbt-2.png"></p>
 <p>以上图为例，性质是：</p>
 <ol>
 <li>$size[R]&gt;=size[A]$</li>
@@ -605,7 +598,7 @@
 <li>首先对t进行右旋，此时t更新成了原图中的L</li>
 </ul>
 <p>得到如下的结果：</p>
-<p><img src="http://jcf94.com/download/2015-06-19-sbt-3.png" alt="3"></p>
+<p><img alt="3" data-src="http://jcf94.com/download/2015-06-19-sbt-3.png"></p>
 <ul>
 <li><p>则对于图中的T，其子树不一定满足性质，需要Maintain(T)</p>
 </li>
@@ -617,17 +610,17 @@
 
 <h3 id="Case-2-size-right-left-t-gt-size-right-t"><a href="#Case-2-size-right-left-t-gt-size-right-t" class="headerlink" title="Case 2: size[right[left[t]]]&gt;size[right[t]]"></a>Case 2: size[right[left[t]]]&gt;size[right[t]]</h3><p>这种情况要稍微复杂一些：</p>
 <p>我们把原图中的B再往下画一层：</p>
-<p><img src="http://jcf94.com/download/2015-06-19-sbt-4.png" alt="4"></p>
+<p><img alt="4" data-src="http://jcf94.com/download/2015-06-19-sbt-4.png"></p>
 <ul>
 <li>首先对L进行左旋</li>
 </ul>
 <p>得到：</p>
-<p><img src="http://jcf94.com/download/2015-06-19-sbt-5.png" alt="5"></p>
+<p><img alt="5" data-src="http://jcf94.com/download/2015-06-19-sbt-5.png"></p>
 <ul>
 <li>再右旋T</li>
 </ul>
 <p>得到：</p>
-<p><img src="http://jcf94.com/download/2015-06-19-sbt-6.png" alt="6"></p>
+<p><img alt="6" data-src="http://jcf94.com/download/2015-06-19-sbt-6.png"></p>
 <ul>
 <li><p>经过上面两步操作之后，整棵树的结构可以说是完全改变了，具体形态也可能变得难以预测。但是根据左右旋的性质，我们可以保证上图的结果中A、E、F、R都是性质完好的SBT，所以只要分别Maintain(L)和Maintain(T)即可。</p>
 </li>

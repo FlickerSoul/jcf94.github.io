@@ -111,13 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="SWIG is used with different types of target languages including common scripting languages such as Javascript, Perl, PHP, Python, Tcl and Ruby. The list of supported languages also includes non-scrip">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2017-02-06-swigdebug-1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2017-02-06-swigdebug-2.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python-SWIG 初探以及其 gdb 调试">
 <meta name="twitter:description" content="SWIG is used with different types of target languages including common scripting languages such as Javascript, Perl, PHP, Python, Tcl and Ruby. The list of supported languages also includes non-scrip">
-<meta name="twitter:image" content="http://jcf94.com/download/2017-02-06-swigdebug-1.jpg">
 
 
 
@@ -602,12 +599,12 @@ The list of supported languages also includes non-scripting languages such as C#
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;Debug.MIDebugExec info sharedlibrary</span><br><span class="line">From                To                  Syms Read   Shared Object Library</span><br><span class="line">0x00007fa4d2be59f0  0x00007fa4d2bf2471  Yes         /lib/x86_64-linux-gnu/libpthread.so.0</span><br><span class="line">0x00007fa4d282f520  0x00007fa4d2974183  Yes         /lib/x86_64-linux-gnu/libc.so.6</span><br><span class="line">0x00007fa4d2600ed0  0x00007fa4d26019ce  Yes         /lib/x86_64-linux-gnu/libdl.so.2</span><br><span class="line">0x00007fa4d23f0f10  0x00007fa4d23f1804  Yes         /lib/x86_64-linux-gnu/libutil.so.1</span><br><span class="line">0x00007fa4d21d1e00  0x00007fa4d21e1bf8  Yes         /lib/x86_64-linux-gnu/libz.so.1</span><br><span class="line">0x00007fa4d1ec5610  0x00007fa4d1f34056  Yes         /lib/x86_64-linux-gnu/libm.so.6</span><br><span class="line">0x00007fa4d2e00ae0  0x00007fa4d2e1b490  Yes         /lib64/ld-linux-x86-64.so.2</span><br><span class="line">0x00007fa4d1b32720  0x00007fa4d1b33ef6  Yes         /usr/lib/python2.7/lib-dynload/readline.x86_64-linux-gnu.so</span><br><span class="line">0x00007fa4d18f30d0  0x00007fa4d1913ee5  Yes         /lib/x86_64-linux-gnu/libreadline.so.6</span><br><span class="line">0x00007fa4d16bc3d0  0x00007fa4d16c8028  Yes         /lib/x86_64-linux-gnu/libtinfo.so.5</span><br><span class="line">                                        No          ./_cfact.so</span><br><span class="line">&gt;Debug.MIDebugExec set solib-search-path :/home/jcf/swig_test/build/lib.linux-x86_64-2.7/</span><br><span class="line">Reading symbols from /home/jcf/swig_test/build/lib.linux-x86_64-2.7/_cfact.so...done.</span><br><span class="line">Loaded symbols for /home/jcf/swig_test/build/lib.linux-x86_64-2.7/_cfact.so</span><br><span class="line">=cmd-param-changed,param=&quot;solib-search-path&quot;,value=&quot;:/home/jcf/swig_test/build/lib.linux-x86_64-2.7/&quot;</span><br></pre></td></tr></table></figure>
 
 <p>这时候在 <code>断点</code> 窗口里面已经可以成功加上 <code>fact</code> 函数的断点了。</p>
-<img src="http://jcf94.com/download/2017-02-06-swigdebug-1.jpg" class="full-image" title="断点">
+<img class="full-image" title="断点" data-src="http://jcf94.com/download/2017-02-06-swigdebug-1.jpg">
 
 <p>加好断点之后 VS <code>继续</code>，然后 Python 窗口调一次函数。</p>
 <p>VS 的断点会马上生效，然后弹出一个窗口让选择源代码文件的位置，毕竟是远程机器上 ssh 得到的，这里的代码位置只能手动选择。</p>
 <p>然后可以看到完整的各项信息。</p>
-<img src="http://jcf94.com/download/2017-02-06-swigdebug-2.jpg" class="full-image" title="VS远程调试">
+<img class="full-image" title="VS远程调试" data-src="http://jcf94.com/download/2017-02-06-swigdebug-2.jpg">
 
 <p>用起来还是相当不错的。</p>
 <hr>

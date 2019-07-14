@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA  开始分析性能瓶颈了，本篇记录一下研究 TF 中自带的 P">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png">
 <meta property="og:updated_time" content="2018-10-30T08:37:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（七）：Profiling 踩坑 &amp; Benchmark">
 <meta name="twitter:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA  开始分析性能瓶颈了，本篇记录一下研究 TF 中自带的 P">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png">
 
 
 
@@ -557,7 +555,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tfprof&gt;</span><br><span class="line">xxx xxx -output timeline:outfile=xxxxx</span><br><span class="line"><span class="comment"># 把结果输出成 chrome 用的时间线 trace 文件，可以在 chrome 地址栏中输入 chrome://tracing 打开</span></span><br><span class="line"><span class="comment"># 只支持 graph、scope、code 这 3 种视图</span></span><br><span class="line">xxx xxx -output pprof:outfile=xxxxx</span><br><span class="line"><span class="comment"># 把结果输出成 pprof 用的可视化文件（所以前面装 pprof 就是为了这个）</span></span><br><span class="line"><span class="comment"># 只支持 code 这种视图</span></span><br><span class="line"><span class="comment"># --------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># pprof 可视化文件之后可以用 pprof 来变成图片（猜测大概是类似 GraphViz 的数据结构）</span></span><br><span class="line">pprof -svg --nodecount=10000 --sample_index=1 xxxxxx.prof &gt; xxxxxx.svg</span><br></pre></td></tr></table></figure>
 
 <p>profiler_ui 打开时的第一个页面就是 graph 视图生成的 timeline：</p>
-<p><img src="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png"></p>
 <p>其中包含了计算图中每个 node 在卡上的情况，运行时间、数据流动依赖关系等等。（话说显示的太复杂了，事实上我觉得还是很难看）</p>
 <p>然后默认的 scope 视图以及 code 视图得到的 timeline 我也感觉并没有什么用。</p>
 <p>code 视图输出成的 pprof 图片倒是还可以看一下，但是感觉用处也不大</p>

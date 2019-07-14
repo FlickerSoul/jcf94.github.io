@@ -111,18 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="我的Y480出厂预装的win7，现在过了好久了，系统早就格盘重装成win8.1了，但是分区表里面还有个OEM分区。里面存的应该是预装的系统备份，跟笔记本电源键旁边的恢复键直接绑定……不过系统既然早被我格完了，那个键已经很早没有用过了，想想决定还是把这个OEM分区删掉。 花了点时间把这事搞定了，之前是自己都不敢动这块硬盘，担心乱弄会出问题。  各大厂商设置的隐藏分区方法应该都类似，可以参照这个…或者">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-1.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-2.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-3.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-4.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-5.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-6.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-7.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="品牌笔记本预装windows的OEM分区问题（联想）">
 <meta name="twitter:description" content="我的Y480出厂预装的win7，现在过了好久了，系统早就格盘重装成win8.1了，但是分区表里面还有个OEM分区。里面存的应该是预装的系统备份，跟笔记本电源键旁边的恢复键直接绑定……不过系统既然早被我格完了，那个键已经很早没有用过了，想想决定还是把这个OEM分区删掉。 花了点时间把这事搞定了，之前是自己都不敢动这块硬盘，担心乱弄会出问题。  各大厂商设置的隐藏分区方法应该都类似，可以参照这个…或者">
-<meta name="twitter:image" content="http://jcf94.com/download/2014-07-20-oem-1.jpg">
 
 
 
@@ -528,23 +520,23 @@
 <p>不需要别的，使用系统自带的diskpart工具即可以完成管理。</p>
 <p>打开cmd，输入diskpart</p>
 <p>输入？号可以查看帮助</p>
-<p><img src="http://jcf94.com/download/2014-07-20-oem-1.jpg" alt="1"></p>
+<p><img alt="1" data-src="http://jcf94.com/download/2014-07-20-oem-1.jpg"></p>
 <p>list disk 显示当前系统上所有的磁盘信息</p>
-<p><img src="http://jcf94.com/download/2014-07-20-oem-2.jpg" alt="2"></p>
+<p><img alt="2" data-src="http://jcf94.com/download/2014-07-20-oem-2.jpg"></p>
 <p>select disk 0 根据编号选择需要的硬盘…然而我的电脑上就这么一块</p>
 <p>rescan 重新扫描配置信息</p>
-<p><img src="http://jcf94.com/download/2014-07-20-oem-3.jpg" alt="3"></p>
+<p><img alt="3" data-src="http://jcf94.com/download/2014-07-20-oem-3.jpg"></p>
 <p>list partition 显示当前硬盘的分区信息</p>
 <p>select partition 4 也是根据分区号选择，我的所有分区都是主分区，分区4的类型为OEM，即为本次要解决的目标分区</p>
-<p><img src="http://jcf94.com/download/2014-07-20-oem-4.jpg" alt="4"></p>
+<p><img alt="4" data-src="http://jcf94.com/download/2014-07-20-oem-4.jpg"></p>
 <p>选择完分区之后</p>
 <p>deatil partition 显示分区详细信息</p>
-<p><img src="http://jcf94.com/download/2014-07-20-oem-5.jpg" alt="5"></p>
+<p><img alt="5" data-src="http://jcf94.com/download/2014-07-20-oem-5.jpg"></p>
 <p>分区类型4为fat32类型，7为NTFS类型，隐藏的OEM分区类型为11或12，设为11则显示为主分区</p>
 <p>set id=7 将该分区类型改成7即可</p>
-<p><img src="http://jcf94.com/download/2014-07-20-oem-6.jpg" alt="6"></p>
+<p><img alt="6" data-src="http://jcf94.com/download/2014-07-20-oem-6.jpg"></p>
 <p>改完之后隐藏分区就显示出来了，可以跟正常的一样使用。</p>
-<p><img src="http://jcf94.com/download/2014-07-20-oem-7.jpg" alt="7"></p>
+<p><img alt="7" data-src="http://jcf94.com/download/2014-07-20-oem-7.jpg"></p>
 <p>然后我默默地把最后这一小块并到了D盘里面去，Hoho<del>~</del></p>
 
       

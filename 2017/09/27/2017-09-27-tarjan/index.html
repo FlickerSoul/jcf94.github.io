@@ -111,13 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="逛知乎的时候发现的这个问题：  Tarjan（自己/合作）创造了哪些算法和数据结构？  一开始只是觉得这个名字熟悉（脑子里面冒出来的是 Tarjan 离线 LCA），点进去一看越看越心惊。 强连通分量？哦，那个经典算法好像确实叫 Tarjan。LCT 动态树…卧槽他写的？斐波那契堆…卧槽他写的？Splay 伸展树…卧槽他写的？ 从 1971 年至今，Tarjan 大佬大概发了 300 篇左右的论">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2017-09-27-tarjan-1.jpg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tarjan 大佬的算法们">
 <meta name="twitter:description" content="逛知乎的时候发现的这个问题：  Tarjan（自己/合作）创造了哪些算法和数据结构？  一开始只是觉得这个名字熟悉（脑子里面冒出来的是 Tarjan 离线 LCA），点进去一看越看越心惊。 强连通分量？哦，那个经典算法好像确实叫 Tarjan。LCT 动态树…卧槽他写的？斐波那契堆…卧槽他写的？Splay 伸展树…卧槽他写的？ 从 1971 年至今，Tarjan 大佬大概发了 300 篇左右的论">
-<meta name="twitter:image" content="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg">
 
 
 
@@ -513,7 +510,7 @@
       
 
       
-        <p><img src="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg" alt></p>
+        <p><img alt data-src="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg"></p>
 <p>逛知乎的时候发现的这个问题：</p>
 <ul>
 <li><a href="https://www.zhihu.com/question/65155704" target="_blank" rel="noopener">Tarjan（自己/合作）创造了哪些算法和数据结构？</a></li>
@@ -600,7 +597,7 @@
 <hr>
 <p>有了 Splay 之后，接下来 LCT 的操作就很简单了。前面说过，LCT 的核心操作是 <code>Access()</code>。</p>
 <p>以 QTREE 一文中的例子来解释（找不到什么比较好的画图工具，只好手画了）：</p>
-<p><img src="http://jcf94.com/download/2017-09-27-tarjan-1.jpg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2017-09-27-tarjan-1.jpg"></p>
 <p>LCT 存储的是树结构上的 <code>Preferred Path</code>，例如对左边的树进行 <code>Access(N)</code> 操作之后，从根节点 A 到目标节点 N 就形成了一条 <code>Preferred Path</code>，跟这条路径上的点相连的原有的 <code>Preferred Path</code> 都恢复成普通边（例如 A-B 和 N-O 都从 <code>Preferred Path</code> 恢复成了普通边）。</p>
 <p>我们把 <code>Preferred Path</code> 存储在 Splay 森林上，然后每次 <code>Access</code> 操作之后对 <code>Preferred Path</code> 进行的修改则相应地需要依靠 Splay 来进行维护。</p>
 <p>左下角的这棵树就是 <code>Access(N)</code> 操作前的 Splay 森林的结构，红边是 Splay 的树边，黑边是两棵 Splay 树的连接关系。这里其实一共有 7 棵 Splay 树：ABE，D，F，CGHJ，IK，LNO，M。可以看到每一棵 Splay 实际上表示的是一条 <code>Preferred Path</code> 或者单个节点，<code>Preferred Path</code> 在原树中的深度就是对应的 Splay 中节点的索引值（！！这个对理解很重要）。</p>

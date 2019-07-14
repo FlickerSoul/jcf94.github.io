@@ -111,16 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现  先来拆一下第一篇里面 DirectSession::Run 里面跑的那个 graph 里面到底都是些什么内容。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-28-tfunpacking3-graph_meta.jpg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-28-tfunpacking3-dot_graph1.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-28-tfunpacking3-mnist_dnn.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-28-tfunpacking3-mnist_dnn_distributed.svg">
-<meta property="og:image" content="http://jcf94.com/download/2018-02-28-tfunpacking3-cnn_distributed.svg">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（三）：Graph 和 Node">
 <meta name="twitter:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现  先来拆一下第一篇里面 DirectSession::Run 里面跑的那个 graph 里面到底都是些什么内容。">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-02-28-tfunpacking3-graph_meta.jpg">
 
 
 
@@ -565,7 +559,7 @@
 <li><a href="http://www.cnblogs.com/yao62995/p/5773070.html" target="_blank" rel="noopener">图解tensorflow源码] Graph 图模块 （UML视图）</a></li>
 </ul>
 <p>引用一下：</p>
-<p><img src="http://jcf94.com/download/2018-02-28-tfunpacking3-graph_meta.jpg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-28-tfunpacking3-graph_meta.jpg"></p>
 <h2 id="Graph-in-C"><a href="#Graph-in-C" class="headerlink" title="Graph in C"></a>Graph in C</h2><p>有关 Graph 的定义，基本上都在 <code>tensorflow/core/graph/graph.h</code>这个头文件里面，几个类都分的比较清晰：</p>
 <ul>
 <li><p>Graph：表示计算图的一个大类，里面有整个图的完整结构，这里的图的定义是唯一起点和唯一终点，以及可用的计算设备表</p>
@@ -622,7 +616,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REGISTER_OP_GRADIENT(<span class="string">"OpName"</span>, OpGradientDef);</span><br><span class="line">REGISTER_GRADIENT_OP(<span class="string">"OpName"</span>, OpGradientKernel);</span><br></pre></td></tr></table></figure>
 
 <p>到这里为止，我们对 TensorFlow 中 Python 层与 C 层的 Op 结合过程有了一个大体的印象。</p>
-<p><img src="http://jcf94.com/download/2018-02-28-tfunpacking3-dot_graph1.svg" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-02-28-tfunpacking3-dot_graph1.svg"></p>
 <p>那么 C 层的 Graph 构建是什么时候发生的呢？回到前面创建 Executor 时的<code>CreateGraphs()</code>函数，可以看到此时DirectSession 对象中的 execution_state_ 成员已经保存了当前 Session 环境中的完整的图信息了，那么 execution_state_ 中的图是哪里来的？</p>
 <h2 id="Back-to-TF-Run"><a href="#Back-to-TF-Run" class="headerlink" title="Back to TF_Run()"></a>Back to TF_Run()</h2><p>之前在<a href="/2018/01/13/2018-01-13-tfunpacking/">TensorFlow 拆包（一）：Session.Run()</a>篇中已经对 TF_Run() 关于执行图的计算的部分进行了分析，现在需要把关注点放回到这里，看一下 Python 层中的 Graph 与 C 层中的 Graph 是如何联系在一起的。</p>
 <p>以下是 Python 层的调用栈：</p>
@@ -675,9 +669,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/awk</span></span><br><span class="line"></span><br><span class="line">BEGIN &#123;</span><br><span class="line">    count = 0;</span><br><span class="line">    <span class="built_in">print</span> <span class="string">"digraph newgraph &#123;\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (match(<span class="variable">$0</span>, /(\w+)\s=\s(\w+)\[(.*)\]\((.*)\)/, out))</span><br><span class="line">    &#123;</span><br><span class="line">        name = out[1];</span><br><span class="line">        newname = sprintf(<span class="string">"c%dn"</span>, count);</span><br><span class="line">        gsub(<span class="string">"n"</span>, newname, name);</span><br><span class="line">        content = out[3];</span><br><span class="line">        gsub(<span class="string">"\""</span>, <span class="string">"\\\""</span>, content)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"        %s[label=\"%s\", tooltip=\"%s\"];\n"</span>, name, out[2], content);</span><br><span class="line">        <span class="keyword">if</span> (out[4])</span><br><span class="line">        &#123;</span><br><span class="line">            inpt = out[4];</span><br><span class="line">            gsub(<span class="string">"n"</span>, newname, inpt);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"        %s -&gt; %s;\n"</span>, inpt, name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"#"</span>, <span class="variable">$0</span>;</span><br><span class="line">        <span class="keyword">if</span> (match(<span class="variable">$0</span>, /\(.*\&#123;/))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"    subgraph cluster_%d &#123;\n        label=\"c%d\";\n"</span>, count, count);</span><br><span class="line">            count ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (match(<span class="variable">$0</span>, /\&#125;/))</span><br><span class="line">            <span class="built_in">print</span> <span class="string">"    &#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">END &#123;</span><br><span class="line">    <span class="built_in">print</span> <span class="string">"&#125;"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>稍微修正一下最终的输出图，我们就可以得到：</p>
-<h2 id="Simple-DNN"><a href="#Simple-DNN" class="headerlink" title="Simple DNN"></a>Simple DNN</h2><p><img src="http://jcf94.com/download/2018-02-28-tfunpacking3-mnist_dnn.svg" alt></p>
-<h2 id="Simple-DNN-Distributed"><a href="#Simple-DNN-Distributed" class="headerlink" title="Simple DNN Distributed"></a>Simple DNN Distributed</h2><p><img src="http://jcf94.com/download/2018-02-28-tfunpacking3-mnist_dnn_distributed.svg" alt></p>
-<h2 id="Simple-CNN-Distributed"><a href="#Simple-CNN-Distributed" class="headerlink" title="Simple CNN Distributed"></a>Simple CNN Distributed</h2><p><img src="http://jcf94.com/download/2018-02-28-tfunpacking3-cnn_distributed.svg" alt></p>
+<h2 id="Simple-DNN"><a href="#Simple-DNN" class="headerlink" title="Simple DNN"></a>Simple DNN</h2><p><img alt data-src="http://jcf94.com/download/2018-02-28-tfunpacking3-mnist_dnn.svg"></p>
+<h2 id="Simple-DNN-Distributed"><a href="#Simple-DNN-Distributed" class="headerlink" title="Simple DNN Distributed"></a>Simple DNN Distributed</h2><p><img alt data-src="http://jcf94.com/download/2018-02-28-tfunpacking3-mnist_dnn_distributed.svg"></p>
+<h2 id="Simple-CNN-Distributed"><a href="#Simple-CNN-Distributed" class="headerlink" title="Simple CNN Distributed"></a>Simple CNN Distributed</h2><p><img alt data-src="http://jcf94.com/download/2018-02-28-tfunpacking3-cnn_distributed.svg"></p>
 <p>为了比较好的视觉效果，上面输出来的图中或多或少被我删掉一点不重要的内容，有的在相同变量上也还没做整合。<code>ApplyGradientDescent</code>、<code>ApplyAdam</code>、<code>Assign</code> 这些有多出来的虚线我加的也不一定对，<strong>暂时先批判地看待上面这几张图吧</strong>。</p>
 <p>C 层面的图结构比 Tensorboard 里面的 Python 层要稍微多点东西（比如跨设备的 send/recv 等），然后有的地方信息又不太全（比如上图中最右侧的部分，对照 Tensorboard 才知道是 adam 中两个值的平方，从 C 层面这些 node 本身的信息上体现不出来），不过大致上还是一致的。</p>
 <h2 id="Assign、Identity"><a href="#Assign、Identity" class="headerlink" title="Assign、Identity"></a>Assign、Identity</h2><p>关于图中的 Assign 和 Identity 这两个 op，可以见<a href="https://www.jianshu.com/p/bebcdfb74fb1" target="_blank" rel="noopener">这里的一些介绍</a>。</p>

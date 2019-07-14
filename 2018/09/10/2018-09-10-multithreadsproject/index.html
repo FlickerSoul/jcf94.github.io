@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="Emm……接前篇。 主要是整理几个多线程小例子，读写锁和定时器队列是面试的时候考到的，线程池是自己很早就想写着玩的（挖了好久的坑一直没填，内存池也是……）。 整理出来的代码会放在这里：  jcf94/multithread_case">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-09-10-multithreadsproject-timewheel.jpg">
 <meta property="og:updated_time" content="2018-10-15T11:01:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="几个多线程的练手 case">
 <meta name="twitter:description" content="Emm……接前篇。 主要是整理几个多线程小例子，读写锁和定时器队列是面试的时候考到的，线程池是自己很早就想写着玩的（挖了好久的坑一直没填，内存池也是……）。 整理出来的代码会放在这里：  jcf94/multithread_case">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-09-10-multithreadsproject-timewheel.jpg">
 
 
 
@@ -540,7 +538,7 @@
 </ul>
 <p>由于小根堆的堆顶元素是最近触发的一个任务，因此还可以动态改变下一次处理需要等待的 Tick 时间来节省 CPU 资源的消耗。但是感觉这种方式会不会影响定时精度？以及这样似乎没有办法处理“在堆顶元素之前又插入了一个更近的任务”这种情况，所以最后想想还是觉得固定 Tick 比较稳妥。</p>
 <p>然后就是重点要来学习一下时间轮（Timing-Wheel）了。</p>
-<p><img src="http://jcf94.com/download/2018-09-10-multithreadsproject-timewheel.jpg" alt="Timing-Wheel"></p>
+<p><img alt="Timing-Wheel" data-src="http://jcf94.com/download/2018-09-10-multithreadsproject-timewheel.jpg"></p>
 <p>这个思路其实很简单，想象有一个钟表盘，上面有一圈时间刻度（从 1 到 N），有一个指针每隔 Tick 时间转动一个刻度，而所有的任务也是按照等待时间除以 Tick 分布在每个刻度上面，当指针扫到某个刻度时，即遍历一遍这个刻度上的任务列表，把到时间的拿出来执行即可。</p>
 <p>当 N 足够大时，显然这个定时器的各个操作的复杂度都是 <code>O(1)</code> 的。</p>
 <p>但是如果 N 过大，则这个时间轮的内存消耗将会比较大，因此又有了多级时间轮的优化思路：以钟表上的时针、分针、秒针为例，时针分为 12 格，分针、秒针分别为 60 格，这样就有一共 132 个格子，每个格子都是一条任务链表。一分钟以内的任务被加到秒针的格子中，一小时以内的任务加到分针的格子中，更久的任务加到时针的格子中。秒针每个 Tick 移动一次，每次移动后直接把当前格子中的所有任务取出来执行；分针则是每 60 个 Tick 移动一次，每次移动把当前格子中的任务下放到秒针轮对应的格子中；时针也是类似。</p>

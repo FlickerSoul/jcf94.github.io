@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed  本篇分析 TensorFlow 1.6.0 中的 RDMA 以及其他的传输优化的实现。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2018-03-12-tfunpacking6-verbs_with_0_copies.png">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 拆包（六）：RDMA">
 <meta name="twitter:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed  本篇分析 TensorFlow 1.6.0 中的 RDMA 以及其他的传输优化的实现。">
-<meta name="twitter:image" content="http://jcf94.com/download/2018-03-12-tfunpacking6-verbs_with_0_copies.png">
 
 
 
@@ -575,7 +573,7 @@
 <p>之后需要用 RDMA 进行传输的时候，就可以从已有的 Memory Region 表中找出某块内存所对应的 mr、rkey 等等，而无需再注册了。</p>
 <h1 id="Transport-protocol"><a href="#Transport-protocol" class="headerlink" title="Transport protocol"></a>Transport protocol</h1><p>TensorFlow 中的传输设计是<strong>异步发送，阻塞接收</strong>，这个设计也很容易理解，没有收到数据之前，当前节点之后的肯定执行不了，而发送者将内容提交之后数据流图到这里为止就结束了，可以把计算资源用于其他地方。</p>
 <p>这张图来源于代码中的文档部分。</p>
-<p><img src="http://jcf94.com/download/2018-03-12-tfunpacking6-verbs_with_0_copies.png" alt></p>
+<p><img alt data-src="http://jcf94.com/download/2018-03-12-tfunpacking6-verbs_with_0_copies.png"></p>
 <h2 id="RecvFromRemoteAsync"><a href="#RecvFromRemoteAsync" class="headerlink" title="RecvFromRemoteAsync"></a>RecvFromRemoteAsync</h2><p>一次完整的传输过程从 <code>RdmaRemoteRendezvous::RecvFromRemoteAsync()</code> 开始：</p>
 <ul>
 <li>解析某条需要传输的 Tensor 的源地址和目标地址，确认目标地址是本机。</li>

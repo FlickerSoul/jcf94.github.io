@@ -111,12 +111,10 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="OpenMP是一个针对共享内存并行编程的API。 与之前的MPI不同的是，OpenMP是线程级并行，比MPI的进程级并行要更轻量化一些。在 更重要的一个特点是，MPI的并行需要完全重写整个程序，而将一个串行程序改造成OpenMP的并行则有可能只要进行少量的改动即可。 而且gcc原生支持OpenMP，不需要像MPI一样另外要装个运行环境和运行库。 用gcc编译时加上-fopenmp开关即可： 123">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jcf94.com/download/2015-11-20-openmp-1.gif">
 <meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="共享内存系统并行 OpenMP">
 <meta name="twitter:description" content="OpenMP是一个针对共享内存并行编程的API。 与之前的MPI不同的是，OpenMP是线程级并行，比MPI的进程级并行要更轻量化一些。在 更重要的一个特点是，MPI的并行需要完全重写整个程序，而将一个串行程序改造成OpenMP的并行则有可能只要进行少量的改动即可。 而且gcc原生支持OpenMP，不需要像MPI一样另外要装个运行环境和运行库。 用gcc编译时加上-fopenmp开关即可： 123">
-<meta name="twitter:image" content="http://jcf94.com/download/2015-11-20-openmp-1.gif">
 
 
 
@@ -533,7 +531,7 @@
 <h1 id="OpenMP的并行模式"><a href="#OpenMP的并行模式" class="headerlink" title="OpenMP的并行模式"></a>OpenMP的并行模式</h1><p>在MPI中，程序编译完成之后如果直接打开是无法运行的，需要用<code>mpiexec</code>来调用生成好的可执行文件，<code>mpiexec</code>会首先得到运行的目标机器、进程数等等情况，然后开始启动多个进程，等到多进程全部开起来之后，并行就开始了。</p>
 <p>而在OpenMP中，编译完成之后的可执行文件可以直接运行，程序在一开始是串行运行，到了需要并行的时候，<strong>单进程单线程</strong>会分裂成<strong>单进程多线程</strong>（其实是除了主线程以外，又启动了几个新的线程同时执行），执行完毕之后又回到<strong>单线程的串行</strong>。而且每次并行的线程数是可以在运行时指定的。</p>
 <p>比如说像这张图：</p>
-<img src="http://jcf94.com/download/2015-11-20-openmp-1.gif" class="full-image" title="test">
+<img class="full-image" title="test" data-src="http://jcf94.com/download/2015-11-20-openmp-1.gif">
 
 <p>MPI和OpenMP的区别还是比较大的。</p>
 <p>所以相对来说，OpenMP可以只把其中的一部分作并行处理，而且并行的时候共享的内存、变量等等都是在一起的，从串行程序的基础上改造过来非常容易，可能只要加几段预处理器指令就可以了，剩下的交给编译器和处理器去解决就可以了。</p>
