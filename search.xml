@@ -836,20 +836,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[聊聊特斯拉]]></title>
-    <url>%2F2015%2F10%2F31%2F2015-10-31-tesla%2F</url>
-    <content type="text"><![CDATA[偶然逛ZEALER官网，原来想找找手机评测视频的来着。 然后发现了视频版块下有个叫科技相对论的标签，是ZEALER跟爱奇艺合作的小节目，每周四更新一期，聊聊科技界的一些趣事。 一口气把前面6期都看完了，感觉还不错，以后可以跟上更新看看。 第二期聊的是特斯拉。 君不知，特斯拉这种高大上的东西对于像我这样未来是搞IT的小同志来说有多么大的吸引力啊~！ 这篇随笔建的很早，结果等到有空想起来回来补坑已经是2个月以后了。 前几天SpaceX成功发射了猎鹰9号火箭，并成功回收，开创了人类历史上首次可重复利用的火箭的先例，这也是NASA等巨头砸了多少钱都没有完成的任务。 虽然最后成本评估、安全性评估等等还不知道怎么样，许多人担心火箭回收技术会不会重走当年航天飞机的老路。不过至少SpaceX真的让人类看到了新的路，如果真的成功，那么以后航天成本就将大大降低，甚至到任何一个公司都可能发的起自己的卫星。 恰巧最近看了电影《火星救援》，当时看着电影，心里面突然冒出来这么个想法：感觉这才是Musk真正想要做的事情！ Elon Musk简直是一个神一样的男人啊！ 火箭、太阳能、电动车！！ 这三大元素正是电影中最重要的部分，而Musk手下的三大公司分别做的就是这三大部分！！ 当别人还在为自己的生活打拼时，人家早就有了改变历史、改变人类的野心，也早就开始了改变人类未来的路。]]></content>
-      <categories>
-        <category>有趣的</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-        <tag>Tesla</tag>
-        <tag>科技相对论</tag>
-        <tag>ZEALER</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[随机信号 复习笔记]]></title>
     <url>%2F2015%2F10%2F26%2F2015-10-26-suiji%2F</url>
     <content type="text"><![CDATA[上一篇核心课程的复习笔记还是在写在上学期：信号相关专业复习 《随机信号》是我本科阶段最后一门通信的核心课程，主要内容是用概率论的方法分析随机信号的统计特性等特点。虽然马上就要毕业离开通信领域了，还是把这最后一门好好理理。 目前上课只介绍到了连续信号的分析。 主要内容是随机过程的统计特性等等特点，平稳随机过程的谱分析，以及随机信号通过线性系统的分析。 1. 什么是随机信号（随机过程）一组随机变量，结果不仅与每次实验有关，还与时间t有关，这时候的随机变量就叫随机过程。 随机过程就是多条样本函数的集合。 随机过程的定义和一般表征设随机实验的样本空间是$S={\xi}$，对于每个$\xi$，对应有参数$t$的函数$X(\xi,t),t\in T$。那么对于每一个$\xi$，得到一族$t$的函数${X(\xi,t),t\in T}$。 这个$t$的函数族称为随机过程，简记为$X(\xi,t)$，或$X(t)$。族中每个函数称为一个样本，它是随机过程的一次试验的物理实现，是一个确知的时间函数。 对于每个给定的时间$t_i(i=1,2,…),X(\xi,t_i)$都是随机变量。 样本函数集合： $$X(t,\xi)=\{X(t,\xi_i),i=1,2,…\}$$ 样本变量集合： $$X(t,\xi)=\{X(t_i,\xi),i=1,2,…\}$$ 2. 随机信号的研究方法时域分析（1）随机过程的概率特性随机过程$X(t)$在任意时刻$t_1\in T$的取值$X(t_1)$是以为随机变量，则其： 一维概率分布函数： $$F_X(x_1;t_1)=P\{x(t_1)\le x_1\}$$ 一维概率密度函数： $$f_X(x_1;t_1)=\frac{\partial F_X(x_1;t_1)}{\partial x_1}$$ 为了描述在任意两个时刻$t_1$和$t_2$的状态间的内在联系，引入二维随机变量的概率分布： 二维概率分布函数： $$F_X(x_1,x_2;t_1,t_2)=P\{X(t_1)\le x_1,X(t_2)\le x_2\}$$ 二维概率密度函数： $$f_X(x_1,x_2;t_1,t_2)=\frac{\partial F_X(x_1,x_2;t_1,t_2)}{\partial x_1 \partial x_2}$$ （2）随机信号的数字特征均值/数学期望（一阶原点矩）相当于把时间$t$先固定，然后用随机变量的方法来计算当前时刻样本变量集合的数学期望。 $$m_X(t)=E[X(t)]=\int_{-\infty}^{\infty}xf_X(x;t)dx$$ $$m_X(t)$$是一个平均函数，是时间$t$的函数，随机过程的样本在它附近起伏变化。 均方值（二阶原点矩）$$\Psi_X^2(t)=E[X^2(t)]=\int_{-\infty}^{\infty}x^2f_X(x;t)dx$$ 方差（二阶中心矩）$$\sigma_X^2(t)=D[X(t)]=E[(X(t)-m_X(t))^2]$$ 方差和均方值都是$t$的确定函数，描述了随机过程$X(t)$的所有样本函数在$t$时刻的函数值相对于$m_X(t)$的偏离程度/围绕数学期望的分散程度。 相关函数（混合原点矩）$$R_X(t_1,t_2)=E[X(t_1)X(t_2)]=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x_1x_2f_X(x_1,x_2;t_1,t_2)dx_1dx_2$$ 描述了$X(t)$在任意两个不同时刻的状态之间的相关程度，即整个随机过程中任意两个不同时刻之间的内在关系：线性相关性。 当$t_1=t_2=t$时： $$R_X(t_1,t_2)=R_X(t,t)=E[X(t)X(t)]=E[X^2(t)]$$ 此时$X(t)$的自相关函数等于均方值。 协方差函数（混合中心矩）$$\begin{align}K_X(t_1,t_2)&amp;=E[(X(t_1)-m_X(t_1))(X(t_2)-m_X(t_2))]\&amp;=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}(x_1-m_X(t_1))(x_2-m_X(t_2))f_X(x_1,x_2;t_1,t_2)dx_1dx_2\&amp;=R_X(t_1,t_2)-m_X(t_1)m_X(t_2)\end{align}$$ 描述了$X(t)$在任意两个不同时刻的起伏值之间的相关程度。 当$t_1=t_2=t$时： $$K_X(t_1,t_2)=K_X(t,t)=E[(X(t)-m_X(t))^2]=D[X(t)]=\sigma^2_X(t)$$ 此时$X(t)$的协方差函数等于方差。 描述两个随机信号之间的联系互相关函数、互协方差函数、互相关系数… 方法类似。 频域分析（1）随机信号样本函数的功率及功率谱平稳过程的任何一个非零样本函数的持续时间都是无限长，因此不满足绝对可积和能量有限的条件，傅里叶变换不存在。 为了能够用频域来分析，首先定义其中一条样本函数的截断函数： $$x_T(t)=\begin{cases}x(t),&amp;|t|\le T\\0,&amp;|t|\gt T\end{cases}$$ 易知，截断函数是符合傅里叶变换存在的充要条件的，有： $$F_x(\omega,T)=\int_{-\infty}^{\infty}x_T(t)e^{-j\omega t}dt=\int_{-T}^{T}x(t)e^{-j\omega t}dt$$ 截断函数的能量（帕萨瓦尔等式）： $$E=\int_{-\infty}^{\infty}x_T^2(t)dt=\frac{1}{2\pi}\int_{-\infty}^{\infty}|F_x(\omega,T)|^2d\omega$$ 把上式右边的被积式称为截断函数的能量谱： $$|F_x(\omega,T)|^2$$ 截断函数的功率： $$\frac{1}{2T}\int_{-T}^{T}x^2(t)dt=\frac{1}{2\pi}\int_{-\infty}^{\infty}\frac{1}{2T}|F_x(\omega,T)|^2d\omega$$ 令$T\to\infty$并交换运算次序，得到$x(t)$在$(-\infty,\infty)$上的平均功率： $$\lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T}x^2(t)dt=\frac{1}{2\pi}\int_{-\infty}^{\infty}\lim_{T\to\infty}\frac{1}{2T}|F_x(\omega,T)|^2d\omega$$ 把上式右边的被积式称作函数的平均功率谱密度，简称功率谱密度，记作： $$S_x(\omega)=\lim_{T\to\infty}\frac{1}{2T}|F_x(\omega,T)|^2$$ （2）随机信号的功率谱密度把单个样本函数的功率谱推广到整个随机过程$X(t)$ 对于随机过程来说，求各样本函数功率谱密度的统计平均： $$\begin{align}S_X(\omega)=E[S_x(\omega)]&amp;=E[\lim_{T\to\infty}\frac{1}{2T}|F_x(\omega,T)|^2]\&amp;=\lim_{T\to\infty}\frac{1}{2T}E[|F_x(\omega,T)|^2]\end{align}$$ 定义为整个随机过程$X(t)$的功率谱密度。 求完统计平均之后，$S_X(\omega)$是一个$\omega$的确知函数。 随机过程的平均功率： 频域计算 任意样本函数的平均功率： $$Q_x=\frac{1}{2\pi}\int_{-\infty}^{\infty}S_x(\omega)d\omega$$ 随机过程的平均功率： $$Q=E[Q_x]=\frac{1}{2\pi}\int_{-\infty}^{\infty}E[S_x(\omega)]d\omega=\frac{1}{2\pi}S_\color{red}{X}(\omega)d\omega$$ 时域计算 任意样本函数的平均功率： $$Q_x=\lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T}|x(t)|^2dt$$ 随机过程的平均功率： $$Q=E[Q_x]=\lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T}E[x^2(t)]dt$$ 注：这里的$Q$是一个确定的值，不是随机变量了。 平稳随机过程功率谱密度的性质（1）$S_{X}(\omega)$是$\omega$的实的、非负的偶函数 （2）功率谱密度可积 （3）功率谱密度与自相关函数的关系功率谱密度反应了随机信号在频域的统计特性，自相关函数反映了随机信号在时域的统计特性，它们均是描述随机信号的重要数字特征。 维纳辛钦定理：当一个平稳过程满足一定条件的时候，其自相关函数与功率谱密度可以构成一对傅里叶变换对。 满足： $$\int_{-\infty}^{\infty}|\tau R_X(\tau)|d\tau\lt \infty$$ 要求均值为0。 则： $$S_X(\omega)=\int_{-\infty}^{\infty}R_X(\tau)e^{-j\omega\tau}d\tau$$ 满足： $$\int_{-\infty}^{\infty}S_X(\omega)d\omega\lt \infty$$ 平均功率有限。 则： $$R_X(\tau)=\frac{1}{2\pi}\int_{-\infty}^{\infty}S_X(\omega)e^{j\omega\tau}d\omega$$ 3. 两大类随机信号平稳随机过程（平稳性）平稳随机过程$X(t)$是在时间平移下概率性质不变的随机过程。 （1）严平稳随机过程（狭义平稳随机过程）一个随机过程的n维概率密度（或n维分布函数）不随时间起点选择的不同而改变，即： $$f_X(x_1,x_2,…,x_n;t_1,t_2,…,t_n)=f_X(x_1,x_2,…,x_n;t_1+\tau,t_2+\tau,…,t_n+\tau)$$ 则称$X(t)$为严平稳随机过程。 性质： 1.它的一维概率密度与时间无关： $$f_X(x_1;t_1)=f_X(x_1;t_1+\tau)=f_X(x_1;0)=f_X(x_1)$$ 其均值、均方值、方差也同样与时间无关。 2.它的二维概率密度只与$t_1$和$t_2$的时间间隔有关，而与时间起点无关： $$f_X(x_1,x_2;t_1,t_2)=f_X(x_1,x_2;t_1+\tau,t_2+\tau)=f_X(x_1,x_2;0,t_2-t_1)=f_X(x_1,x_2;\eta)$$ 其相关函数、协方差函数同样只与时间间隔有关，与时间起点无关。 （2）宽平稳随机过程（广义平稳随机过程）若随机过程的均值函数和相关函数存在，并且满足： 1.均值与时间无关（常数）；2.相关函数只与时间间隔有关，与时间起点无关。 则称$X(t)$为宽平稳随机过程。 宽平稳过程反映了一个系统处于稳态工作条件下的统计性质。 严平稳一定是宽平稳，反之不一定。当随机过程满足高斯分布时，严平稳和宽平稳是等价的。 若无特别指明，则“平稳随机过程”指的就是宽平稳过程。 假定平稳过程的均值$E[X(t)]=0$，则此时平稳过程的协方差函数$K_X(t_1,t_2)=K_X(\tau)$与相关函数$R_X(t_1,t_2)=E[X(t_1)X(t_2)]=R_X(\tau)$相等。 当均值不为0时，可以通过定义$Y(t)=X(t)-E[X(t)]$来得到均值为0的平稳过程$Y(t)$。 （3）平稳随机过程相关函数的性质自相关函数： （1） $$R_X(0)=E[X^2(t)]=\Psi_X^2\ge0$$ 自相关函数在$\tau=0$处的值给出了平稳过程的均方值，表示了平稳过程的平均功率。 （2） $$R_X(\tau)=R_X(-\tau)$$ 自相关函数具有对称性，是$\tau$的偶函数。 （3） $$R_X(0)\ge|R_X(\tau)|$$ 自相关函数在$\tau=0$处有最大值。 （4） 平稳随机过程的自相关函数对所有的$\omega$满足： $$\int_{-\infty}^{\infty}R_X(\tau)e^{-j\omega\tau}d\tau\ge0$$ 相关系数： $$r_X(\tau)=\frac{K_X(\tau)}{K_X(0)}=\frac{R_X(\tau)-m_X^2}{\sigma^2_X}$$ 又称归一化自相关函数或标准自协方差函数，它确切表征了平稳随机过程在两个不同时刻的起伏值之间的线性关联程度。 相关时间： $r_X(\tau)$从其最大值$r_X(0)=1$下降到$r_X(\tau_0)=0.05$所经历的时间间隔，定义为相关时间。 相关时间越小，意味着相关系数随$\tau$增加/降落得越快，说明随机过程随时间变化得越剧烈。 各态历经随机过程（遍历性）各态历经性（遍历性）：只要观测时间足够长，随机过程的一个样本函数也能够“遍历”整个集合中出现的各种可能的状态。 （1）严遍历性随机过程（狭义遍历性随机过程）如果一个随机过程$X(t)$，它的各种时间平均都依概率1收敛于相应的集合平均，则称该随机过程具有严格的遍历性，称它为严遍历性过程（狭义遍历性过程）。 （2）宽遍历性随机过程（广义遍历性随机过程）定义： 设${X(t),-\infty\lt t\lt\infty}$是均方连续的平稳过程，则分别称： $$A\langle X(t)\rangle=\overline{X(t)}=\lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T}X(t)dt$$ $$\mathfrak{R}_X(t,t+\tau)=\overline{X(t)X(t+\tau)}=\lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T}X(t)X(t+\tau)dt$$ 为该过程的时间均值和时间相关函数。 若： $$A\langle X(t)\rangle=\overline{X(t)}=E[X(t)]=m_X$$ 依概率1成立，则称该平稳过程的均值具有遍历性。 $\overline{X(t)}$与取哪一条样本有关，与时间无关$E[X(t)]$与时间$t$有关，与取哪一条样本无关 均值的各态历经性表明：任何一条样本函数所包含的取值状态与随机过程（任意时刻）所有的状态相同，而且出现的频率与随机过程各状态的概率相同。 若： $$\mathfrak{R}_X(t,t+\tau)=\overline{X(t)X(t+\tau)}=E[X(t)X(t+\tau)]=R_X(\tau)$$ 依概率1成立，则称该平稳过程的相关函数具有遍历性。 若$\tau=0$时上式成立，则称该平稳过程的均方值具有遍历性。 如果均方连续的平稳过程$X(t)$的均值和相关函数都具有遍历性，则称该平稳随机过程为宽遍历性过程（广义遍历性过程）。 实际过程中，要严格验证平稳过程是否满足遍历性条件是比较困难的，最简单的办法是假定平稳过程是遍历性的，由此假设出发，对观测材料进行分析、处理，看其所得结论是否符合实际。 4. 白噪声理想白噪声分布在$(-\infty,\infty)$整个频率区间上，均值为零而功率谱密度为一个非零常数，即： $$S_N(\omega)=\frac{1}{2}N_0$$ 的平稳随机过程称为白噪声过程或简称为白噪声。 其中$N_0$为一个正实常数。 利用维纳辛钦定理，可以得到白噪声的自相关函数： $$R_N(\tau)=\frac{1}{2\pi}\int_{-\infty}^{\infty}S_N(\omega)e^{j\omega\tau}d\omega=\frac{N_0}{4\pi}\int_{-\infty}^{\infty}e^{j\omega\tau}d\omega=\frac{1}{2}N_0\delta(\tau)$$ 自相关系数： $$r_N(\tau)=\frac{R_N(\tau)-m_N^2}{\sigma_N^2}=\frac{R_N(\tau)}{R_N(0)}=\begin{cases}1&amp;\tau=0\\0&amp;\tau\ne0\end{cases}$$ 带限白噪声若一个平稳随机过程的均值为零，而功率谱密度限定在某一个有限的频率范围内均匀分布，而在此范围以外为零，则称这个过程是带限白噪声。 （1）低通白噪声$$S_X(\omega)=\begin{cases}S_0&amp;|\omega|\le W\\0&amp;|\omega|\gt W\end{cases}$$ 自相关函数： $$R_X(\tau)=\frac{1}{2\pi}\int_{-\infty}^{\infty}S_X(\omega)e^{j\omega\tau}d\omega=\frac{1}{2\pi}\int_{-W}^{W}S_0e^{j\omega\tau}d\omega=\frac{WS_0}{\pi}\frac{sinW\tau}{W\tau}$$ （2）带通白噪声$$S_X(\omega)=\begin{cases}S_0&amp;\omega_0-\frac{W}{2}\lt|\omega|\lt\omega_0+\frac{W}{2}\\0&amp;其他\end{cases}$$ 自相关函数： $$R_X(\tau)=\frac{WS_0}{\pi}\frac{\sin\frac{W\tau}{2}}{\frac{W\tau}{2}}\cos\omega_0\tau$$ 5. 随机信号通过连续时间系统的分析在系统给定的条件下，输出信号的某个统计特性只取决于输入信号的相应的统计特性，而不依赖于输入型号其他统计特性。 则根据输入信号已知的均值、相关函数、功率谱密度，再加上已知线性系统的单位冲激响应或者传递函数，就可求出随机信号响应的均值、相关函数和功率谱密度。 3dB带宽如果系统的特性为低通，则3dB带宽定义为幅频特性$|H(\omega)|$值下降到最大值的$\frac{1}{\sqrt{2}}$即$0.707|H(\omega)|_{max}$时的正频率，此时功率谱下降到峰值的一半。 如果系统特性是带通：3dB带宽定义为幅频特性$|H(\omega)|$下降到最大值的$\frac{1}{\sqrt{2}}$即$0.707|H(\omega)|_{max}$时对应正频率的差值。 等效噪声带宽当系统比较复杂时，计算系统输出噪声的统计特性是非常困难的。在实际中为了计算方便，常常用一个幅频响应为矩形的理想系统等效替代实际系统。 等效的原则： 1.理想系统与实际系统在同一白噪声激励下，两个系统的输出平均功率是相等的；2.理想系统的增益等于实际系统的最大增益。 等效噪声带宽：定义为理想系统的带宽。 设一个普通的系统幅频特性为$|H(\omega)|$，则其平均功率为： $$E[Y^2(t)]=\frac{N_0}{2\pi}\int_0^{\infty}|H(\omega)|^2d\omega$$ 取积分限$0\sim\Delta\omega_e$，$|H(\omega)|=K$，则理想线性系统对同一白噪声输入的输出总平均功率为： $$\frac{N_0}{2\pi}\int_0^{\Delta\omega_e}K^2d\omega=\frac{N_0K^2\Delta\omega_e}{2\pi}=\frac{N_0}{2\pi}\int_0^{\infty}|H(\omega)|^2d\omega$$ 则解方程可得： $$\Delta\omega_e=\frac{1}{|H(\omega)|^2_{max}}\int_0^{\infty}|H(\omega)|^2d\omega$$ 对于低通系统来说，$|H(\omega)|$的最大值出现在$\omega=0$处。 中心频率为$\omega_0$的带通系统，$|H(\omega)|$的最大值出现在$\omega=\omega_0$处。 白噪声通过理想线性系统分析希尔伯特变换和解析过程设有一个实值函数$x(t)$，它的希尔伯特变换记作$\hat{x}(t)$或者$H[x(t)]$ $$\hat{x}(t)=H[x(t)]=\frac{1}{\pi}\int_{-\infty}^{\infty}\frac{x(\tau)}{t-\tau}d\tau=x(t)*\frac{1}{\pi t}$$ 易得希尔伯特变换的冲激响应及传递函数： $$h_H(t)=\frac{1}{\pi t}\leftrightarrow H_H(j\omega)=-jsgn(\omega)=\begin{cases}-j,&amp;\omega\ge0\\j,&amp;\omega\lt0\end{cases}$$ 希尔伯特逆变换： $$\begin{align}x(t)=H^{-1}[\hat{x}(t)]&amp;=-\frac{1}{\pi}\int_{-\infty}^{\infty}\frac{\hat{x}(t-\tau)}{\tau}d\tau\&amp;=\frac{1}{\pi}\int_{-\infty}^{\infty}\frac{\hat{x}(t+\tau)}{\tau}d\tau\&amp;=-\frac{1}{\pi}*\hat{x}(t)\end{align}$$ 希尔伯特变换相当于一个正交滤波器/90°移相器。 对于正频率分量，移相-90°；对于负频率分量，移相+90°。 给定任一实随机过程$X(t)$，定义一个复随机过程为$\tilde{X}(t)$为： $$\tilde{X}(t)=X(t)+j\hat{X}(t)$$ 上式中，$\hat{X}(t)$是$X(t)$的希尔伯特变换，它也是一个实随机过程。 称$\tilde{X}(t)$是实随机过程$X(t)$的复解析过程，简称解析过程。 性质： （1）若$X(t)$是实平稳随机过程，则$\hat{X}(t)$也是实平稳过程，且联合平稳； （2）实函数与其希尔伯特变换的相关函数和功率谱相同，即： $$R_{\hat{X}}(\tau)=R_X(\tau)$$ $$S_{\hat{X}}(\omega)=S_X(\omega)$$ （3） $$R_{\hat{X}X}(\tau)=-\hat{R}_X(\tau)$$ $$R_{X\hat{X}}(\tau)=\hat{R}_X(\tau)$$ （4） $$R_{\hat{X}X}(\tau)=-R_{X\hat{X}}(\tau)$$ （5） $$R_{\hat{X}X}(-\tau)=-R_{\hat{X}X}(\tau)$$ （6） $$R_{\hat{X}X}(0)=0$$ 表明，在同一时刻，随机变量$\hat{X}_t$和$X_t$正交，但上式不意味着整个随机过程正交。 （7） $$R_{\tilde{X}}(\tau)=2[R_X(\tau)+jR_{X\hat{X}}(\tau)]=2[R_X(\tau)+j\hat{R}_X(\tau)]$$ （8） $$S_{X\hat{X}}(\omega)=\begin{cases}-jS_X(\omega),&amp;\omega\ge0\\jS_X(\omega),&amp;\omega\lt0\end{cases}$$ （9） $$S_{\tilde{X}}(\omega)=\begin{cases}4S_X(\omega),&amp;\omega\ge0\\0,&amp;\omega\lt0\end{cases}$$]]></content>
@@ -1230,8 +1216,8 @@
         <category>算法学习</category>
       </categories>
       <tags>
-        <tag>SBT</tag>
         <tag>平衡树</tag>
+        <tag>SBT</tag>
       </tags>
   </entry>
   <entry>
@@ -1374,9 +1360,9 @@
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>Splay</tag>
         <tag>伸展树</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -1387,8 +1373,8 @@
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>SBT</tag>
         <tag>平衡树</tag>
+        <tag>SBT</tag>
       </tags>
   </entry>
   <entry>
@@ -1399,8 +1385,8 @@
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>SBT</tag>
         <tag>平衡树</tag>
+        <tag>SBT</tag>
         <tag>划分树</tag>
       </tags>
   </entry>
@@ -1412,8 +1398,8 @@
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>SBT</tag>
         <tag>平衡树</tag>
+        <tag>SBT</tag>
       </tags>
   </entry>
   <entry>
@@ -1424,9 +1410,9 @@
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>Splay</tag>
         <tag>伸展树</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -1437,9 +1423,9 @@
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>Splay</tag>
         <tag>伸展树</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -1451,8 +1437,8 @@
       </categories>
       <tags>
         <tag>优先队列</tag>
-        <tag>SBT</tag>
         <tag>平衡树</tag>
+        <tag>SBT</tag>
       </tags>
   </entry>
   <entry>
