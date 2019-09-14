@@ -9,6 +9,7 @@
       </categories>
       <tags>
         <tag>TVM</tag>
+        <tag>Compile</tag>
       </tags>
   </entry>
   <entry>
@@ -311,7 +312,7 @@
   <entry>
     <title><![CDATA[写着玩之 RDMA 轮子]]></title>
     <url>%2F2017%2F09%2F18%2F2017-09-18-rdmalib%2F</url>
-    <content type="text"><![CDATA[嗯，原本打算写着玩系列写个内存池、线程池啥的，前段时间做医疗影像 DL 项目的时候跟实验室的小伙伴一起用 C++ 和 Cuda 写过一个 Inference 的框架。 那个项目后面还不知道要怎么发展，似乎暂时没办法把框架公开出来。然后内存池只写了个开头，准备等有空再出来补补吧。线程池…嗯，还不知道在哪呢。 最近整理以前的资料的时候又给自己找了个新坑。嗯，虽说之前在 gRPC 和 TensorFlow 上都改过 RDMA，然而这两个都是当时直接改在它们原本的源码里面的，要有人让我再改一个别的东西那我就傻了，又得从头重新走一遍。要我给个示例的话，手上只有当时最早学 RDMA 时从 rc_pingpong 里扒出来的 client 和 server 了。 于是准备开个新坑，整理个自己的的 RDMA 轮子库出来。 To be continued.]]></content>
+    <content type="text"><![CDATA[嗯，原本打算写着玩系列写个内存池、线程池啥的，前段时间做医疗影像 DL 项目的时候跟实验室的小伙伴一起用 C++ 和 Cuda 写过一个 Inference 的框架。 那个项目后面还不知道要怎么发展，似乎暂时没办法把框架公开出来。然后内存池只写了个开头，准备等有空再出来补补吧。线程池…嗯，还不知道在哪呢。 最近整理以前的资料的时候又给自己找了个新坑。嗯，虽说之前在 gRPC 和 TensorFlow 上都改过 RDMA，然而这两个都是当时直接改在它们原本的源码里面的，要有人让我再改一个别的东西那我就傻了，又得从头重新走一遍。要我给个示例的话，手上只有当时最早学 RDMA 时从 rc_pingpong 里扒出来的 client 和 server 了。 于是准备开个新坑，整理个自己的的 RDMA 轮子库出来。 Talk is cheap, just show you the code: https://github.com/jcf94/RDMA-wheel]]></content>
       <categories>
         <category>Project</category>
       </categories>
