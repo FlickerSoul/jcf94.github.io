@@ -106,14 +106,14 @@
   <meta name="description" content="还是应该多写东西，感觉离开学校以后写的越来越少了，真是惭愧。 之后的工作有很多是要跟神经网络的编译执行相关，准备继 TF 拆包之后再来记一下我对 TVM 的探索过程。这个系列的坑会开多久也不一定，毕竟之前 TF 的其实也只做了一点点微小的工作，还有很多方面的内容没有看，另外 TF 要更到 2.0 之后可能有不少地方已经有一些变动了。 （也许有空也会看一下 XLA 吧，不过那个应该是要合到 TF 的">
 <meta name="keywords" content="TVM,Compile">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TVM 拆包（一）：Source code basics">
+<meta property="og:title" content="TVM 拆包（一）：Runtime basics">
 <meta property="og:url" content="http://jcf94.com/2019/09/14/2019-09-14-tvm/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="还是应该多写东西，感觉离开学校以后写的越来越少了，真是惭愧。 之后的工作有很多是要跟神经网络的编译执行相关，准备继 TF 拆包之后再来记一下我对 TVM 的探索过程。这个系列的坑会开多久也不一定，毕竟之前 TF 的其实也只做了一点点微小的工作，还有很多方面的内容没有看，另外 TF 要更到 2.0 之后可能有不少地方已经有一些变动了。 （也许有空也会看一下 XLA 吧，不过那个应该是要合到 TF 的">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-22T06:44:12.619Z">
+<meta property="og:updated_time" content="2019-09-22T08:51:16.488Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TVM 拆包（一）：Source code basics">
+<meta name="twitter:title" content="TVM 拆包（一）：Runtime basics">
 <meta name="twitter:description" content="还是应该多写东西，感觉离开学校以后写的越来越少了，真是惭愧。 之后的工作有很多是要跟神经网络的编译执行相关，准备继 TF 拆包之后再来记一下我对 TVM 的探索过程。这个系列的坑会开多久也不一定，毕竟之前 TF 的其实也只做了一点点微小的工作，还有很多方面的内容没有看，另外 TF 要更到 2.0 之后可能有不少地方已经有一些变动了。 （也许有空也会看一下 XLA 吧，不过那个应该是要合到 TF 的">
 
 
@@ -134,7 +134,7 @@
   };
 </script>
 
-  <title>TVM 拆包（一）：Source code basics | Chenfan Blog</title>
+  <title>TVM 拆包（一）：Runtime basics | Chenfan Blog</title>
   
 
 
@@ -407,7 +407,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">TVM 拆包（一）：Source code basics
+          <h2 class="post-title" itemprop="name headline">TVM 拆包（一）：Runtime basics
 
               
             
@@ -448,7 +448,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-09-22 14:44:12" itemprop="dateModified" datetime="2019-09-22T14:44:12+08:00">2019-09-22</time>
+                <time title="Modified: 2019-09-22 16:51:16" itemprop="dateModified" datetime="2019-09-22T16:51:16+08:00">2019-09-22</time>
               </span>
             
           
@@ -517,7 +517,41 @@
 <a id="more"></a>
 
 <hr>
-<p>To be continued.</p>
+<p>第一篇先从代码中一些基础的结构开始，最早读代码的时候没看明白一些东西是怎么实现的，为了看懂细节吃了不少的苦头。</p>
+<p>参考文档：<a href="https://docs.tvm.ai/dev/runtime.html" target="_blank" rel="noopener">【TVM Runtime System】</a></p>
+<h1 id="Node-amp-NodeRef"><a href="#Node-amp-NodeRef" class="headerlink" title="Node &amp; NodeRef"></a>Node &amp; NodeRef</h1><p>Node 和 NodeRef 这两个类在 TVM 中几乎是所有对象的基类了，Node 是功能本体，NodeRef 可以看成是对 Node 的一个指针引用。举例来说 TVM IR 语法树中的两个结构 Statement 和 Expression 的实际存储对象是 <code>StmtNode</code> 和 <code>ExprNode</code>，从 Node 继承而来，但是在被其他结构用到的时候用的却是 <code>Stmt</code> 和 <code>Expr</code> 两个结构，从 NodeRef 继承而来。</p>
+<p>Node 这个结构本身没什么好看的，看一下 NodeRef 的实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*! \brief Base class of all node reference object */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NodeRef</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">/*! \brief type indicate the container type */</span></span><br><span class="line">  <span class="keyword">using</span> ContainerType = Node;</span><br><span class="line">  <span class="comment">/*!</span></span><br><span class="line"><span class="comment">   * \brief Comparator</span></span><br><span class="line"><span class="comment">   * \param other Another node ref.</span></span><br><span class="line"><span class="comment">   * \return the compare result.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> NodeRef&amp; other) <span class="keyword">const</span>;</span><br><span class="line">  <span class="comment">/*!</span></span><br><span class="line"><span class="comment">   * \brief Comparator</span></span><br><span class="line"><span class="comment">   * \param other Another node ref.</span></span><br><span class="line"><span class="comment">   * \return the compare result.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">same_as</span><span class="params">(<span class="keyword">const</span> NodeRef&amp; other)</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">/*!</span></span><br><span class="line"><span class="comment">   * \brief Comparator</span></span><br><span class="line"><span class="comment">   * \param other Another node ref.</span></span><br><span class="line"><span class="comment">   * \return the compare result.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> NodeRef&amp; other) <span class="keyword">const</span>;</span><br><span class="line">  <span class="comment">/*!</span></span><br><span class="line"><span class="comment">   * \brief Comparator</span></span><br><span class="line"><span class="comment">   * \param other Another node ref.</span></span><br><span class="line"><span class="comment">   * \return the compare result.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> NodeRef&amp; other) <span class="keyword">const</span>;</span><br><span class="line">  <span class="comment">/*! \return the hash function for NodeRef */</span></span><br><span class="line">  <span class="function"><span class="keyword">inline</span> size_t <span class="title">hash</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">/*! \return whether the expression is null */</span></span><br><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">defined</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">/*! \return the internal type index of IRNode */</span></span><br><span class="line">  <span class="function"><span class="keyword">inline</span> uint32_t <span class="title">type_index</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">/*! \return the internal node pointer */</span></span><br><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">const</span> Node* <span class="title">get</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">/*! \return the internal node pointer */</span></span><br><span class="line">  <span class="keyword">inline</span> <span class="keyword">const</span> Node* <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span>;</span><br><span class="line">  <span class="comment">/*!</span></span><br><span class="line"><span class="comment">   * \brief Downcast this ir node to its actual type (e.g. Add, or</span></span><br><span class="line"><span class="comment">   * Select). This returns nullptr if the node is not of the requested</span></span><br><span class="line"><span class="comment">   * type. Example usage:</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * if (const Add *add = node-&gt;as&lt;Add&gt;()) &#123;</span></span><br><span class="line"><span class="comment">   *   // This is an add node</span></span><br><span class="line"><span class="comment">   * &#125;</span></span><br><span class="line"><span class="comment">   * \tparam T the target type, must be subtype of IRNode</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">const</span> T *<span class="title">as</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">/*!</span></span><br><span class="line"><span class="comment">   * \brief A more powerful version of as that also works with</span></span><br><span class="line"><span class="comment">   *  intermediate base types.</span></span><br><span class="line"><span class="comment">   * \tparam T the target type, must be subtype of IRNode</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">const</span> T *<span class="title">as_derived</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">/*! \brief default constructor */</span></span><br><span class="line">  NodeRef() = <span class="keyword">default</span>;</span><br><span class="line">  explicit NodeRef(NodePtr&lt;Node&gt; node) : node_(node) &#123;&#125;</span><br><span class="line">  <span class="comment">/*! \brief the internal node object, do not touch  */</span></span><br><span class="line">  NodePtr&lt;Node&gt; node_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> Node* NodeRef::<span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> node_.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最关键的点在于 NodeRef 对它的 <code>-&gt;</code>运算符做了一下重载，即返回自己实际代表的实体对象，所以 NodeRef 以及其派生结构虽然实际是个对象，但是在代码里面可以当成指针来用，<code>-&gt;</code>运算符之后直接跟的就是本体 Node 的成员。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*! \brief Container of all statements */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stmt</span> :</span> <span class="keyword">public</span> NodeRef &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  TVM_DEFINE_NODE_REF_METHODS(Stmt, NodeRef, StmtNode);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * \brief Macro to define common node ref methods.</span></span><br><span class="line"><span class="comment"> * \param TypeName The name of the NodeRef.</span></span><br><span class="line"><span class="comment"> * \param BaseTypeName The Base type.</span></span><br><span class="line"><span class="comment"> * \param NodeName The node container type.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TVM_DEFINE_NODE_REF_METHODS(TypeName, BaseTypeName, NodeName)   \</span></span><br><span class="line">  TypeName() &#123;&#125;                                                         \</span><br><span class="line">  explicit TypeName(::tvm::NodePtr&lt;::tvm::Node&gt; n) : BaseTypeName(n) &#123;&#125; \</span><br><span class="line">  <span class="keyword">const</span> NodeName* <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123;                                  \</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> NodeName*&gt;(node_.get());                   \</span><br><span class="line">  &#125;                                                                     \</span><br><span class="line">  <span class="function"><span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>-&gt;defined(); &#125;                     \</span><br><span class="line">  <span class="keyword">using</span> ContainerType = NodeName;</span><br></pre></td></tr></table></figure>
+
+<p>以上面的 <code>Stmt</code> 类为例，其他很多 NodeRef 的派生类结构也会用一个 <code>TVM_DEFINE_NODE_REF</code> 的宏来扩展出这部分的关键代码。</p>
+<h1 id="PackedFunc"><a href="#PackedFunc" class="headerlink" title="PackedFunc"></a>PackedFunc</h1><p>TVM 的整个软件栈涉及到很多高层脚本语言（Python、JavaScript）和 C++ 运行时的交互，因此这里提供了一套 PackedFunc 的基础用来把整个过程方便地串接起来。</p>
+<p>第一次看到这种实现时真的是被惊到了，感觉非常神奇。</p>
+<p>在 C++ 层面创建一个函数，可以直接进行本地调用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;tvm/runtime/packed_func.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyAdd</span><span class="params">(TVMArgs args, TVMRetValue* rv)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// automatically convert arguments to desired type.</span></span><br><span class="line">  <span class="keyword">int</span> a = args[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">int</span> b = args[<span class="number">1</span>];</span><br><span class="line">  <span class="comment">// automatically assign value return to rv</span></span><br><span class="line">  *rv = a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CallPacked</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  PackedFunc myadd = PackedFunc(MyAdd);</span><br><span class="line">  <span class="comment">// get back 3</span></span><br><span class="line">  <span class="keyword">int</span> c = myadd(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以通过 API 注册之后（要注册到 TVM 的 C++ 运行时库里面去），从 Python 层进行调用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// register a global packed function in c++</span></span><br><span class="line">TVM_REGISTER_GLOBAL(<span class="string">"myadd"</span>)</span><br><span class="line">.set_body(MyAdd);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tvm</span><br><span class="line"></span><br><span class="line">myadd = tvm.get_global_func(<span class="string">"myadd"</span>)</span><br><span class="line"><span class="comment"># prints 3</span></span><br><span class="line">print(myadd(<span class="number">1</span>, <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<p>反过来 Python 层写好的函数也可以直接从 C++ 层调用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TVM_REGISTER_GLOBAL(<span class="string">"callhello"</span>)</span><br><span class="line">.set_body([](TVMArgs args, TVMRetValue* rv) &#123;</span><br><span class="line">  PackedFunc f = args[<span class="number">0</span>];</span><br><span class="line">  f(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tvm</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">callback</span><span class="params">(msg)</span>:</span></span><br><span class="line">  print(msg)</span><br><span class="line"></span><br><span class="line"><span class="comment"># convert to PackedFunc</span></span><br><span class="line">f = tvm.convert(callback)</span><br><span class="line">callhello = tvm.get_global_func(<span class="string">"callhello"</span>)</span><br><span class="line"><span class="comment"># prints hello world</span></span><br><span class="line">callhello(f)</span><br></pre></td></tr></table></figure>
+
+<p>Python 层定义的 <code>callback(msg)</code> 通过 <code>callhello</code> 传递给 C++ 层，C++ 层执行时直接从输入参数中得到了 Python 的函数对象并调用执行。</p>
+<hr>
+<p>实现方面，C++ 层的 PackedFunc 是一个对 std::function 对象的封装结构，而 Python 层面<code>tvm.convert</code> 实际上是把 Python 的函数用 ctype 做了一下封装：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TVMPackedCFunc = ctypes.CFUNCTYPE(</span><br><span class="line">    ctypes.c_int,</span><br><span class="line">    ctypes.POINTER(TVMValue),</span><br><span class="line">    ctypes.POINTER(ctypes.c_int),</span><br><span class="line">    ctypes.c_int,</span><br><span class="line">    ctypes.c_void_p,</span><br><span class="line">    ctypes.c_void_p)</span><br></pre></td></tr></table></figure>
+
+<p>PackedFunc 对函数的输入参数、返回值的解析处理做了比较精巧的处理，最终达到了从 API 层面看上去非常好的使用体验。</p>
+<blockquote>
+<p>Amazing!</p>
+<p>有空的话可以试一下把 TVM 里面的这部分内容单独扒出来，这个实现思路真的非常有意思。</p>
+</blockquote>
 
       
     </div>
@@ -619,8 +653,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1157,6 +1200,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-amp-NodeRef"><span class="nav-text">Node &amp; NodeRef</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PackedFunc"><span class="nav-text">PackedFunc</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
