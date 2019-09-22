@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[TVM 拆包]]></title>
+    <title><![CDATA[TVM 拆包（一）：Source code basics]]></title>
     <url>%2F2019%2F09%2F14%2F2019-09-14-tvm%2F</url>
-    <content type="text"><![CDATA[还是应该多写东西，感觉离开学校以后写的越来越少了，真是惭愧。 之后的工作有很多是要跟神经网络的编译执行相关，准备继 TF 拆包之后再来记一下我对 TVM 的探索过程。（也许有空也会看一下 XLA 吧，不过那个应该是要合到 TF 的拆包系列里面去了） To be continued.]]></content>
+    <content type="text"><![CDATA[还是应该多写东西，感觉离开学校以后写的越来越少了，真是惭愧。 之后的工作有很多是要跟神经网络的编译执行相关，准备继 TF 拆包之后再来记一下我对 TVM 的探索过程。这个系列的坑会开多久也不一定，毕竟之前 TF 的其实也只做了一点点微小的工作，还有很多方面的内容没有看，另外 TF 要更到 2.0 之后可能有不少地方已经有一些变动了。 （也许有空也会看一下 XLA 吧，不过那个应该是要合到 TF 的拆包系列里面去了） 一些基础的背景可以见前面一篇对 TVM 作者一门课的课程记录：【CSE 599W： Systems for ML】 To be continued.]]></content>
       <categories>
         <category>Project</category>
       </categories>
