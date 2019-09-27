@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="信号系列是通信工程的重点内容，以复变函数与积分变换作为基础的数学课程，主要包含信号与系统、升级版数字信号处理、然后是以概率论与数理统计为数学基础课的信息论作为通信方面数学上的理论基础、最后得到通信原理、应用方面有移动通信。 复变函数与积分变换  欧拉公式：  二维平面中点的坐标：$(r\cos\theta,r\sin\theta)$ $$x=r\cos\theta$$ $$y=r\sin\thet">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-10-08T01:56:46.000Z">
+<meta property="og:updated_time" content="2019-09-25T15:27:26.067Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="信号相关专业复习">
 <meta name="twitter:description" content="信号系列是通信工程的重点内容，以复变函数与积分变换作为基础的数学课程，主要包含信号与系统、升级版数字信号处理、然后是以概率论与数理统计为数学基础课的信息论作为通信方面数学上的理论基础、最后得到通信原理、应用方面有移动通信。 复变函数与积分变换  欧拉公式：  二维平面中点的坐标：$(r\cos\theta,r\sin\theta)$ $$x=r\cos\theta$$ $$y=r\sin\thet">
@@ -448,7 +448,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2017-10-08 09:56:46" itemprop="dateModified" datetime="2017-10-08T09:56:46+08:00">2017-10-08</time>
+                <time title="Modified: 2019-09-25 23:27:26" itemprop="dateModified" datetime="2019-09-25T23:27:26+08:00">2019-09-25</time>
               </span>
             
           
@@ -656,7 +656,30 @@
 <ul>
 <li>变换</li>
 </ul>
-<p>|时域|频域|<br>|-|<br>|连续|非周期|<br>|离散|周期|<br>|周期|离散|<br>|非周期|连续|</p>
+<table>
+<thead>
+<tr>
+<th>时域</th>
+<th>频域</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>连续</td>
+<td>非周期</td>
+</tr>
+<tr>
+<td>离散</td>
+<td>周期</td>
+</tr>
+<tr>
+<td>周期</td>
+<td>离散</td>
+</tr>
+<tr>
+<td>非周期</td>
+<td>连续</td>
+</tr>
+</tbody></table>
 <ul>
 <li>频移特性/调制特性</li>
 </ul>
@@ -1971,6 +1994,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

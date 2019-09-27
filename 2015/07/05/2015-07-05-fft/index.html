@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="正好复习信号到FFT了，想起来前段时间放了挺久的FFT大数乘法，顺便研究下。 普通的高精度乘法的复杂度需要$O(n^2)$，用了押位之后，一般押4位的话能够达到$O(n^2/16)$，看上去可能效果不错，但仍然是同一个数量级的。 对付更大一点的变态数据（。。。ACM赛场上很少有卡这货的吧。。。-_-////）就需要用的$O(nlogn)$的FFT大数乘法算法了。 数学基础 首先基础是DFT，FFT">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
+<meta property="og:updated_time" content="2019-09-25T16:31:37.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="快速傅里叶变换FFT算法的用途">
 <meta name="twitter:description" content="正好复习信号到FFT了，想起来前段时间放了挺久的FFT大数乘法，顺便研究下。 普通的高精度乘法的复杂度需要$O(n^2)$，用了押位之后，一般押4位的话能够达到$O(n^2/16)$，看上去可能效果不错，但仍然是同一个数量级的。 对付更大一点的变态数据（。。。ACM赛场上很少有卡这货的吧。。。-_-////）就需要用的$O(nlogn)$的FFT大数乘法算法了。 数学基础 首先基础是DFT，FFT">
@@ -448,7 +448,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-09-23 18:58:49" itemprop="dateModified" datetime="2018-09-23T18:58:49+08:00">2018-09-23</time>
+                <time title="Modified: 2019-09-26 00:31:37" itemprop="dateModified" datetime="2019-09-26T00:31:37+08:00">2019-09-26</time>
               </span>
             
           
@@ -517,8 +517,7 @@
 <p>首先基础是DFT，FFT是DFT的一种快速算法。</p>
 <p>从N点DFT出发：</p>
 <a id="more"></a>
-
-<p>$$\begin{align}<br>X[K]&amp;=\sum_{n=0}^{N-1}x[n]e^{-j\frac{2\pi K}{N}n}\<br>&amp;=\sum_{n=0}^{\frac{N}{2}-1}x[2n]e^{-j\frac{2\pi K}{N}2n}+\sum_{n=0}^{\frac{N}{2}-1}x[2n+1]e^{-j\frac{2\pi K}{N}(2n+1)}\<br>&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}+\sum_{n=0}^{\frac{N}{2}-1}x_2[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}e^{-j\frac{2\pi K}{N}}\<br>&amp;=X_1[K]+e^{-j\frac{2\pi K}{N}}X_2[K]<br>\end{align}$$</p>
+<p>$$<br>\begin{align}<br>X[K] &amp;= \sum_{n=0}^{N-1}x[n]e^{-j\frac{2\pi K}{N}n} \\<br>&amp;=\sum_{n=0}^{\frac{N}{2}-1}x[2n]e^{-j\frac{2\pi K}{N}2n}+\sum_{n=0}^{\frac{N}{2}-1}x[2n+1]e^{-j\frac{2\pi K}{N}(2n+1)} \\<br>&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}+\sum_{n=0}^{\frac{N}{2}-1}x_2[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}e^{-j\frac{2\pi K}{N}} \\<br>&amp;=X_1[K]+e^{-j\frac{2\pi K}{N}}X_2[K]<br>\end{align}<br>$$</p>
 <p>也就是说，通过上述变换，我们成功地将一个N点得DFT拆成了2个$\frac{N}{2}$点的DFT</p>
 <p>分析一下复杂度：</p>
 <p>首先N点DFT的结果$X[K]$有N点，每个点的计算都要对$x[n]$的n个序列值乘上负指数求和，复杂度是$O(n^2)$</p>
@@ -527,7 +526,7 @@
 <p>我们把一个N点的DFT拆成$\frac{N}{2}$点的DFT之后，下面得到的两个序列$X_1[K]$和$X_2[K]$都只有$\frac{N}{2}$点。</p>
 <p>也就是说直接这么写，当K大于$\frac{N}{2}-1$之后，放在代码里面，后面部分就会出现<u><strong>数组越界</strong></u>的问题！！</p>
 <p>继续分析后面部分：</p>
-<p>$$\begin{align}<br>X_1[K]&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}\<br>X_1[\frac{N}{2}+K]&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi}{\frac{N}{2}}(\frac{N}{2}+K)n}\<br>&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}e^{-j2\pi n}\<br>&amp;=-\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}\<br>&amp;=-X_1[K]<br>\end{align}$$</p>
+<p>$$<br>\begin{align}<br>X_1[K]&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n} \\<br>X_1[\frac{N}{2}+K]&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi}{\frac{N}{2}}(\frac{N}{2}+K)n}\\<br>&amp;=\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}e^{-j2\pi n}\\<br>&amp;=-\sum_{n=0}^{\frac{N}{2}-1}x_1[n]e^{-j\frac{2\pi K}{\frac{N}{2}}n}\\<br>&amp;=X_1[K]<br>\end{align}<br>$$</p>
 <p>好，这样问题就解决了。</p>
 <p>令：</p>
 <p>$$W_N^K=e^{-j\frac{2\pi K}{N}}$$</p>
