@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,29 +49,32 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="逛知乎的时候发现的这个问题：  Tarjan（自己&#x2F;合作）创造了哪些算法和数据结构？  一开始只是觉得这个名字熟悉（脑子里面冒出来的是 Tarjan 离线 LCA），点进去一看越看越心惊。 强连通分量？哦，那个经典算法好像确实叫 Tarjan。LCT 动态树…卧槽他写的？斐波那契堆…卧槽他写的？Splay 伸展树…卧槽他写的？ 从 1971 年至今，Tarjan 大佬大概发了 300 篇左右的论">
-<meta name="keywords" content="Splay,伸展树,动态树,LCT,Paper,Tarjan,Algorithm,LCA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tarjan 大佬的算法们">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2017&#x2F;09&#x2F;27&#x2F;2017-09-27-tarjan&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2017/09/27/2017-09-27-tarjan/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="逛知乎的时候发现的这个问题：  Tarjan（自己&#x2F;合作）创造了哪些算法和数据结构？  一开始只是觉得这个名字熟悉（脑子里面冒出来的是 Tarjan 离线 LCA），点进去一看越看越心惊。 强连通分量？哦，那个经典算法好像确实叫 Tarjan。LCT 动态树…卧槽他写的？斐波那契堆…卧槽他写的？Splay 伸展树…卧槽他写的？ 从 1971 年至今，Tarjan 大佬大概发了 300 篇左右的论">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2017-09-27-tarjan-tarjan.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2017-09-27-tarjan-1.jpg">
-<meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2017-09-27-tarjan-1.jpg">
+<meta property="article:published_time" content="2017-09-27T01:06:45.000Z">
+<meta property="article:modified_time" content="2018-09-23T10:58:49.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="Splay">
+<meta property="article:tag" content="伸展树">
+<meta property="article:tag" content="动态树">
+<meta property="article:tag" content="LCT">
+<meta property="article:tag" content="Paper">
+<meta property="article:tag" content="Tarjan">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="LCA">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2017-09-27-tarjan-tarjan.jpg">
+<meta name="twitter:image" content="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg">
 
 <link rel="canonical" href="http://jcf94.com/2017/09/27/2017-09-27-tarjan/">
 
@@ -79,16 +84,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>Tarjan 大佬的算法们 | Chenfan Blog</title>
   
-
-
 
 
 
@@ -118,6 +119,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -203,6 +205,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -280,7 +283,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg"></p>
+        <p><img data-src="http://jcf94.com/download/2017-09-27-tarjan-tarjan.jpg" alt=""></p>
 <p>逛知乎的时候发现的这个问题：</p>
 <ul>
 <li><a href="https://www.zhihu.com/question/65155704" target="_blank" rel="noopener">Tarjan（自己/合作）创造了哪些算法和数据结构？</a></li>
@@ -367,7 +370,7 @@
 <hr>
 <p>有了 Splay 之后，接下来 LCT 的操作就很简单了。前面说过，LCT 的核心操作是 <code>Access()</code>。</p>
 <p>以 QTREE 一文中的例子来解释（找不到什么比较好的画图工具，只好手画了）：</p>
-<p><img alt data-src="http://jcf94.com/download/2017-09-27-tarjan-1.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2017-09-27-tarjan-1.jpg" alt=""></p>
 <p>LCT 存储的是树结构上的 <code>Preferred Path</code>，例如对左边的树进行 <code>Access(N)</code> 操作之后，从根节点 A 到目标节点 N 就形成了一条 <code>Preferred Path</code>，跟这条路径上的点相连的原有的 <code>Preferred Path</code> 都恢复成普通边（例如 A-B 和 N-O 都从 <code>Preferred Path</code> 恢复成了普通边）。</p>
 <p>我们把 <code>Preferred Path</code> 存储在 Splay 森林上，然后每次 <code>Access</code> 操作之后对 <code>Preferred Path</code> 进行的修改则相应地需要依靠 Splay 来进行维护。</p>
 <p>左下角的这棵树就是 <code>Access(N)</code> 操作前的 Splay 森林的结构，红边是 Splay 的树边，黑边是两棵 Splay 树的连接关系。这里其实一共有 7 棵 Splay 树：ABE，D，F，CGHJ，IK，LNO，M。可以看到每一棵 Splay 实际上表示的是一条 <code>Preferred Path</code> 或者单个节点，<code>Preferred Path</code> 在原树中的深度就是对应的 Splay 中节点的索引值（！！这个对理解很重要）。</p>
@@ -509,21 +512,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2017/09/18/2017-09-18-rdmalib/" rel="next" title="写着玩之 RDMA 轮子">
-                  <i class="fa fa-chevron-left"></i> 写着玩之 RDMA 轮子
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2017/10/28/2017-10-28-hdu3436/" rel="prev" title="HDU 3436 Queue-jumpers Splay 离散化">
-                  HDU 3436 Queue-jumpers Splay 离散化 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/09/18/2017-09-18-rdmalib/" rel="prev" title="写着玩之 RDMA 轮子">
+      <i class="fa fa-chevron-left"></i> 写着玩之 RDMA 轮子
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/10/28/2017-10-28-hdu3436/" rel="next" title="HDU 3436 Queue-jumpers Splay 离散化">
+      HDU 3436 Queue-jumpers Splay 离散化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -537,6 +537,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -561,14 +583,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tarjan-双连通分量-amp-强连通分量"><span class="nav-text">Tarjan 双连通分量 &amp; 强连通分量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tarjan-离线-LCA"><span class="nav-text">Tarjan 离线 LCA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Link-Cut-Tree-动态树"><span class="nav-text">Link/Cut Tree 动态树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Splay-伸展树"><span class="nav-text">Splay 伸展树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#持久化数据结构"><span class="nav-text">持久化数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#斐波那契堆"><span class="nav-text">斐波那契堆</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tarjan-双连通分量-amp-强连通分量"><span class="nav-text">Tarjan 双连通分量 &amp; 强连通分量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tarjan-离线-LCA"><span class="nav-text">Tarjan 离线 LCA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Link-Cut-Tree-动态树"><span class="nav-text">Link&#x2F;Cut Tree 动态树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Splay-伸展树"><span class="nav-text">Splay 伸展树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#持久化数据结构"><span class="nav-text">持久化数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#斐波那契堆"><span class="nav-text">斐波那契堆</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -594,20 +616,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -629,16 +651,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -670,25 +692,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -706,23 +732,20 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -733,6 +756,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -742,10 +766,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>

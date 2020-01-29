@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,31 +49,27 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="大二开始几个小伙伴一起跟杨俊做了个单片机的小东西 最后感觉也就是水过了 这几天准备重新把资料理出来看看，没准面试可以用一下。 Orz 基本原理:">
-<meta name="keywords" content="单片机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Uzebox">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2015&#x2F;07&#x2F;12&#x2F;2015-07-12-uzebox&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2015/07/12/2015-07-12-uzebox/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="大二开始几个小伙伴一起跟杨俊做了个单片机的小东西 最后感觉也就是水过了 这几天准备重新把资料理出来看看，没准面试可以用一下。 Orz 基本原理:">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-07-12-uzebox-1.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-07-12-uzebox-2.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-07-12-uzebox-3.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-07-12-uzebox-4.jpg">
-<meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://jcf94.com/download/2015-07-12-uzebox-1.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-07-12-uzebox-2.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-07-12-uzebox-3.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-07-12-uzebox-4.jpg">
+<meta property="article:published_time" content="2015-07-12T12:30:40.000Z">
+<meta property="article:modified_time" content="2018-09-23T10:58:49.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="单片机">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-07-12-uzebox-1.jpg">
+<meta name="twitter:image" content="http://jcf94.com/download/2015-07-12-uzebox-1.jpg">
 
 <link rel="canonical" href="http://jcf94.com/2015/07/12/2015-07-12-uzebox/">
 
@@ -81,16 +79,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>Uzebox | Chenfan Blog</title>
   
-
-
 
 
 
@@ -120,6 +114,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -205,6 +200,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -287,11 +283,11 @@
 <p>这几天准备重新把资料理出来看看，没准面试可以用一下。</p>
 <p>Orz</p>
 <p>基本原理:</p>
-<p><img alt="基本原理" data-src="http://jcf94.com/download/2015-07-12-uzebox-1.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2015-07-12-uzebox-1.jpg" alt="基本原理"></p>
 <a id="more"></a>
 
 <p>从核心部分开始：</p>
-<p><img alt="总图" data-src="http://jcf94.com/download/2015-07-12-uzebox-2.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2015-07-12-uzebox-2.jpg" alt="总图"></p>
 <h1 id="UZEBOX主机"><a href="#UZEBOX主机" class="headerlink" title="UZEBOX主机"></a>UZEBOX主机</h1><hr>
 <p><a href="http://uzebox.org/wiki/index.php?title=Main_Page" target="_blank" rel="noopener">UZEBOX的Wiki页面</a></p>
 <p>具体电路图如上所示，用到的芯片只有两个，单片机和后面的AD转换芯片，剩下的都是一些简单的电路。</p>
@@ -327,11 +323,11 @@
 <p>计时器开始为0，计数到1820，此时它会自动回转到0，并且生成一个中断。</p>
 <p>1820的值是由主晶振频率（28.63636MHZ）除以NTSC扫描线率（15.73426KHZ）得到的。</p>
 <p>内核中断负责暂停主程序，进行渲染视频和混合音乐。由于速度和时间要求，需要用汇编语言来写。</p>
-<p><img alt="中断" data-src="http://jcf94.com/download/2015-07-12-uzebox-3.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2015-07-12-uzebox-3.jpg" alt="中断"></p>
 <h3 id="视频引擎"><a href="#视频引擎" class="headerlink" title="视频引擎"></a>视频引擎</h3><p>内核提供12种不同的工作模式，每种都有不同的特点，用于实现视频绘制</p>
 <h3 id="声音引擎"><a href="#声音引擎" class="headerlink" title="声音引擎"></a>声音引擎</h3><p>音乐处理涉及到音乐乐谱的读取和波封的处理，这里使用的是MIDI这种紧凑格式的音频，纯软件完成</p>
 <h2 id="游戏载入"><a href="#游戏载入" class="headerlink" title="游戏载入"></a>游戏载入</h2><p>从<a href="https://github.com/Uzebox/uzebox" target="_blank" rel="noopener">github</a>上下到完整的包是这样的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">demos         //各种运行工具以及游戏包</span><br><span class="line">gfx           //颜色以及图像资源等</span><br><span class="line">kernel        //内核，包括初始化、运行主程序、中断、视频/音频引擎等</span><br><span class="line">tools         //编译工具</span><br><span class="line">Makefile      //编译文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">demos         &#x2F;&#x2F;各种运行工具以及游戏包</span><br><span class="line">gfx           &#x2F;&#x2F;颜色以及图像资源等</span><br><span class="line">kernel        &#x2F;&#x2F;内核，包括初始化、运行主程序、中断、视频&#x2F;音频引擎等</span><br><span class="line">tools         &#x2F;&#x2F;编译工具</span><br><span class="line">Makefile      &#x2F;&#x2F;编译文件</span><br></pre></td></tr></table></figure>
 
 <p>执行make之后，会在Rom目录下生成一些.hex和.uze的文件</p>
 <p>.uze文件是原本生成了.hex文件之后加上首部打包而成</p>
@@ -344,7 +340,7 @@
 <p>游戏机制作完成之后，我们对其进行了两方面的改进</p>
 <h2 id="无线传输"><a href="#无线传输" class="headerlink" title="无线传输"></a>无线传输</h2><p><a href="http://anarchy.translocal.jp/radio/micro/howtotx.html" target="_blank" rel="noopener">参考Tetsuo Kogawa的网站</a></p>
 <p>将视频信号通过一个简易的无线电路发射出去，可以通过一般的CRT电视来接收</p>
-<p><img alt="无线" data-src="http://jcf94.com/download/2015-07-12-uzebox-4.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2015-07-12-uzebox-4.jpg" alt="无线"></p>
 <p>该电路非常简化，制作该电路的时候也是使用双面覆铜板完成</p>
 <p>所有暴露在外面的导线都是尽可能地贴近覆铜板，使高频信号尽可能地衰减掉</p>
 <p>选择一个电视频道，并调节可调电感来使得两个设备相互适配</p>
@@ -367,21 +363,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2015/07/09/2015-07-09-qiyue/" rel="next" title="我的七月">
-                  <i class="fa fa-chevron-left"></i> 我的七月
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2015/07/13/2015-07-13-makefile/" rel="prev" title="Makefile解析">
-                  Makefile解析 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/07/09/2015-07-09-qiyue/" rel="prev" title="我的七月">
+      <i class="fa fa-chevron-left"></i> 我的七月
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/07/13/2015-07-13-makefile/" rel="next" title="Makefile解析">
+      Makefile解析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -395,6 +388,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -425,8 +440,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -452,20 +467,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -487,16 +502,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -528,25 +543,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -564,23 +583,20 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -591,6 +607,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -600,10 +617,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>

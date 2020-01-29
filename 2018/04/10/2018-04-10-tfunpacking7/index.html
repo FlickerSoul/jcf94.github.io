@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,28 +49,24 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA  开始分析性能瓶颈了，本篇记录一下研究 TF 中自带的 P">
-<meta name="keywords" content="TensorFlow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TensorFlow 拆包（七）：Profiling 踩坑 &amp; Benchmark">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2018&#x2F;04&#x2F;10&#x2F;2018-04-10-tfunpacking7&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2018/04/10/2018-04-10-tfunpacking7/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="接上篇：  TensorFlow 拆包（一）：Session.Run() TensorFlow 拆包（二）：TF 的数据流模型实现 TensorFlow 拆包（三）：Graph 和 Node TensorFlow 拆包（四）：Device TensorFlow 拆包（五）：Distributed TensorFlow 拆包（六）：RDMA  开始分析性能瓶颈了，本篇记录一下研究 TF 中自带的 P">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2018-04-10-tfunpacking7-graph_timeline.png">
-<meta property="og:updated_time" content="2018-10-30T08:37:52.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png">
+<meta property="article:published_time" content="2018-04-10T05:26:52.000Z">
+<meta property="article:modified_time" content="2018-10-30T08:37:52.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="TensorFlow">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2018-04-10-tfunpacking7-graph_timeline.png">
+<meta name="twitter:image" content="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png">
 
 <link rel="canonical" href="http://jcf94.com/2018/04/10/2018-04-10-tfunpacking7/">
 
@@ -78,16 +76,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>TensorFlow 拆包（七）：Profiling 踩坑 & Benchmark | Chenfan Blog</title>
   
-
-
 
 
 
@@ -117,6 +111,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -202,6 +197,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -324,7 +320,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tfprof&gt;</span><br><span class="line">xxx xxx -output timeline:outfile=xxxxx</span><br><span class="line"><span class="comment"># 把结果输出成 chrome 用的时间线 trace 文件，可以在 chrome 地址栏中输入 chrome://tracing 打开</span></span><br><span class="line"><span class="comment"># 只支持 graph、scope、code 这 3 种视图</span></span><br><span class="line">xxx xxx -output pprof:outfile=xxxxx</span><br><span class="line"><span class="comment"># 把结果输出成 pprof 用的可视化文件（所以前面装 pprof 就是为了这个）</span></span><br><span class="line"><span class="comment"># 只支持 code 这种视图</span></span><br><span class="line"><span class="comment"># --------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># pprof 可视化文件之后可以用 pprof 来变成图片（猜测大概是类似 GraphViz 的数据结构）</span></span><br><span class="line">pprof -svg --nodecount=10000 --sample_index=1 xxxxxx.prof &gt; xxxxxx.svg</span><br></pre></td></tr></table></figure>
 
 <p>profiler_ui 打开时的第一个页面就是 graph 视图生成的 timeline：</p>
-<p><img alt data-src="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png"></p>
+<p><img data-src="http://jcf94.com/download/2018-04-10-tfunpacking7-graph_timeline.png" alt=""></p>
 <p>其中包含了计算图中每个 node 在卡上的情况，运行时间、数据流动依赖关系等等。（话说显示的太复杂了，事实上我觉得还是很难看）</p>
 <p>然后默认的 scope 视图以及 code 视图得到的 timeline 我也感觉并没有什么用。</p>
 <p>code 视图输出成的 pprof 图片倒是还可以看一下，但是感觉用处也不大</p>
@@ -543,7 +539,7 @@
       <div class="popular-posts-title"><a href="/2018/01/23/2018-01-23-tfunpacking2/" rel="bookmark">TensorFlow 拆包（二）：TF 的数据流模型实现以及自动求导</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/02/28/2018-02-28-tfunpacking3/" rel="bookmark">TensorFlow 拆包（三）：Graph 和 Node</a></div>
+      <div class="popular-posts-title"><a href="/2018/03/09/2018-03-09-tfunpacking5/" rel="bookmark">TensorFlow 拆包（五）：Distributed</a></div>
     </li>
   </ul>
 
@@ -555,21 +551,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2018/03/12/2018-03-12-tfunpacking6/" rel="next" title="TensorFlow 拆包（六）：RDMA">
-                  <i class="fa fa-chevron-left"></i> TensorFlow 拆包（六）：RDMA
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2018/06/11/2018-06-11-tfunpacking8/" rel="prev" title="TensorFlow 拆包（八）：Dynamic Control Flow in Large-Scale Machine Learning">
-                  TensorFlow 拆包（八）：Dynamic Control Flow in Large-Scale Machine Learning <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/12/2018-03-12-tfunpacking6/" rel="prev" title="TensorFlow 拆包（六）：RDMA">
+      <i class="fa fa-chevron-left"></i> TensorFlow 拆包（六）：RDMA
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/06/11/2018-06-11-tfunpacking8/" rel="next" title="TensorFlow 拆包（八）：Dynamic Control Flow in Large-Scale Machine Learning">
+      TensorFlow 拆包（八）：Dynamic Control Flow in Large-Scale Machine Learning <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -583,6 +576,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -613,8 +628,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -640,20 +655,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -675,16 +690,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -716,25 +731,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -752,23 +771,20 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -779,6 +795,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -788,10 +805,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>

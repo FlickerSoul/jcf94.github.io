@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,34 +49,31 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="我的Y480出厂预装的win7，现在过了好久了，系统早就格盘重装成win8.1了，但是分区表里面还有个OEM分区。里面存的应该是预装的系统备份，跟笔记本电源键旁边的恢复键直接绑定……不过系统既然早被我格完了，那个键已经很早没有用过了，想想决定还是把这个OEM分区删掉。 花了点时间把这事搞定了，之前是自己都不敢动这块硬盘，担心乱弄会出问题。  各大厂商设置的隐藏分区方法应该都类似，可以参照这个…或者">
-<meta name="keywords" content="OEM,分区">
 <meta property="og:type" content="article">
 <meta property="og:title" content="品牌笔记本预装windows的OEM分区问题（联想）">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2014&#x2F;07&#x2F;20&#x2F;2014-07-20-oem&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2014/07/20/2014-07-20-oem/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="我的Y480出厂预装的win7，现在过了好久了，系统早就格盘重装成win8.1了，但是分区表里面还有个OEM分区。里面存的应该是预装的系统备份，跟笔记本电源键旁边的恢复键直接绑定……不过系统既然早被我格完了，那个键已经很早没有用过了，想想决定还是把这个OEM分区删掉。 花了点时间把这事搞定了，之前是自己都不敢动这块硬盘，担心乱弄会出问题。  各大厂商设置的隐藏分区方法应该都类似，可以参照这个…或者">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-1.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-2.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-3.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-4.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-5.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-6.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-7.jpg">
-<meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-1.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-2.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-3.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-4.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-5.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-6.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2014-07-20-oem-7.jpg">
+<meta property="article:published_time" content="2014-07-20T11:15:02.000Z">
+<meta property="article:modified_time" content="2018-09-23T10:58:49.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="OEM">
+<meta property="article:tag" content="分区">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2014-07-20-oem-1.jpg">
+<meta name="twitter:image" content="http://jcf94.com/download/2014-07-20-oem-1.jpg">
 
 <link rel="canonical" href="http://jcf94.com/2014/07/20/2014-07-20-oem/">
 
@@ -84,16 +83,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>品牌笔记本预装windows的OEM分区问题（联想） | Chenfan Blog</title>
   
-
-
 
 
 
@@ -123,6 +118,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -208,6 +204,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -295,23 +292,23 @@
 <p>不需要别的，使用系统自带的diskpart工具即可以完成管理。</p>
 <p>打开cmd，输入diskpart</p>
 <p>输入？号可以查看帮助</p>
-<p><img alt="1" data-src="http://jcf94.com/download/2014-07-20-oem-1.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2014-07-20-oem-1.jpg" alt="1"></p>
 <p>list disk 显示当前系统上所有的磁盘信息</p>
-<p><img alt="2" data-src="http://jcf94.com/download/2014-07-20-oem-2.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2014-07-20-oem-2.jpg" alt="2"></p>
 <p>select disk 0 根据编号选择需要的硬盘…然而我的电脑上就这么一块</p>
 <p>rescan 重新扫描配置信息</p>
-<p><img alt="3" data-src="http://jcf94.com/download/2014-07-20-oem-3.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2014-07-20-oem-3.jpg" alt="3"></p>
 <p>list partition 显示当前硬盘的分区信息</p>
 <p>select partition 4 也是根据分区号选择，我的所有分区都是主分区，分区4的类型为OEM，即为本次要解决的目标分区</p>
-<p><img alt="4" data-src="http://jcf94.com/download/2014-07-20-oem-4.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2014-07-20-oem-4.jpg" alt="4"></p>
 <p>选择完分区之后</p>
 <p>deatil partition 显示分区详细信息</p>
-<p><img alt="5" data-src="http://jcf94.com/download/2014-07-20-oem-5.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2014-07-20-oem-5.jpg" alt="5"></p>
 <p>分区类型4为fat32类型，7为NTFS类型，隐藏的OEM分区类型为11或12，设为11则显示为主分区</p>
 <p>set id=7 将该分区类型改成7即可</p>
-<p><img alt="6" data-src="http://jcf94.com/download/2014-07-20-oem-6.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2014-07-20-oem-6.jpg" alt="6"></p>
 <p>改完之后隐藏分区就显示出来了，可以跟正常的一样使用。</p>
-<p><img alt="7" data-src="http://jcf94.com/download/2014-07-20-oem-7.jpg"></p>
+<p><img data-src="http://jcf94.com/download/2014-07-20-oem-7.jpg" alt="7"></p>
 <p>然后我默默地把最后这一小块并到了D盘里面去，Hoho<del>~</del></p>
 
     </div>
@@ -330,21 +327,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2014/06/21/2014-06-21-runlevel/" rel="next" title="Ubuntu11.04之后的runlevel定义">
-                  <i class="fa fa-chevron-left"></i> Ubuntu11.04之后的runlevel定义
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2014/08/13/2014-08-13-xueshu/" rel="prev" title="浅谈我院学术氛围之我见">
-                  浅谈我院学术氛围之我见 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2014/06/21/2014-06-21-runlevel/" rel="prev" title="Ubuntu11.04之后的runlevel定义">
+      <i class="fa fa-chevron-left"></i> Ubuntu11.04之后的runlevel定义
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2014/08/13/2014-08-13-xueshu/" rel="next" title="浅谈我院学术氛围之我见">
+      浅谈我院学术氛围之我见 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -358,6 +352,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -387,8 +403,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -414,20 +430,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -449,16 +465,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -490,25 +506,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -526,23 +546,20 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -553,6 +570,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -562,10 +580,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>

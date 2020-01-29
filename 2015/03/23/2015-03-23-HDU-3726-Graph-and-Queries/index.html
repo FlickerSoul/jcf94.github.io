@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,25 +49,22 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="Graph and QueriesTime Limit: 10000&#x2F;5000 MS (Java&#x2F;Others)    Memory Limit: 32768&#x2F;32768 K (Java&#x2F;Others)  Problem DescriptionYou are given an undirected graph with N vertexes and M edges. Every vertex in">
-<meta name="keywords" content="SBT,平衡树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDU 3726 Graph and Queries 平衡树+前向星+并查集+离线操作+逆向思维 数据结构大综合题">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2015&#x2F;03&#x2F;23&#x2F;2015-03-23-HDU-3726-Graph-and-Queries&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2015/03/23/2015-03-23-HDU-3726-Graph-and-Queries/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="Graph and QueriesTime Limit: 10000&#x2F;5000 MS (Java&#x2F;Others)    Memory Limit: 32768&#x2F;32768 K (Java&#x2F;Others)  Problem DescriptionYou are given an undirected graph with N vertexes and M edges. Every vertex in">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2016-01-11T09:48:54.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-03-23T11:29:27.000Z">
+<meta property="article:modified_time" content="2016-01-11T09:48:54.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="平衡树">
+<meta property="article:tag" content="SBT">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://jcf94.com/2015/03/23/2015-03-23-HDU-3726-Graph-and-Queries/">
@@ -76,16 +75,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>HDU 3726 Graph and Queries 平衡树+前向星+并查集+离线操作+逆向思维 数据结构大综合题 | Chenfan Blog</title>
   
-
-
 
 
 
@@ -115,6 +110,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -200,6 +196,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -324,10 +321,10 @@
       <div class="popular-posts-title"><a href="/2015/03/08/2015-03-08-HDU-4006-The-kth-great-number/" rel="bookmark">HDU 4006 The kth great number 优先队列、平衡树模板题（SBT）</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2015/03/15/2015-03-15-vijos-p1647/" rel="bookmark">VIJOS P1647 不差钱 SBT</a></div>
+      <div class="popular-posts-title"><a href="/2015/03/16/2015-03-16-vijos-p1081/" rel="bookmark">VIJOS P1081 野生动物园 SBT、划分树模板</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2015/03/16/2015-03-16-vijos-p1081/" rel="bookmark">VIJOS P1081 野生动物园 SBT、划分树模板</a></div>
+      <div class="popular-posts-title"><a href="/2015/03/15/2015-03-15-vijos-p1647/" rel="bookmark">VIJOS P1647 不差钱 SBT</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2015/06/19/2015-06-19-sbt/" rel="bookmark">Size Balanced Tree</a></div>
@@ -340,27 +337,24 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/SBT/" rel="tag"># SBT</a>
               <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" rel="tag"># 平衡树</a>
+              <a href="/tags/SBT/" rel="tag"># SBT</a>
           </div>
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2015/03/16/2015-03-16-vijos-p1081/" rel="next" title="VIJOS P1081 野生动物园 SBT、划分树模板">
-                  <i class="fa fa-chevron-left"></i> VIJOS P1081 野生动物园 SBT、划分树模板
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2015/03/28/2015-03-28-HDU-3487/" rel="prev" title="HDU 3487 Play with Chain | Splay">
-                  HDU 3487 Play with Chain | Splay <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/03/16/2015-03-16-vijos-p1081/" rel="prev" title="VIJOS P1081 野生动物园 SBT、划分树模板">
+      <i class="fa fa-chevron-left"></i> VIJOS P1081 野生动物园 SBT、划分树模板
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/03/28/2015-03-28-HDU-3487/" rel="next" title="HDU 3487 Play with Chain | Splay">
+      HDU 3487 Play with Chain | Splay <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -374,6 +368,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -404,8 +420,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -431,20 +447,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -466,16 +482,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -507,25 +523,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -543,23 +563,20 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -570,6 +587,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -579,10 +597,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>

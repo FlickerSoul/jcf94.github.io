@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,32 +49,30 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="正在努力攻克《硬件&#x2F;软件接口》一书。 笔记总帖：计算机组成与设计.硬件&#x2F;软件接口 学习笔记 读到第五章 Large and Fast: Exploiting Memory Hierarchy 5.7节Virtual Memory时遭遇了较大难度。另外花费了不少功夫来看。 这一节已经开始从CPU层涉及到操作系统的内容了，现在从总帖中另外再开出来一个单独记笔记。">
-<meta name="keywords" content="学习笔记,体系结构,组成与设计.硬软件接口">
 <meta property="og:type" content="article">
 <meta property="og:title" content="硬件&#x2F;软件接口 Virtual Memory">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2015&#x2F;10&#x2F;23&#x2F;2015-10-23-virtualmemory&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2015/10/23/2015-10-23-virtualmemory/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="正在努力攻克《硬件&#x2F;软件接口》一书。 笔记总帖：计算机组成与设计.硬件&#x2F;软件接口 学习笔记 读到第五章 Large and Fast: Exploiting Memory Hierarchy 5.7节Virtual Memory时遭遇了较大难度。另外花费了不少功夫来看。 这一节已经开始从CPU层涉及到操作系统的内容了，现在从总帖中另外再开出来一个单独记笔记。">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-10-23-virtualmemory-5.7.1.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-10-23-virtualmemory-5.7.2.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-10-23-virtualmemory-5.7.3.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-10-23-virtualmemory-5.7.4.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-10-23-virtualmemory-pic.jpg">
-<meta property="og:updated_time" content="2018-09-23T10:58:49.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.2.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.3.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.4.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-pic.jpg">
+<meta property="article:published_time" content="2015-10-23T03:07:14.000Z">
+<meta property="article:modified_time" content="2018-09-23T10:58:49.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="体系结构">
+<meta property="article:tag" content="组成与设计.硬软件接口">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-10-23-virtualmemory-5.7.1.jpg">
+<meta name="twitter:image" content="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg">
 
 <link rel="canonical" href="http://jcf94.com/2015/10/23/2015-10-23-virtualmemory/">
 
@@ -82,16 +82,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>硬件/软件接口 Virtual Memory | Chenfan Blog</title>
   
-
-
 
 
 
@@ -121,6 +117,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -206,6 +203,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -390,14 +388,14 @@
 </ol>
 <p>页表、PC和寄存器，这三种东西放在一起就确定了一个程序的<strong>状态（State）</strong>，通常把这种状态叫做一个<strong>进程（Process）</strong>。当一个进程占用CPU时，它就是<strong>活跃的（Active）</strong>；当另一个进程需要占用CPU时，就会保存下该进程的当前状态，把它变成<strong>非活跃的（Inactive）</strong>；等下次再切回来执行的时候，操作系统再重新加载程序的状态，把它激活，进程就会在之前保存的地方继续向下执行。</p>
 <p>每个不同的进程可能有<strong>相同的虚拟地址</strong>（因为编程的时候无需考虑这一点），但是<strong>每个进程都有自己的页表</strong>，由操作系统负责分配和更新页表（地址的映射状况），每个虚拟地址都会指向不同的物理地址，因此不会产生冲突。</p>
-<img titile="页表寄存器、页表以及地址转换" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg">
+<img data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.1.jpg" titile="页表寄存器、页表以及地址转换">
 
 <p>上图中，首先通过页表寄存器查到一个程序页表的起始位置；<br>然后用程序中的<strong>虚拟地址页号（虚拟地址高位）</strong>来作为索引，定位到虚拟存储器的条目；<br>与Cache非常类似，一条虚拟存储器记录里面有两项：有效位、内容（物理页号）；因为页表里面包含的是所有可能的虚拟页的映射情况，因此不需要Tag位；<br>如果某一条是有效的，则命中，根据记录里面的内容就能找到对应的在主存上的物理页地址；否则就发生缺页，要去硬盘中提取内容到主存中来</p>
 <p>注意上图中的设备：一个页的大小是2^12=4KB，而虚拟地址空间一共是2^32=4GB，物理地址只有2^30=1GB（可见虚拟地址系统能够让1GB的实际物理空间处理4GB内存大小的程序，还是相当强大的），然后图里面显示的一个条目宽度只有19位，事实上为了寻址方便，会加入其它保护信息把它扩到32位。</p>
 <h3 id="5-7-2-缺页"><a href="#5-7-2-缺页" class="headerlink" title="5.7.2. 缺页"></a>5.7.2. 缺页</h3><p>如果页表中的某条有效位是0，那么就发生了缺页，转由操作系统处理，操作系统需要在下一级存储层中（一般是硬盘）找到这一页，然后把它放到主存中去。</p>
 <p>因此除了用页表跟踪虚拟页在主存中的对应位置，如果缺页发生，还需要用一个另外的数据结构来快速找到<strong>虚拟页在硬盘中的位置</strong>。这个结构可以是页表的一部分（比如说用页表的1表示命中，然后条目内容是虚拟页在主存上的物理地址；用0表示缺页，但是这个时候条目内容是虚拟页在硬盘上的物理地址），或者另外维护一个，然后寻址方式跟页表一样。</p>
 <p>操作系统在创建进程的时候也会在硬盘上建好一个专门的区域叫做<strong>交换区（Swap Space）</strong>，把进程中所有页的内容都放进去，然后建好索引。</p>
-<img title="用一个页表同时映射主存和硬盘" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.2.jpg">
+<img data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.2.jpg" title="用一个页表同时映射主存和硬盘">
 
 <p>然后，关于主存上的哪些页可以被替换掉，操作系统中也会有另外一个结构用来维护，当需要替换主存上的内容时，把长时间不用/近期不用的页写入交换区，要用的调出来。这个策略叫做<strong>LRU（Least Recently Used）</strong>。</p>
 <p>要完全准确地执行LRU的代价太高，所以一种简化的方式是在页表中加入一个<strong>引用位（Reference Bit）/使用位（Use Bit）</strong>。当某一页被访问过时，把它置为1，然后每过一段时间把所有引用位清零。这样就可以判定在某一段特定的时间内哪些页被访问过。</p>
@@ -409,11 +407,11 @@
 <blockquote>
 <p>虚拟存储器这部分多次反复使用到了Cache的思想。TLB与页表的思想区别是，页表有很多个，TLB只有一个。页表是在思想上参照了Cache，TLB则完全就是Cache的翻版。</p>
 </blockquote>
-<img title="TLB作为页表的Cache" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.3.jpg">
+<img data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.3.jpg" title="TLB作为页表的Cache">
 
 <p>上图中的页表加上了前几小节中提到的<strong>引用位（Reference Bit）和重写位（Dirty Bit）</strong>。虚拟地址过来首先跟Cache一样把虚拟地址页号分成两部分，用索引地址找到对应的条目，然后对比Tag，如果命中则直接使用物理地址；否则TLB缺失，则继续看能否在主存中找到，并装载到TLB中；再否则就是发生了主存缺页，进一步跳到硬盘上调取数据。</p>
 <p>三个标志位同步更新处理即可。</p>
-<img title="FastMATH中的TLB和Cache" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.4.jpg">
+<img data-src="http://jcf94.com/download/2015-10-23-virtualmemory-5.7.4.jpg" title="FastMATH中的TLB和Cache">
 
 <h3 id="5-7-5-集成虚拟存储器、TLB和Cache"><a href="#5-7-5-集成虚拟存储器、TLB和Cache" class="headerlink" title="5.7.5. 集成虚拟存储器、TLB和Cache"></a>5.7.5. 集成虚拟存储器、TLB和Cache</h3><p>虚拟存储系统和Cache可以看成是同一级的，下面来看一下TLB、页表、Cache三个缺失和命中的所有情况：</p>
 <table>
@@ -493,7 +491,7 @@
 <p>TLB操作与页表操作都要通过特殊的指令来完成。</p>
 <hr>
 <p>本节到此结束，真是有点累。增加了存储器部分的详细信息，尤其是支持虚拟存储器系统之后，第4章的数据通路与流水线怕是要发生很大的改动了。存储器的访问部分需要耗费的时钟周期远比原来想象的要多。</p>
-<img title="手绘一张虚拟存储器系统图" class="full-image" data-src="http://jcf94.com/download/2015-10-23-virtualmemory-pic.jpg">
+<img data-src="http://jcf94.com/download/2015-10-23-virtualmemory-pic.jpg" title="手绘一张虚拟存储器系统图" class="full-image">
 
 <hr>
 <p>资料：</p>
@@ -536,21 +534,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2015/10/16/2015-10-16-git/" rel="next" title="Git使用小结">
-                  <i class="fa fa-chevron-left"></i> Git使用小结
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2015/10/24/2015-10-24-dnsswitch/" rel="prev" title="博客站双机备份切换">
-                  博客站双机备份切换 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/10/16/2015-10-16-git/" rel="prev" title="Git使用小结">
+      <i class="fa fa-chevron-left"></i> Git使用小结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/10/24/2015-10-24-dnsswitch/" rel="next" title="博客站双机备份切换">
+      博客站双机备份切换 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -564,6 +559,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -594,8 +611,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -621,20 +638,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -656,16 +673,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -697,25 +714,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -733,23 +754,20 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -760,6 +778,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -769,10 +788,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>

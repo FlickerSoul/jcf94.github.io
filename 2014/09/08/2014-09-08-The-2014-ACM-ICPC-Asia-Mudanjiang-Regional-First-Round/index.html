@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,25 +49,21 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="【A】签到题 【B】构造 【C】遍历+floodfill染色或并查集 【D】DP（背包）+状态压缩 （感觉可出） 【E】线段树 【F】图形题 搜索+状态压缩 【G】数论，某种不定方程……ZOJ上到现在只过了4个人，还找不到题解-_-&#x2F;&#x2F;&#x2F; 【H】回文数变种+dfs枚举构造 又是构造-_-&#x2F;&#x2F;&#x2F; 【I】字符串哈希+DP或者暴力 【J】直接模拟，字符串细节操作">
-<meta name="keywords" content="ACM-ICPC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The 2014 ACM-ICPC Asia Mudanjiang Regional First Round">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2014&#x2F;09&#x2F;08&#x2F;2014-09-08-The-2014-ACM-ICPC-Asia-Mudanjiang-Regional-First-Round&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2014/09/08/2014-09-08-The-2014-ACM-ICPC-Asia-Mudanjiang-Regional-First-Round/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="【A】签到题 【B】构造 【C】遍历+floodfill染色或并查集 【D】DP（背包）+状态压缩 （感觉可出） 【E】线段树 【F】图形题 搜索+状态压缩 【G】数论，某种不定方程……ZOJ上到现在只过了4个人，还找不到题解-_-&#x2F;&#x2F;&#x2F; 【H】回文数变种+dfs枚举构造 又是构造-_-&#x2F;&#x2F;&#x2F; 【I】字符串哈希+DP或者暴力 【J】直接模拟，字符串细节操作">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2016-01-11T09:44:00.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-09-08T03:24:57.000Z">
+<meta property="article:modified_time" content="2016-01-11T09:44:00.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="ACM-ICPC">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://jcf94.com/2014/09/08/2014-09-08-The-2014-ACM-ICPC-Asia-Mudanjiang-Regional-First-Round/">
@@ -76,16 +74,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>The 2014 ACM-ICPC Asia Mudanjiang Regional First Round | Chenfan Blog</title>
   
-
-
 
 
 
@@ -115,6 +109,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -200,6 +195,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -327,14 +323,14 @@
 <p>以7和8为例：</p>
 <p>首先将其中的最后一列全部记为一种颜色，剩下的n*(n-1)部分用另外3种颜色去染：</p>
 <p>前n/2种区块蛇形染色：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">n=7</span><br><span class="line">-------</span><br><span class="line">1111110</span><br><span class="line">2222210</span><br><span class="line">2233330</span><br><span class="line">xxx3330</span><br><span class="line">xxxxxx0</span><br><span class="line">xxxxxx0</span><br><span class="line">xxxxxx0</span><br><span class="line">-------</span><br><span class="line">n=8</span><br><span class="line">--------</span><br><span class="line">11111110</span><br><span class="line">22222210</span><br><span class="line">22333330</span><br><span class="line">44443330</span><br><span class="line">4444xxx0</span><br><span class="line">xxxxxxx0</span><br><span class="line">xxxxxxx0</span><br><span class="line">xxxxxxx0</span><br><span class="line">--------</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">n&#x3D;7</span><br><span class="line">-------</span><br><span class="line">1111110</span><br><span class="line">2222210</span><br><span class="line">2233330</span><br><span class="line">xxx3330</span><br><span class="line">xxxxxx0</span><br><span class="line">xxxxxx0</span><br><span class="line">xxxxxx0</span><br><span class="line">-------</span><br><span class="line">n&#x3D;8</span><br><span class="line">--------</span><br><span class="line">11111110</span><br><span class="line">22222210</span><br><span class="line">22333330</span><br><span class="line">44443330</span><br><span class="line">4444xxx0</span><br><span class="line">xxxxxxx0</span><br><span class="line">xxxxxxx0</span><br><span class="line">xxxxxxx0</span><br><span class="line">--------</span><br></pre></td></tr></table></figure>
 
 <p>后n/2块一行一行从左向右将剩下部分填满:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">n=7</span><br><span class="line">-------</span><br><span class="line">111111 0</span><br><span class="line">222221 0</span><br><span class="line">223333 0</span><br><span class="line">   333 0</span><br><span class="line">444</span><br><span class="line">554444 0</span><br><span class="line">655555 0</span><br><span class="line">666666 0</span><br><span class="line">-------</span><br><span class="line">n=8</span><br><span class="line">--------</span><br><span class="line">1111111 0</span><br><span class="line">2222221 0</span><br><span class="line">2233333 0</span><br><span class="line">4444333 0</span><br><span class="line">4444</span><br><span class="line">    555 0</span><br><span class="line">5555566 0</span><br><span class="line">6666667 0</span><br><span class="line">7777777 0</span><br><span class="line">--------</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">n&#x3D;7</span><br><span class="line">-------</span><br><span class="line">111111 0</span><br><span class="line">222221 0</span><br><span class="line">223333 0</span><br><span class="line">   333 0</span><br><span class="line">444</span><br><span class="line">554444 0</span><br><span class="line">655555 0</span><br><span class="line">666666 0</span><br><span class="line">-------</span><br><span class="line">n&#x3D;8</span><br><span class="line">--------</span><br><span class="line">1111111 0</span><br><span class="line">2222221 0</span><br><span class="line">2233333 0</span><br><span class="line">4444333 0</span><br><span class="line">4444</span><br><span class="line">    555 0</span><br><span class="line">5555566 0</span><br><span class="line">6666667 0</span><br><span class="line">7777777 0</span><br><span class="line">--------</span><br></pre></td></tr></table></figure>
 
 <p>以上n=7和n=8时最后对齐的方向与第一部分最后一行染色的方向相同。</p>
 <p>接下来需要注意的就是第一块与最后一块的形状相同，于是作一下微调把它们变得不一样即可：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">n=7</span><br><span class="line">-------</span><br><span class="line">1111110</span><br><span class="line">2222210</span><br><span class="line">2233330</span><br><span class="line">4443330</span><br><span class="line">6544440</span><br><span class="line">6555550</span><br><span class="line">6666650</span><br><span class="line">-------</span><br><span class="line">n=8</span><br><span class="line">--------</span><br><span class="line">11111110</span><br><span class="line">22222210</span><br><span class="line">22333330</span><br><span class="line">44443330</span><br><span class="line">44445550</span><br><span class="line">55555670</span><br><span class="line">66666670</span><br><span class="line">67777770</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">n&#x3D;7</span><br><span class="line">-------</span><br><span class="line">1111110</span><br><span class="line">2222210</span><br><span class="line">2233330</span><br><span class="line">4443330</span><br><span class="line">6544440</span><br><span class="line">6555550</span><br><span class="line">6666650</span><br><span class="line">-------</span><br><span class="line">n&#x3D;8</span><br><span class="line">--------</span><br><span class="line">11111110</span><br><span class="line">22222210</span><br><span class="line">22333330</span><br><span class="line">44443330</span><br><span class="line">44445550</span><br><span class="line">55555670</span><br><span class="line">66666670</span><br><span class="line">67777770</span><br></pre></td></tr></table></figure>
 
 <p>我的做法是把最后一块色块在最后一行的其中一块与最后第二块色块在n-2行的其中一块进行互换，保证相同颜色这时候还是连在一起的就行。</p>
 <p>测试时，发现n等于5和6时，用这种调整方案是不行的，因为格子数太少，会出现第一块与最后一块颜色相同然后重叠到一起的情况。对包括这个在内的几种情况进行一下特判即可。</p>
@@ -428,13 +424,13 @@
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2014/09/13/2014-09-13-The-2014-ACM-ICPC-Asia-Regional-Anshan-Online/" rel="bookmark">The 2014 ACM-ICPC Asia Regional Anshan Online</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2014/09/15/2014-09-15-The-2014-ACMICPC-Asia-Regional-Xian-Online/" rel="bookmark">The 2014 ACMICPC Asia Regional Xian Online</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2014/09/23/2014-09-23-The-2014-ACMICPC-Asia-Regional-Beijing-Online/" rel="bookmark">The 2014 ACMICPC Asia Regional Beijing Online</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2014/09/13/2014-09-13-The-2014-ACM-ICPC-Asia-Regional-Anshan-Online/" rel="bookmark">The 2014 ACM-ICPC Asia Regional Anshan Online</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2014/09/23/2014-09-23-The-2014-ACMICPC-Asia-Regional-Guangzhou-Online/" rel="bookmark">The 2014 ACMICPC Asia Regional Guangzhou Online</a></div>
@@ -452,21 +448,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2014/09/07/2014-09-07-HDU-1811-Rank-of-Tetris/" rel="next" title="HDU 1811 Rank of Tetris 拓扑排序+并查集">
-                  <i class="fa fa-chevron-left"></i> HDU 1811 Rank of Tetris 拓扑排序+并查集
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2014/09/09/2014-09-09-HDU-3367-Pseudoforest/" rel="prev" title="HDU 3367 Pseudoforest 最大生成树">
-                  HDU 3367 Pseudoforest 最大生成树 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2014/09/07/2014-09-07-HDU-1811-Rank-of-Tetris/" rel="prev" title="HDU 1811 Rank of Tetris 拓扑排序+并查集">
+      <i class="fa fa-chevron-left"></i> HDU 1811 Rank of Tetris 拓扑排序+并查集
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2014/09/09/2014-09-09-HDU-3367-Pseudoforest/" rel="next" title="HDU 3367 Pseudoforest 最大生成树">
+      HDU 3367 Pseudoforest 最大生成树 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -480,6 +473,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -510,8 +525,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -537,20 +552,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -572,16 +587,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -613,25 +628,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -649,23 +668,20 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -676,6 +692,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -685,10 +702,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>

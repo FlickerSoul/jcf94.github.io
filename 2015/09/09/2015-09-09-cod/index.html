@@ -4,40 +4,42 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png?v=7.4.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png?v=7.4.2">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://jcf94.com').hostname,
     root: '/',
     scheme: 'Gemini',
-    version: '7.4.2',
+    version: '7.7.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":"mac"},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
     lazyload: true,
-    pangu: false,
+    pangu: true,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -47,33 +49,31 @@
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
   <meta name="description" content="《Computer Organization and Design, Hardware&#x2F;Software Interface》以及《Computer Architecture: A Quantitative Approach》被誉为体系结构界的两本圣经。 最近除了编译原理外，还在补的就是《硬件&#x2F;软件接口》这一本了。 这本书讲解得非常透彻。原本我只是对体系结构、CPU有个模糊的很难学的概念，，，书中">
-<meta name="keywords" content="学习笔记,体系结构,组成与设计.硬软件接口">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机组成与设计.硬件&#x2F;软件接口 学习笔记（一）">
-<meta property="og:url" content="http:&#x2F;&#x2F;jcf94.com&#x2F;2015&#x2F;09&#x2F;09&#x2F;2015-09-09-cod&#x2F;index.html">
+<meta property="og:url" content="http://jcf94.com/2015/09/09/2015-09-09-cod/index.html">
 <meta property="og:site_name" content="Chenfan Blog">
 <meta property="og:description" content="《Computer Organization and Design, Hardware&#x2F;Software Interface》以及《Computer Architecture: A Quantitative Approach》被誉为体系结构界的两本圣经。 最近除了编译原理外，还在补的就是《硬件&#x2F;软件接口》这一本了。 这本书讲解得非常透彻。原本我只是对体系结构、CPU有个模糊的很难学的概念，，，书中">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-09-09-cod-chip.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-09-09-cod-multi.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-09-09-cod-divi.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-09-09-cod-3.5.1.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-09-09-cod-3.5.2.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-09-09-cod-3.5.3.jpg">
-<meta property="og:updated_time" content="2018-10-04T02:46:34.000Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-chip.png">
+<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-multi.png">
+<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-divi.png">
+<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-3.5.1.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-3.5.2.jpg">
+<meta property="og:image" content="http://jcf94.com/download/2015-09-09-cod-3.5.3.jpg">
+<meta property="article:published_time" content="2015-09-09T02:56:01.000Z">
+<meta property="article:modified_time" content="2018-10-04T02:46:34.000Z">
+<meta property="article:author" content="Jcf94">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="体系结构">
+<meta property="article:tag" content="组成与设计.硬软件接口">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;jcf94.com&#x2F;download&#x2F;2015-09-09-cod-chip.png">
+<meta name="twitter:image" content="http://jcf94.com/download/2015-09-09-cod-chip.png">
 
 <link rel="canonical" href="http://jcf94.com/2015/09/09/2015-09-09-cod/">
 
@@ -83,16 +83,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>计算机组成与设计.硬件/软件接口 学习笔记（一） | Chenfan Blog</title>
   
-
-
 
 
 
@@ -122,6 +118,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Chenfan Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -207,6 +204,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -386,7 +384,7 @@
 </tbody></table>
 <p>话说理论上来说从 1965 年一直到现在本质上用的原件都还是晶体管，只不过工艺水平一直在提升，集成度也在不断增加，摩尔定律本质上是对单块芯片里面晶体管数量增长率的估计。</p>
 <p>来看下 CPU 这些芯片是怎么造出来的：</p>
-<p><img alt data-src="http://jcf94.com/download/2015-09-09-cod-chip.png"></p>
+<p><img data-src="http://jcf94.com/download/2015-09-09-cod-chip.png" alt=""></p>
 <p>首先原料是从硅开始，硅是一种出色的半导体材料，它本身的导电性介于导体和绝缘体之间，但是经过某些化学处理之后，可以变成三种不同性质的结构：</p>
 <ol>
 <li>用微观铜线或者铝线（microscopic copper or aluminum wire，不知道这个具体处理过程是啥）处理之后，可以变成良导体</li>
@@ -518,24 +516,24 @@
 <h1 id="CHAPTER-3-Arithmetic-for-Computers"><a href="#CHAPTER-3-Arithmetic-for-Computers" class="headerlink" title="CHAPTER 3. Arithmetic for Computers"></a>CHAPTER 3. Arithmetic for Computers</h1><p>计算机中的算术运算</p>
 <h2 id="3-1-Instruction"><a href="#3-1-Instruction" class="headerlink" title="3.1. Instruction"></a>3.1. Instruction</h2><h2 id="3-2-Addition-and-Subtraction"><a href="#3-2-Addition-and-Subtraction" class="headerlink" title="3.2. Addition and Subtraction"></a>3.2. Addition and Subtraction</h2><p>加减的硬件实现考虑数电中的加减电路，原理还是很简单的。</p>
 <h2 id="3-3-Multiplication"><a href="#3-3-Multiplication" class="headerlink" title="3.3. Multiplication"></a>3.3. Multiplication</h2><p>乘法的硬件实现也可以看成是用纸笔列竖式乘法方法的衍生，即移位和加法。</p>
-<p><img alt data-src="http://jcf94.com/download/2015-09-09-cod-multi.png"></p>
+<p><img data-src="http://jcf94.com/download/2015-09-09-cod-multi.png" alt=""></p>
 <h2 id="3-4-Division"><a href="#3-4-Division" class="headerlink" title="3.4. Division"></a>3.4. Division</h2><p>移位加比较，原理类似。</p>
-<p><img alt data-src="http://jcf94.com/download/2015-09-09-cod-divi.png"></p>
+<p><img data-src="http://jcf94.com/download/2015-09-09-cod-divi.png" alt=""></p>
 <h2 id="3-5-Floating-Point"><a href="#3-5-Floating-Point" class="headerlink" title="3.5. Floating Point"></a>3.5. Floating Point</h2><p>计算机中的实数用科学计数法来表示，将一个存储空间的一部分用于表示指数，另一部分用于表示尾数。</p>
 <p>存储空间的总大小是一定的，指数数位越多，则表示的数的范围越大，但是由于尾数数位少了，有效数位下降了；反之，指数数位越少，表示的数有效数位越多，精确度越高，但是能够表示的范围就小了。</p>
 <p>以MIPS中常见的32位浮点数表示为例：</p>
-<img title="MIPS中常见的浮点数表示法" data-src="http://jcf94.com/download/2015-09-09-cod-3.5.1.jpg">
+<img data-src="http://jcf94.com/download/2015-09-09-cod-3.5.1.jpg" title="MIPS中常见的浮点数表示法"/>
 
 <p>首位为符号位，接下来8位是带符号的指数部分，最后23位是尾数，则整个数最后表示的内容是：</p>
 <p>$$(-1)^S*F*2^E$$</p>
 <p>它能表示的范围在：$2*10^{-38}\sim2*10^{38}$</p>
 <p>64位的浮点数结构则是这样的：</p>
-<img title="双精度浮点数表示" data-src="http://jcf94.com/download/2015-09-09-cod-3.5.2.jpg">
+<img data-src="http://jcf94.com/download/2015-09-09-cod-3.5.2.jpg" title="双精度浮点数表示"/>
 
 <p>表示的范围在：$2*10^{-308}\sim2*10^{308}$</p>
 <hr>
 <p>IEEE754标准对零、无穷与无效数据格式作了规定：</p>
-<img title="IEEE754浮点数编码" data-src="http://jcf94.com/download/2015-09-09-cod-3.5.3.jpg">
+<img data-src="http://jcf94.com/download/2015-09-09-cod-3.5.3.jpg" title="IEEE754浮点数编码">
 
 <p>除此之外，对浮点数有两个比较重要的规定：</p>
 <ol>
@@ -598,21 +596,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2015/09/07/2015-09-07-nothing/" rel="next" title="杂记">
-                  <i class="fa fa-chevron-left"></i> 杂记
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2015/09/13/2015-09-13-Changchun-Online/" rel="prev" title="The 2015 ACM-ICPC Asia Regional Changchun Online">
-                  The 2015 ACM-ICPC Asia Regional Changchun Online <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/09/07/2015-09-07-nothing/" rel="prev" title="杂记">
+      <i class="fa fa-chevron-left"></i> 杂记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/09/13/2015-09-13-Changchun-Online/" rel="next" title="The 2015 ACM-ICPC Asia Regional Changchun Online">
+      The 2015 ACM-ICPC Asia Regional Changchun Online <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -626,6 +621,28 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -656,8 +673,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Jcf94"
-    src="/photo.jpg">
+    <img class="site-author-image" itemprop="image" alt="Jcf94"
+      src="/photo.jpg">
   <p class="site-author-name" itemprop="name">Jcf94</p>
   <div class="site-description" itemprop="description">To live is to change the world.</div>
 </div>
@@ -683,20 +700,20 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/jcf94" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/jcf94" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://weibo.com/jcf94" title="Weibo &amp;rarr; http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+        <a href="http://weibo.com/jcf94" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu &amp;rarr; http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
+        <a href="http://www.zhihu.com/people/jcf94" title="Zhihu → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jcf94" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>Zhihu</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in &amp;rarr; https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
+        <a href="https://cn.linkedin.com/in/jcf94/en" title="Linked-in → https:&#x2F;&#x2F;cn.linkedin.com&#x2F;in&#x2F;jcf94&#x2F;en" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linked-in</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -718,16 +735,16 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jcf94</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
   </div>
 
         
@@ -759,25 +776,29 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
-<script src="/js/schemes/pisces.js?v=7.4.2"></script>
-<script src="/js/next-boot.js?v=7.4.2"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -795,9 +816,8 @@
 
 
 
-
-
-  <script src="/js/local-search.js?v=7.4.2"></script>
+  
+<script src="/js/local-search.js"></script>
 
 
 
@@ -865,11 +885,10 @@
 
   
 
-  
-
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
 <script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID: '53c17a207b0eb9315f41',
@@ -879,10 +898,11 @@
       admin: ['jcf94'],
       id: location.pathname,
         language: 'en',
-      distractionFreeMode: 'true'
+      distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
+});
 </script>
 
 </body>
