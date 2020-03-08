@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>TVM 拆包（二）：IR &amp; Build</title>
+    <title>TVM 拆包（二）：IR</title>
     <url>/2020/03/08/2020-03-08-tvm2/</url>
     <content><![CDATA[<p>这一篇来记一下 TVM 跟语法树 IR 相关的一些内容。</p>
 <p>TVM 是在 Halide 的基础上发展而来的一套编译架构。早一点版本的 TVM 其实还能看到 Halide 是作为一个 git 的 submodule 放在 TVM 目录里的，当时 TVM 自身的代码中还有一个 <code>HalideIR</code> 的 namespace，也有不少的结构是直接继承了 Halide IR 里的内容：</p>
@@ -31,12 +31,38 @@
 
 <p>之后 IRVisitor 的派生类只需要去重载针对不同 Stmt 类型的 <code>Visit_()</code> 函数就好了。</p>
 <h2 id="Dump-Ast"><a href="#Dump-Ast" class="headerlink" title="Dump Ast"></a>Dump Ast</h2><p>看 TVM 代码包括 debug 的时候一开始会觉得两眼一抹黑连语法树长啥样都没有个概念，也不知道 build 过程中每个 ir_pass 具体做了什么事情，就很想要有个工具能把语法树打成图看下。</p>
-<p>最开始 TVM 里面是找不到这种现成的工具的，后来在论坛里有看到别人提的这方面相关 RFC，不过我后续也没有去关注最后到底有没有收进 repo 里了。不过了解完 IRVisitor 的实现之后，其实自己写一个语法树的 Dumper 其实是不难的。</p>
+<p>最开始 TVM 里面是找不到这种现成的工具的，后来在论坛里有看到别人提的这方面相关 RFC，不过我后续也没有去关注最后到底有没有收进 repo 里了。其实了解完 IRVisitor 的实现之后，自己写一个语法树的 Dumper 还是挺简单的。</p>
 <p><code>ir_visitor.cc</code> 里面有一个 PostOrderVisit 的示例：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IRApplyVisit</span> :</span> <span class="keyword">public</span> IRVisitor &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  explicit IRApplyVisit(std::function&lt;void(const NodeRef&amp;)&gt; f) : f_(f) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Visit</span><span class="params">(<span class="keyword">const</span> NodeRef&amp; node)</span> final </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (visited_.count(node.get()) != <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    visited_.insert(node.get());</span><br><span class="line">    IRVisitor::Visit(node);</span><br><span class="line">    f_(node);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  <span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">const</span> NodeRef&amp;)&gt; f_;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">unordered_set</span>&lt;<span class="keyword">const</span> Node*&gt; visited_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PostOrderVisit</span><span class="params">(<span class="keyword">const</span> NodeRef&amp; node, <span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">const</span> NodeRef&amp;)&gt; fvisit)</span> </span>&#123;</span><br><span class="line">  IRApplyVisit(fvisit).Visit(node);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这个实现的功能是按照对语法树后续遍历的顺序对每个语法树节点应用 <code>f_()</code> 函数，要实现语法树输出的目标，光靠这个还不够。</p>
-<p>… To be continued.</p>
+<p>按照对语法树后续遍历的顺序对每个语法树节点应用 <code>f_()</code> 函数，不过要实现语法树输出的目标，光靠这个还不够，需要再稍微进行一点点的扩充。</p>
+<p>我们通过一个栈来记录下语法树上每一个 stmt 的从属关系，首先扩展一下上面那个 Visitor 来做到在访问 stmt 节点的前后分别调一个外部函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IRPrePostOrderVisitor</span> :</span> <span class="keyword">public</span> IRVisitor &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">explicit</span> <span class="title">IRPrePostOrderVisitor</span><span class="params">(<span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">const</span> NodeRef&amp;)&gt; f,</span></span></span><br><span class="line">                                 std::function&lt;void(const NodeRef&amp;)&gt; e) : f_(f), e_(e) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Visit</span><span class="params">(<span class="keyword">const</span> NodeRef&amp; node)</span> final </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (visited_.count(node.get()) != <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    visited_.insert(node.get());</span><br><span class="line">    f_(node);</span><br><span class="line">    IRVisitor::Visit(node);</span><br><span class="line">    e_(node);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  <span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">const</span> NodeRef&amp;)&gt; f_, e_;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">unordered_set</span>&lt;<span class="keyword">const</span> Node*&gt; visited_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrePostOrderVisit</span><span class="params">(<span class="keyword">const</span> NodeRef&amp; node,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">const</span> NodeRef&amp;)&gt; fvisit,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">const</span> NodeRef&amp;)&gt; evisit)</span> </span>&#123;</span><br><span class="line">  IRPrePostOrderVisitor(fvisit, evisit).Visit(node);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <code>PrePostOrderVisit()</code> 相应的在 <code>ir_visitor.h</code> 里也要添加一下。</p>
+<p>接下来再往 <code>api_pass.cc</code> 里添加一下<code>_PrePostOrderVisit</code>的函数注册：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">TVM_REGISTER_API(<span class="string">"_PrePostOrderVisit"</span>)</span><br><span class="line">.set_body([](TVMArgs args, TVMRetValue *ret) &#123;</span><br><span class="line">    Stmt stmt = args[<span class="number">0</span>];</span><br><span class="line">    PackedFunc f = args[<span class="number">1</span>];</span><br><span class="line">    PackedFunc e = args[<span class="number">2</span>];</span><br><span class="line">    ir::PrePostOrderVisit(stmt, f, e);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这样在 C++ 部分的工作就完成了，之后是 Python 这一层，我们的 dump 目标是语法树，所以找个能直接拿到 stmt 结构的地方，<code>build_module.py</code> 就很不错。</p>
+<p><code>lower()</code> 是从 TVM IR 往能够运行的代码编译的第一步，涉及到多种 ir_pass 的使用，不同 ir_pass 的前后插入 dump ast 的代码可以帮助我们快速搞清楚每个 ir_pass 到底实际做了什么事情。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lower</span><span class="params">(...)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> lower_phase0:</span><br><span class="line">        stmt = f(stmt)</span><br><span class="line">    <span class="comment"># Phase 1</span></span><br><span class="line">    stmt = ir_pass.StorageFlatten(stmt, binds, <span class="number">64</span>, cfg.instrument_bound_checkers)</span><br><span class="line">    stmt = ir_pass.CanonicalSimplify(stmt)</span><br><span class="line"></span><br><span class="line">    dump_ast(stmt)	<span class="comment"># &lt;-------------- here</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> lower_phase1:</span><br><span class="line">        stmt = f(stmt)</span><br><span class="line">    <span class="comment"># Phase 2</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> simple_mode:</span><br><span class="line">        stmt = ir_pass.LoopPartition(stmt, cfg.partition_const_loop)</span><br><span class="line">    <span class="keyword">if</span> cfg.disable_vectorize:</span><br><span class="line">        stmt = ir_pass.SkipVectorize(stmt)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        stmt = ir_pass.VectorizeLoop(stmt)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+
+<p>接下来看一下我们需要在 <code>dump_ast()</code> 里面写上什么：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dump_ast</span><span class="params">(stmt)</span>:</span></span><br><span class="line">    stack = []</span><br><span class="line">    ast_node = []</span><br><span class="line">    ast_edge = []</span><br><span class="line">    count = [<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pre_func</span><span class="params">(stmt)</span>:</span></span><br><span class="line">        node_idx = count[<span class="number">0</span>]</span><br><span class="line">        count[<span class="number">0</span>] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        ast_node.append([node_idx, stmt])</span><br><span class="line">        <span class="keyword">if</span> len(stack):</span><br><span class="line">            ast_edge.append([stack[<span class="number">-1</span>], node_idx])</span><br><span class="line"></span><br><span class="line">        stack.append(node_idx)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post_func</span><span class="params">(stmt)</span>:</span></span><br><span class="line">        <span class="keyword">del</span> stack[<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">    _api_internal._PrePostOrderVisit(stmt, pre_func, post_func)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">"graph.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(<span class="string">"digraph &#123;\n"</span>)</span><br><span class="line">        f.write(<span class="string">"    node [shape=matrix]\n"</span>)</span><br><span class="line">        <span class="keyword">for</span> node <span class="keyword">in</span> ast_node:</span><br><span class="line">            ast_type = type(node[<span class="number">1</span>])</span><br><span class="line">            ast_str = str(node[<span class="number">1</span>]).replace(<span class="string">"\n"</span>, <span class="string">"\\l"</span>).replace(<span class="string">"\\n"</span>, <span class="string">"\\l"</span>)</span><br><span class="line">            f.write(<span class="string">"    node%d"</span> % (node[<span class="number">0</span>]))</span><br><span class="line">            f.write(<span class="string">"[label=\"%s\n%s\"]"</span> % (ast_type, ast_str))</span><br><span class="line">            f.write(<span class="string">";\n"</span>)</span><br><span class="line">        <span class="keyword">for</span> edge <span class="keyword">in</span> ast_edge:</span><br><span class="line">            f.write(<span class="string">"    node%d -&gt; node%d;\n"</span> % (edge[<span class="number">0</span>], edge[<span class="number">1</span>]))</span><br><span class="line">        f.write(<span class="string">"&#125;\n"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>思路也是很简单的，我们只要在 PrePostOrderVisit 访问 stmt 节点前将节点入栈，然后访问节点结束后将节点退栈就完事了。</p>
+<p>这个地方也体现出上一篇中 TVM 特别搞出来的这套跨 Python 和 C++ 混合运行的 PackedFunc 机制的便利性，这里事实上我们是从 Python 层开始，调了一个 C++ 的函数，然后在这个 C++ 的函数里面又回调了两个 Python 的函数，并且这个过程中数据还是存在我们在 Python 层创建的结构上的。</p>
+<hr>
+<p>试一下下面这段示例代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">n = tvm.var(<span class="string">"n"</span>)</span><br><span class="line">A = tvm.placeholder((n,), name=<span class="string">'A'</span>)</span><br><span class="line">B = tvm.placeholder((n,), name=<span class="string">'B'</span>)</span><br><span class="line">C = tvm.compute(A.shape, <span class="keyword">lambda</span> i: A[i] + B[i], name=<span class="string">"C"</span>)</span><br><span class="line"></span><br><span class="line">s = tvm.create_schedule([C.op])</span><br><span class="line">bx, tx = s[C].split(C.op.axis[<span class="number">0</span>], factor=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">res = tvm.lower(s, [A, B, C], simple_mode=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通过 dump_ast 打出来的 dot 代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape&#x3D;matrix]</span><br><span class="line">    node0[label&#x3D;&quot;&lt;class &#39;tvm.stmt.ProducerConsumer&#39;&gt;</span><br><span class="line">produce C &#123;\l  for (i.outer, 0, ((n + 63)&#x2F;64)) &#123;\l    for (i.inner, 0, 64) &#123;\l      if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l        if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l          C[((i.outer*64) + i.inner)] &#x3D; (A[((i.outer*64) + i.inner)] + B[((i.outer*64) + i.inner)])\l        &#125;\l      &#125;\l    &#125;\l  &#125;\l&#125;\l&quot;];</span><br><span class="line">    node1[label&#x3D;&quot;&lt;class &#39;tvm.stmt.For&#39;&gt;</span><br><span class="line">for (i.outer, 0, ((n + 63)&#x2F;64)) &#123;\l  for (i.inner, 0, 64) &#123;\l    if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l      if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l        C[((i.outer*64) + i.inner)] &#x3D; (A[((i.outer*64) + i.inner)] + B[((i.outer*64) + i.inner)])\l      &#125;\l    &#125;\l  &#125;\l&#125;\l&quot;];</span><br><span class="line">    node2[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">0&quot;];</span><br><span class="line">    node3[label&#x3D;&quot;&lt;class &#39;tvm.expr.Div&#39;&gt;</span><br><span class="line">((n + 63)&#x2F;64)&quot;];</span><br><span class="line">    node4[label&#x3D;&quot;&lt;class &#39;tvm.expr.Add&#39;&gt;</span><br><span class="line">(n + 63)&quot;];</span><br><span class="line">    node5[label&#x3D;&quot;&lt;class &#39;tvm.expr.Var&#39;&gt;</span><br><span class="line">n&quot;];</span><br><span class="line">    node6[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">63&quot;];</span><br><span class="line">    node7[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">64&quot;];</span><br><span class="line">    node8[label&#x3D;&quot;&lt;class &#39;tvm.stmt.For&#39;&gt;</span><br><span class="line">for (i.inner, 0, 64) &#123;\l  if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l    if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l      C[((i.outer*64) + i.inner)] &#x3D; (A[((i.outer*64) + i.inner)] + B[((i.outer*64) + i.inner)])\l    &#125;\l  &#125;\l&#125;\l&quot;];</span><br><span class="line">    node9[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">0&quot;];</span><br><span class="line">    node10[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">64&quot;];</span><br><span class="line">    node11[label&#x3D;&quot;&lt;class &#39;tvm.stmt.IfThenElse&#39;&gt;</span><br><span class="line">if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l  if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l    C[((i.outer*64) + i.inner)] &#x3D; (A[((i.outer*64) + i.inner)] + B[((i.outer*64) + i.inner)])\l  &#125;\l&#125;\l&quot;];</span><br><span class="line">    node12[label&#x3D;&quot;&lt;class &#39;tvm.expr.Call&#39;&gt;</span><br><span class="line">likely((((i.outer*64) + i.inner) &lt; n))&quot;];</span><br><span class="line">    node13[label&#x3D;&quot;&lt;class &#39;tvm.expr.LT&#39;&gt;</span><br><span class="line">(((i.outer*64) + i.inner) &lt; n)&quot;];</span><br><span class="line">    node14[label&#x3D;&quot;&lt;class &#39;tvm.expr.Add&#39;&gt;</span><br><span class="line">((i.outer*64) + i.inner)&quot;];</span><br><span class="line">    node15[label&#x3D;&quot;&lt;class &#39;tvm.expr.Mul&#39;&gt;</span><br><span class="line">(i.outer*64)&quot;];</span><br><span class="line">    node16[label&#x3D;&quot;&lt;class &#39;tvm.expr.Var&#39;&gt;</span><br><span class="line">i.outer&quot;];</span><br><span class="line">    node17[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">64&quot;];</span><br><span class="line">    node18[label&#x3D;&quot;&lt;class &#39;tvm.expr.Var&#39;&gt;</span><br><span class="line">i.inner&quot;];</span><br><span class="line">    node19[label&#x3D;&quot;&lt;class &#39;tvm.stmt.IfThenElse&#39;&gt;</span><br><span class="line">if (likely((((i.outer*64) + i.inner) &lt; n))) &#123;\l  C[((i.outer*64) + i.inner)] &#x3D; (A[((i.outer*64) + i.inner)] + B[((i.outer*64) + i.inner)])\l&#125;\l&quot;];</span><br><span class="line">    node20[label&#x3D;&quot;&lt;class &#39;tvm.expr.Call&#39;&gt;</span><br><span class="line">likely((((i.outer*64) + i.inner) &lt; n))&quot;];</span><br><span class="line">    node21[label&#x3D;&quot;&lt;class &#39;tvm.expr.LT&#39;&gt;</span><br><span class="line">(((i.outer*64) + i.inner) &lt; n)&quot;];</span><br><span class="line">    node22[label&#x3D;&quot;&lt;class &#39;tvm.expr.Add&#39;&gt;</span><br><span class="line">((i.outer*64) + i.inner)&quot;];</span><br><span class="line">    node23[label&#x3D;&quot;&lt;class &#39;tvm.expr.Mul&#39;&gt;</span><br><span class="line">(i.outer*64)&quot;];</span><br><span class="line">    node24[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">64&quot;];</span><br><span class="line">    node25[label&#x3D;&quot;&lt;class &#39;tvm.stmt.Store&#39;&gt;</span><br><span class="line">C[((i.outer*64) + i.inner)] &#x3D; (A[((i.outer*64) + i.inner)] + B[((i.outer*64) + i.inner)])\l&quot;];</span><br><span class="line">    node26[label&#x3D;&quot;&lt;class &#39;tvm.expr.Add&#39;&gt;</span><br><span class="line">(A[((i.outer*64) + i.inner)] + B[((i.outer*64) + i.inner)])&quot;];</span><br><span class="line">    node27[label&#x3D;&quot;&lt;class &#39;tvm.expr.Load&#39;&gt;</span><br><span class="line">A[((i.outer*64) + i.inner)]&quot;];</span><br><span class="line">    node28[label&#x3D;&quot;&lt;class &#39;tvm.expr.Add&#39;&gt;</span><br><span class="line">((i.outer*64) + i.inner)&quot;];</span><br><span class="line">    node29[label&#x3D;&quot;&lt;class &#39;tvm.expr.Mul&#39;&gt;</span><br><span class="line">(i.outer*64)&quot;];</span><br><span class="line">    node30[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">64&quot;];</span><br><span class="line">    node31[label&#x3D;&quot;&lt;class &#39;tvm.expr.UIntImm&#39;&gt;</span><br><span class="line">(bool)1&quot;];</span><br><span class="line">    node32[label&#x3D;&quot;&lt;class &#39;tvm.expr.Load&#39;&gt;</span><br><span class="line">B[((i.outer*64) + i.inner)]&quot;];</span><br><span class="line">    node33[label&#x3D;&quot;&lt;class &#39;tvm.expr.Add&#39;&gt;</span><br><span class="line">((i.outer*64) + i.inner)&quot;];</span><br><span class="line">    node34[label&#x3D;&quot;&lt;class &#39;tvm.expr.Mul&#39;&gt;</span><br><span class="line">(i.outer*64)&quot;];</span><br><span class="line">    node35[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">64&quot;];</span><br><span class="line">    node36[label&#x3D;&quot;&lt;class &#39;tvm.expr.UIntImm&#39;&gt;</span><br><span class="line">(bool)1&quot;];</span><br><span class="line">    node37[label&#x3D;&quot;&lt;class &#39;tvm.expr.Add&#39;&gt;</span><br><span class="line">((i.outer*64) + i.inner)&quot;];</span><br><span class="line">    node38[label&#x3D;&quot;&lt;class &#39;tvm.expr.Mul&#39;&gt;</span><br><span class="line">(i.outer*64)&quot;];</span><br><span class="line">    node39[label&#x3D;&quot;&lt;class &#39;tvm.expr.IntImm&#39;&gt;</span><br><span class="line">64&quot;];</span><br><span class="line">    node40[label&#x3D;&quot;&lt;class &#39;tvm.expr.UIntImm&#39;&gt;</span><br><span class="line">(bool)1&quot;];</span><br><span class="line">    node0 -&gt; node1;</span><br><span class="line">    node1 -&gt; node2;</span><br><span class="line">    node1 -&gt; node3;</span><br><span class="line">    node3 -&gt; node4;</span><br><span class="line">    node4 -&gt; node5;</span><br><span class="line">    node4 -&gt; node6;</span><br><span class="line">    node3 -&gt; node7;</span><br><span class="line">    node1 -&gt; node8;</span><br><span class="line">    node8 -&gt; node9;</span><br><span class="line">    node8 -&gt; node10;</span><br><span class="line">    node8 -&gt; node11;</span><br><span class="line">    node11 -&gt; node12;</span><br><span class="line">    node12 -&gt; node13;</span><br><span class="line">    node13 -&gt; node14;</span><br><span class="line">    node14 -&gt; node15;</span><br><span class="line">    node15 -&gt; node16;</span><br><span class="line">    node15 -&gt; node17;</span><br><span class="line">    node14 -&gt; node18;</span><br><span class="line">    node11 -&gt; node19;</span><br><span class="line">    node19 -&gt; node20;</span><br><span class="line">    node20 -&gt; node21;</span><br><span class="line">    node21 -&gt; node22;</span><br><span class="line">    node22 -&gt; node23;</span><br><span class="line">    node23 -&gt; node24;</span><br><span class="line">    node19 -&gt; node25;</span><br><span class="line">    node25 -&gt; node26;</span><br><span class="line">    node26 -&gt; node27;</span><br><span class="line">    node27 -&gt; node28;</span><br><span class="line">    node28 -&gt; node29;</span><br><span class="line">    node29 -&gt; node30;</span><br><span class="line">    node27 -&gt; node31;</span><br><span class="line">    node26 -&gt; node32;</span><br><span class="line">    node32 -&gt; node33;</span><br><span class="line">    node33 -&gt; node34;</span><br><span class="line">    node34 -&gt; node35;</span><br><span class="line">    node32 -&gt; node36;</span><br><span class="line">    node25 -&gt; node37;</span><br><span class="line">    node37 -&gt; node38;</span><br><span class="line">    node38 -&gt; node39;</span><br><span class="line">    node25 -&gt; node40;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 GraphViz 这种 dot 可视化工具处理一下：</p>
+<p><img data-src="http://jcf94.com/download/2020-03-08-tvm2-graph_exp.png" alt="Vis Result"></p>
+<p>当然这个实现还是相当简单了，根据每个节点的类型等等还可以再加一些更复杂的判断逻辑，控制一下输出的内容量等等，以及其实可以看到里面还有很多重复的节点也都可以被筛掉。</p>
+<p>Relay IR 的整体处理结构跟 TVM IR 一致，用类似的方法也可以把 Relay 那一层的 AST 打出来。</p>
 ]]></content>
       <categories>
         <category>Project</category>
@@ -5075,8 +5101,8 @@ Haswell-LP (ultrabooks)</td>
       </categories>
       <tags>
         <tag>Deep Learning</tag>
-        <tag>TensorFlow</tag>
         <tag>AlexNet</tag>
+        <tag>TensorFlow</tag>
       </tags>
   </entry>
   <entry>
@@ -5355,8 +5381,8 @@ The list of supported languages also includes non-scripting languages such as C#
       <tags>
         <tag>Google</tag>
         <tag>Deep Learning</tag>
-        <tag>Machine Learning</tag>
         <tag>TensorFlow</tag>
+        <tag>Machine Learning</tag>
       </tags>
   </entry>
   <entry>
@@ -11945,8 +11971,8 @@ the two letters of the computer alphabet do not limit how what computers can do.
         <category>算法学习</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>SBT</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -12972,9 +12998,9 @@ int main()
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>树链剖分</tag>
         <tag>动态树</tag>
         <tag>LCT</tag>
+        <tag>树链剖分</tag>
       </tags>
   </entry>
   <entry>
@@ -13056,9 +13082,9 @@ int main()
         <category>ACM-训练</category>
       </categories>
       <tags>
+        <tag>平衡树</tag>
         <tag>Splay</tag>
         <tag>伸展树</tag>
-        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -13103,8 +13129,8 @@ int main()
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>SBT</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -13135,8 +13161,8 @@ int main()
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>SBT</tag>
+        <tag>平衡树</tag>
         <tag>划分树</tag>
       </tags>
   </entry>
@@ -13174,8 +13200,8 @@ int main()
         <category>ACM-训练</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>SBT</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -13215,9 +13241,9 @@ int main()
         <category>ACM-训练</category>
       </categories>
       <tags>
+        <tag>平衡树</tag>
         <tag>Splay</tag>
         <tag>伸展树</tag>
-        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -13265,9 +13291,9 @@ int main()
         <category>ACM-训练</category>
       </categories>
       <tags>
+        <tag>平衡树</tag>
         <tag>Splay</tag>
         <tag>伸展树</tag>
-        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -13303,8 +13329,8 @@ int main()
       </categories>
       <tags>
         <tag>优先队列</tag>
-        <tag>平衡树</tag>
         <tag>SBT</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
