@@ -61,7 +61,7 @@
 <meta property="og:description" content="还是应该多写东西，感觉离开学校以后写的越来越少了，真是惭愧。 之后的工作有很多是要跟神经网络的编译执行相关，准备继 TF 拆包之后再来记一下我对 TVM 的探索过程。这个系列的坑会开多久也不一定，毕竟之前 TF 的其实也只做了一点点微小的工作，还有很多方面的内容没有看，另外 TF 要更到 2.0 之后可能有不少地方已经有一些变动了。 （也许有空也会看一下 XLA 吧，不过那个应该是要合到 TF 的">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-09-14T01:53:09.000Z">
-<meta property="article:modified_time" content="2019-09-22T08:51:16.488Z">
+<meta property="article:modified_time" content="2020-03-08T05:01:26.020Z">
 <meta property="article:author" content="Jcf94">
 <meta property="article:tag" content="TVM">
 <meta property="article:tag" content="Compile">
@@ -242,7 +242,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-22 16:51:16" itemprop="dateModified" datetime="2019-09-22T16:51:16+08:00">2019-09-22</time>
+                <time title="Modified: 2020-03-08 13:01:26" itemprop="dateModified" datetime="2020-03-08T13:01:26+08:00">2020-03-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,6 +291,17 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*! \brief Container of all statements */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stmt</span> :</span> <span class="keyword">public</span> NodeRef &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  TVM_DEFINE_NODE_REF_METHODS(Stmt, NodeRef, StmtNode);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * \brief Macro to define common node ref methods.</span></span><br><span class="line"><span class="comment"> * \param TypeName The name of the NodeRef.</span></span><br><span class="line"><span class="comment"> * \param BaseTypeName The Base type.</span></span><br><span class="line"><span class="comment"> * \param NodeName The node container type.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TVM_DEFINE_NODE_REF_METHODS(TypeName, BaseTypeName, NodeName)   \</span></span><br><span class="line">  TypeName() &#123;&#125;                                                         \</span><br><span class="line">  explicit TypeName(::tvm::NodePtr&lt;::tvm::Node&gt; n) : BaseTypeName(n) &#123;&#125; \</span><br><span class="line">  <span class="keyword">const</span> NodeName* <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123;                                  \</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> NodeName*&gt;(node_.get());                   \</span><br><span class="line">  &#125;                                                                     \</span><br><span class="line">  <span class="function"><span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>-&gt;defined(); &#125;                     \</span><br><span class="line">  <span class="keyword">using</span> ContainerType = NodeName;</span><br></pre></td></tr></table></figure>
 
 <p>以上面的 <code>Stmt</code> 类为例，其他很多 NodeRef 的派生类结构也会用一个 <code>TVM_DEFINE_NODE_REF</code> 的宏来扩展出这部分的关键代码。</p>
+<hr>
+<p>那么问题来了，为什么要设计成这个样子呢。</p>
+<blockquote>
+<p>这里谈一下我自己的理解，如果有问题的话也欢迎看到的同学指正一下。</p>
+</blockquote>
+<p>一方面可能是为了方便下面 C++ runtime 和 Python 部分所有结构的无缝衔接；另一方面从上面的代码也可以看到，NodeRef 重载了 <code>-&gt;</code> 运算符之后返回的是个 const 的指针对象，所以通过 <code>-&gt;</code> 访问到的实际的成员结构都是只读的了，这就保证了 TVM 这套复杂系统里面各种数据结构的安全性。</p>
+<p>当然严格的只读访问在某些情况下是不够的，所以 TVM 提供了 <code>CopyOnWrite()</code> 的机制，如果某个 NodeRef 类的定义中包含了 <code>TVM_DEFINE_NODE_REF_COW</code> 这个宏的话，可以通过 <code>NodeRef.CopyOnWrite()</code> 获得一个可修改的 Node 指针，之后对成员内容的修改均通过这个指针来做就可以了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * \brief Macro to define CopyOnWrite function in a NodeRef.</span></span><br><span class="line"><span class="comment"> * \param NodeName The Type of the Node.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  CopyOnWrite will generate a unique copy of the internal node.</span></span><br><span class="line"><span class="comment"> *  The node will be copied if it is referenced by multiple places.</span></span><br><span class="line"><span class="comment"> *  The function returns the raw pointer to the node to allow modification</span></span><br><span class="line"><span class="comment"> *  of the content.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \code</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  MyCOWNodeRef ref, ref2;</span></span><br><span class="line"><span class="comment"> *  ref2 = ref;</span></span><br><span class="line"><span class="comment"> *  ref.CopyOnWrite()-&gt;value = new_value;</span></span><br><span class="line"><span class="comment"> *  assert(ref2-&gt;value == old_value);</span></span><br><span class="line"><span class="comment"> *  assert(ref-&gt;value == new_value);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \endcode</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TVM_DEFINE_NODE_REF_COW(NodeName)                               \</span></span><br><span class="line">  <span class="function">NodeName* <span class="title">CopyOnWrite</span><span class="params">()</span> </span>&#123;                                             \</span><br><span class="line">      CHECK(node_ != <span class="literal">nullptr</span>);                                          \</span><br><span class="line">      <span class="keyword">if</span> (!node_.unique())  &#123;                                           \</span><br><span class="line">        NodePtr&lt;NodeName&gt; n = make_node&lt;NodeName&gt;(*(<span class="keyword">operator</span>-&gt;()));     \</span><br><span class="line">        NodePtr&lt;Node&gt;(<span class="built_in">std</span>::move(n)).swap(node_);                        \</span><br><span class="line">      &#125;                                                                 \</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;NodeName*&gt;(node_.get());                       \</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>话说 <code>CopyOnWrite()</code> 这个函数名称我感觉可能不是特别确切，也许改成 <code>GetMutablePtr()</code> 之类的会更好点？因为这个实际上并不 Copy，直接调用这个函数返回的是对这个 NodeRef 自己所指代对象的指针，之后的改动也都是对这个 Node 自身做的。</p>
+<p>如果确切希望实现 Copy 的语义，则需要像前面注释里面示例的那样，先用另一个 <code>ref2</code> 复制一份 <code>ref</code>，之后再在 <code>ref2</code> 上进行修改。</p>
 <h1 id="PackedFunc"><a href="#PackedFunc" class="headerlink" title="PackedFunc"></a>PackedFunc</h1><p>TVM 的整个软件栈涉及到很多高层脚本语言（Python、JavaScript）和 C++ 运行时的交互，因此这里提供了一套 PackedFunc 的基础用来把整个过程方便地串接起来。</p>
 <p>第一次看到这种实现时真的是被惊到了，感觉非常神奇。</p>
 <p>在 C++ 层面创建一个函数，可以直接进行本地调用：</p>
@@ -323,6 +334,12 @@
     
     
       
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/03/08/2020-03-08-tvm2/" rel="bookmark">TVM 拆包（二）：IR & Build</a></div>
+    </li>
+  </ul>
 
 
       <footer class="post-footer">
@@ -340,7 +357,10 @@
     <a href="/2019/06/18/2019-06-18-note/" rel="prev" title="大半年的流水账">
       <i class="fa fa-chevron-left"></i> 大半年的流水账
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/08/2020-03-08-tvm2/" rel="next" title="TVM 拆包（二）：IR & Build">
+      TVM 拆包（二）：IR & Build <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -416,7 +436,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-count">158</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
