@@ -3,5 +3,5 @@
 <ShortName>Chenfan Blog</ShortName>
 <Description>To live is to change the world.</Description>
 <Image height="16" width="16" type="image/x-icon">http://jcf94.com/favicon.ico</Image>
-<Url type="text/html" template="http://jcf94.com/search?search={searchTerms}"/>
+<Url type="text/html" template="http://search.jcf94.com?search={searchTerms}"/>
 </OpenSearchDescription>
