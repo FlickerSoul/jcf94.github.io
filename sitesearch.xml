@@ -1,0 +1,7 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<InputEncoding>utf-8</InputEncoding>
+<ShortName>Title</ShortName>
+<Description>Description</Description>
+<Image height="16" width="16" type="image/x-icon">icon(Exp: https://xxx.com/favicon.ico)</Image>
+<Url type="text/html" template="https://xxx.com/search?search={searchTerms}"/>
+</OpenSearchDescription>
